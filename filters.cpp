@@ -112,7 +112,7 @@ Mat Filters::applyGaussianFilter(Mat inputImage, int kernelSize, float sigma){
 
 
 /**
- * @brief Filters image using the Median method
+ * @brief Function to compute the Guassian Kernel based on the given size and standard deviation
  * @param kernelSize {int} - size of the kernel
  * @param sigma {float} - standard deviation
  * @return kernel {vector<vector<double>>}
@@ -143,6 +143,52 @@ vector<vector<double>> Filters::computeGuassianKernel(int kernelSize, float sigm
   return kernel;
 }
 
+
+/**
+ * @brief Filters image using the Median method
+ * @param inputImage {cv::Mat} - input image
+ * @param kernelSize {int} - size of the used kernel
+ * @return outputImage {cv::Mat}
+ */
+Mat Filters::applyMedianFilter(Mat inputImage, int kernelSize){
+
+
+  Mat outputImage(inputImage.size(), inputImage.type());
+  int halfKernel = kernelSize / 2;
+
+  // Iterate over each pixel in the image
+  for (int i = halfKernel; i < inputImage.rows - halfKernel; i++) {
+      for (int j = halfKernel; j < inputImage.cols - halfKernel; j++) {
+          vector<int> red_values(kernelSize * kernelSize);
+          vector<int> green_values(kernelSize * kernelSize);
+          vector<int> blue_values(kernelSize * kernelSize);
+
+          // Extract the pixel values for each color channel in the window
+          int k = 0;
+          for (int m = -halfKernel; m <= halfKernel; m++) {
+              for (int n = -halfKernel; n <= halfKernel; n++) {
+                  Vec3b pixel = inputImage.at<Vec3b>(i + m, j + n);
+                  red_values[k] = pixel[2];
+                  green_values[k] = pixel[1];
+                  blue_values[k] = pixel[0];
+                  k++;
+              }
+          }
+
+          // Sort the values and select the median
+          sort(red_values.begin(), red_values.end());
+          sort(green_values.begin(), green_values.end());
+          sort(blue_values.begin(), blue_values.end());
+
+          int median_index = red_values.size() / 2;
+          Vec3b median_pixel(blue_values[median_index], green_values[median_index], red_values[median_index]);
+
+          // Set the pixel in the destination image to the median value
+          outputImage.at<Vec3b>(i, j) = median_pixel;
+      }
+  }
+  return outputImage;
+}
 
 
 
