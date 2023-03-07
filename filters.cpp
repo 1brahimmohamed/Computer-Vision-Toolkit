@@ -5,6 +5,8 @@
 
 #include "filters.h"
 
+using namespace cv;
+
 Filters::Filters()
 {
 
@@ -189,7 +191,6 @@ Mat Filters::applyMedianFilter(Mat inputImage, int kernelSize){
   }
   return outputImage;
 }
-
 
 
 // ------------------------------------ OpenCV Functions  -----------------------------------------//

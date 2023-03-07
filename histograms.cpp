@@ -1,18 +1,17 @@
-#include "histogram.h"
+#include "histograms.h"
 
 
-Histogram::Histogram()
+Histograms::Histograms()
 {
 
 }
 
-Histogram::~Histogram()
+Histograms::~Histograms()
 {
 
 }
 
-
-void Histogram:: Histo(Mat image, int histogram[])
+void Histograms:: Histo(Mat image, int histogram[])
 {
 
     // initialize all intensity values to 0
@@ -28,10 +27,7 @@ void Histogram:: Histo(Mat image, int histogram[])
 
 }
 
-
-
-
-void Histogram:: cumhist(int histogram[], int cumhistogram[])
+void Histograms:: cumHist(int histogram[], int cumhistogram[])
 {
     cumhistogram[0] = histogram[0];
 
@@ -41,11 +37,7 @@ void Histogram:: cumhist(int histogram[], int cumhistogram[])
     }
 }
 
-
-
-
-
-void Histogram:: histDisplay(int histogram[], const char* name)
+void Histograms:: histDisplay(int histogram[], const char* name)
 {
     int hist[256];
     for(int i = 0; i < 256; i++)
@@ -88,19 +80,14 @@ void Histogram:: histDisplay(int histogram[], const char* name)
     imshow(name, histImage);
 }
 
-
-
-int Histogram:: calc_image_size(Mat image){
+int Histograms:: calculateImageSize(Mat image){
     int size = image.rows * image.cols;
     return size;
 }
 
+Mat Histograms:: equilization(Mat image, int histogram[], int cumhistogram[], int Sk[]){
 
-
-
-Mat Histogram:: equilization(Mat image, int histogram[], int cumhistogram[], int Sk[]){
-
-    int size = calc_image_size(image);
+    int size = calculateImageSize(image);
     float alpha = 255.0/size;
 
 
@@ -121,10 +108,7 @@ Mat Histogram:: equilization(Mat image, int histogram[], int cumhistogram[], int
     return new_image;
 }
 
-
-
-
-void Histogram:: equalized_Histogram(Mat image, int final[], int histogram[],int Sk[]){
+void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int Sk[]){
     // Calculate the probability of each intensity
     float PrRk[256];
     for(int i = 0; i < 256; i++)
@@ -147,4 +131,29 @@ void Histogram:: equalized_Histogram(Mat image, int final[], int histogram[],int
     for(int i = 0; i < 256; i++)
         final[i] = cvRound(PsSk[i]*255);
 
+}
+
+Mat Histograms::NormalizeImage(Mat inputImage){
+
+  vector<Mat> bgr_channels;
+  split(inputImage, bgr_channels);
+
+  // Normalize each color channel separately
+  vector<Mat> normalized_bgr_channels;
+  for (int c = 0; c < bgr_channels.size(); c++) {
+      // Find the minimum and maximum pixel values in the color channel
+      double channel_min_val, channel_max_val;
+      minMaxLoc(bgr_channels[c], &channel_min_val, &channel_max_val);
+
+      // Normalize the color channel
+      Mat normalized_channel = (bgr_channels[c] - channel_min_val) / (channel_max_val - channel_min_val);
+      normalized_bgr_channels.push_back(normalized_channel);
+    }
+
+  // Merge normalized color channels back into RGB image
+  Mat normalized_rgb_img;
+  merge(normalized_bgr_channels, normalized_rgb_img);
+
+  // return the normalized RGB image
+  return normalized_rgb_img;
 }
