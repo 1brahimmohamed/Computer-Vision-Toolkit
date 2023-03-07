@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: filters.h
+ * Description: Header file for Filters Class including Adding noise and removing
+ * noise using Average, Guassian & Median Filters
+ * Author: Ibrahim Mohamed
+ * Last Modified: 3 Mar 23 - 01:36
+ *
+ *******************************************************************************/
+
 #ifndef FILTERS_H
 #define FILTERS_H
 

@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: histograms.h
+ * Description: Header file for Histograms Class.
+ * Authors: Marina Nasser & Ibrahim Mohamed
+ * Last Modified: 3 Mar 23 - 01:39
+ *
+ *******************************************************************************/
+
+
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 

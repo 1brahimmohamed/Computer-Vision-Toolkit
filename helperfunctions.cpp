@@ -1,3 +1,14 @@
+/******************************************************************************
+ *
+ * File Name: helperfunctions.cpp
+ * Description: Source file for helper functions like reading image & converting
+ * the image into different represenation types.
+ * Author: Ibrahim Mohamed
+ * Last Modified: 3 Mar 23 - 01:38
+ *
+ *******************************************************************************/
+
+
 #include "helperfunctions.h"
 
 HelperFunctions::HelperFunctions()

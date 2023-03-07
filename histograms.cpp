@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: histograms.cpp
+ * Description: Source file for Histograms Class.
+ * Authors: Marina Nasser & Ibrahim Mohamed
+ * Last Modified: 3 Mar 23 - 01:39
+ *
+ *******************************************************************************/
+
+
 #include "histograms.h"
 
 
