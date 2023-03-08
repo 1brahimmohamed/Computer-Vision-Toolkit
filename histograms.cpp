@@ -114,14 +114,14 @@ Mat Histograms:: equilization(Mat image, int histogram[], int cumhistogram[], in
     return new_image;
 }
 
-void Histogram:: equalized_Histogram(Mat image, int final[], int histogram[],int sk[]){
+void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int sk[]){
 
 
     // Calculate the probability of each intensity
     float PDF[256];
     for(int i = 0; i < 256; i++)
     {
-        PDF[i] = (double)histogram[i] / calc_image_size(image);
+        PDF[i] = (double)histogram[i] / calculateImageSize(image);
     }
 
 
