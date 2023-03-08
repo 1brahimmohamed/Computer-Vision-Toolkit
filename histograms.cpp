@@ -55,7 +55,7 @@ void Histograms:: histDisplay(int histogram[], const char* name)
         hist[i]=histogram[i];
     }
     // draw the histograms
-    int hist_w = 512; int hist_h = 400;
+    int hist_w = 512; int hist_h = 256;
     int bin_w = cvRound((double) hist_w/256);
 
     Mat histImage(hist_h, hist_w, CV_8UC1, Scalar(255, 255, 255));
@@ -81,11 +81,7 @@ void Histograms:: histDisplay(int histogram[], const char* name)
         line(histImage, Point(bin_w*(i), hist_h),Point(bin_w*(i), hist_h - hist[i]),Scalar(0,0,0), 1, 8, 0);
     }
 
-    // display histogram
-//     QChart *chart = new QChart();
-//     chart->addSeries(histImage);
-//     chart->setTitle("Simple barchart example");
-//     chart->setAnimationOptions(QChart::SeriesAnimations);
+
     namedWindow(name, CV_WINDOW_AUTOSIZE);
     imshow(name, histImage);
 }
@@ -118,23 +114,25 @@ Mat Histograms:: equilization(Mat image, int histogram[], int cumhistogram[], in
     return new_image;
 }
 
-void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int Sk[]){
+void Histogram:: equalized_Histogram(Mat image, int final[], int histogram[],int sk[]){
+
+
     // Calculate the probability of each intensity
-    float PrRk[256];
+    float PDF[256];
     for(int i = 0; i < 256; i++)
     {
-        PrRk[i] = (double)histogram[i] / 512; //el mfrod bdal 512 dy size el image
-    }
-    // Generate the equlized histogram
-    float PsSk[256];
-    for(int i = 0; i < 256; i++)
-    {
-        PsSk[i] = 0;
+        PDF[i] = (double)histogram[i] / calc_image_size(image);
     }
 
+
+
+    // Generate the equlized histogram
+    float PsSk[256]={0};
+
+    //new level
     for(int i = 0; i < 256; i++)
     {
-        PsSk[Sk[i]] += PrRk[i];
+        PsSk[sk[i]] += PDF[i];
     }
 
 
@@ -142,7 +140,6 @@ void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int
         final[i] = cvRound(PsSk[i]*255);
 
 }
-
 Mat Histograms::NormalizeImage(Mat inputImage){
 
   vector<Mat> bgr_channels;
