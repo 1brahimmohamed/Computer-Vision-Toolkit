@@ -8,12 +8,6 @@
  *
  *******************************************************************************/
 
-
-#include <vector>
-#include <QDebug>
-#include <algorithm>
-#include <queue>
-
 #include "filters.h"
 
 using namespace cv;
