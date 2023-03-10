@@ -3,7 +3,6 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
-
 #include<cstdint>
 #include <iostream>
 using namespace cv;
@@ -47,5 +46,23 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg, Mat &DstImg,double Mean=0.0,
         }
     }
     return DstImg;
+}
+Mat NoiseAddatives::SaltAndPepperNoise(Mat SrcImg)
+{   Mat ResultImg = SrcImg.clone();
+    int r = 15;
+    for (int i = 0; i < ResultImg.rows; i++) {
+        for (int k = 0; k <ResultImg.cols; k++) {
+            int random = rand() % r + 1;
+            if (random == 1) {
+                ResultImg.at<uchar>(i, k) = 255;
+            }
+            if (random == 2) {
+                ResultImg.at<uchar>(i, k) = 0;
+            }
+
+        }
+
+    }
+    return ResultImg;
 }
 
