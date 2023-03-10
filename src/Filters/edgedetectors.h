@@ -12,6 +12,9 @@ public:
     EdgeDetectors();
    ~EdgeDetectors();
     Mat CannyEdgeDetector(Mat srcImg);
+    Mat RobertEdgeDetector(Mat SrcImg);
+    Mat PerwittEdgeDetector(Mat SrcImg);
+    Mat SobalEdgeDetector(Mat SrcImg);
 };
 
 #endif // EDGEDETECTORS_H
