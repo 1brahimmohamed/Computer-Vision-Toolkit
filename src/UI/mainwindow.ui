@@ -60,14 +60,105 @@
 border: 0;
 }
 
-QTabBar::tab:selected {
-    background-color: #fff;
-    border-color: #aaa;
+QTabWidget::pane {
+background: white;
+border: 1px solid black;
 }
 
-QTabWidget::pane {
-    border: 0px;
+QTabWidget::tab-bar:top {
+top: 1px;
 }
+
+QTabWidget::tab-bar:bottom {
+bottom: 1px;
+}
+
+QTabWidget::tab-bar:left {
+right: 1px;
+}
+
+QTabWidget::tab-bar:right {
+left: 1px;
+}
+
+QTabBar::tab {
+border: 0.5px solid white;
+width: 359px;
+font-size: 18px;
+
+
+}
+
+QTabBar::tab:selected {
+background: white;
+color: #141725;
+}
+
+QTabBar::tab:!selected {
+background: #141725;
+color: white;
+
+}
+
+QTabBar::tab:!selected:hover {
+background: #999;
+}
+
+QTabBar::tab:top:!selected {
+margin-top: 3px;
+}
+
+QTabBar::tab:bottom:!selected {
+margin-bottom: 3px;
+}
+
+QTabBar::tab:top, QTabBar::tab:bottom {
+min-width: 8ex;
+margin-right: -1px;
+padding: 5px 10px 5px 10px;
+}
+
+QTabBar::tab:top:selected {
+border-bottom-color: none;
+}
+
+QTabBar::tab:bottom:selected {
+border-top-color: none;
+}
+
+QTabBar::tab:top:last, QTabBar::tab:bottom:last,
+QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one {
+margin-right: 0;
+}
+
+QTabBar::tab:left:!selected {
+margin-right: 3px;
+}
+
+QTabBar::tab:right:!selected {
+margin-left: 3px;
+}
+
+QTabBar::tab:left, QTabBar::tab:right {
+min-height: 8ex;
+margin-bottom: -1px;
+padding: 10px 5px 10px 5px;
+}
+
+QTabBar::tab:left:selected {
+border-left-color: none;
+}
+
+QTabBar::tab:right:selected {
+border-right-color: none;
+}
+
+QTabBar::tab:left:last, QTabBar::tab:right:last,
+QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
+margin-bottom: 0;
+}
+
+
 </string>
     </property>
     <property name="currentIndex">
@@ -862,46 +953,28 @@ border-radius: 10px;
       <property name="geometry">
        <rect>
         <x>226</x>
-        <y>785</y>
+        <y>770</y>
         <width>221</width>
-        <height>31</height>
+        <height>60</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">/* Define the slider style */
-QSlider {
-  border: none;
-  background: #222;
-  width: 300px;
-  height: 6px;
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
 }
-
-/* Define the handle style */
-QSlider::handle {
-  background: #fff;
-  border: none;
-  width: 16px;
-  height: 16px;
-  margin: -5px 0;
-  border-radius: 8px;
-  box-shadow: 0 0 1px #000;
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
 }
-
-/* Define the handle style on hover */
-QSlider::handle:hover {
-  background: #ccc;
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
 }
-
-/* Define the groove style */
-QSlider::groove {
-  background: #555;
-  height: 6px;
-  border-radius: 3px;
-}
-
-/* Define the groove style on hover */
-QSlider::groove:hover {
-  background: #777;
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
       </property>
       <property name="orientation">
@@ -943,46 +1016,28 @@ background-color: #1d408d;
       <property name="geometry">
        <rect>
         <x>596</x>
-        <y>785</y>
+        <y>770</y>
         <width>221</width>
-        <height>31</height>
+        <height>60</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">/* Define the slider style */
-QSlider {
-  border: none;
-  background: #222;
-  width: 300px;
-  height: 6px;
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
 }
-
-/* Define the handle style */
-QSlider::handle {
-  background: #fff;
-  border: none;
-  width: 16px;
-  height: 16px;
-  margin: -5px 0;
-  border-radius: 8px;
-  box-shadow: 0 0 1px #000;
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
 }
-
-/* Define the handle style on hover */
-QSlider::handle:hover {
-  background: #ccc;
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
 }
-
-/* Define the groove style */
-QSlider::groove {
-  background: #555;
-  height: 6px;
-  border-radius: 3px;
-}
-
-/* Define the groove style on hover */
-QSlider::groove:hover {
-  background: #777;
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
       </property>
       <property name="orientation">
@@ -2116,10 +2171,29 @@ background-color: #1d408d;
       <property name="geometry">
        <rect>
         <x>1210</x>
-        <y>250</y>
+        <y>230</y>
         <width>261</width>
-        <height>21</height>
+        <height>60</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
+}
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
+}
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
+}
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+}</string>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -2129,10 +2203,29 @@ background-color: #1d408d;
       <property name="geometry">
        <rect>
         <x>1210</x>
-        <y>330</y>
+        <y>310</y>
         <width>261</width>
-        <height>21</height>
+        <height>60</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
+}
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
+}
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
+}
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+}</string>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
