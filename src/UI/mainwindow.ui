@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1269</width>
-    <height>727</height>
+    <width>1518</width>
+    <height>986</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -32,19 +32,23 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">QFrame {
+    border: 0;
+}</string>
+   </property>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>-3</x>
       <y>-3</y>
-      <width>1221</width>
-      <height>741</height>
+      <width>1521</width>
+      <height>991</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>10</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -52,10 +56,22 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QTabWidget{
+border: 0;
+}
+
+QTabBar::tab:selected {
+    background-color: #fff;
+    border-color: #aaa;
+}
+
+QTabWidget::pane {
+    border: 0px;
+}
+</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -73,6 +89,1181 @@
      <attribute name="title">
       <string>Filters</string>
      </attribute>
+     <widget class="QGraphicsView" name="backgrounDark">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-45</y>
+        <width>1521</width>
+        <height>1001</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #141725;
+border: 0px;
+
+
+</string>
+      </property>
+      <property name="backgroundBrush">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="backgroundLight">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>1524</width>
+        <height>969</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #1e2235;
+border: 0px;
+border-radius: 35px 35px 0 0;
+</string>
+      </property>
+      <property name="backgroundBrush">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="splitterUp">
+      <property name="geometry">
+       <rect>
+        <x>1320</x>
+        <y>96</y>
+        <width>26</width>
+        <height>3</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#fff;
+</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="leftPanelBackgroundLower">
+      <property name="geometry">
+       <rect>
+        <x>1166</x>
+        <y>51</y>
+        <width>338</width>
+        <height>898</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #181b2b;
+border: 0px;
+border-radius: 35px;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="leftPanelText">
+      <property name="geometry">
+       <rect>
+        <x>1232</x>
+        <y>69</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Noise, Filters &amp; Edge Detection</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="leftPanelBackgroundUpper">
+      <property name="geometry">
+       <rect>
+        <x>1166</x>
+        <y>110</y>
+        <width>338</width>
+        <height>838</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #141725;
+border: 0px;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+border-bottom-right-radius: 35px;
+border-bottom-left-radius: 35px;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="averageRemoveBtn">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>410</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Average</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="downloadBtn">
+      <property name="geometry">
+       <rect>
+        <x>1348</x>
+        <y>133</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Download</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="addNoiseText">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>210</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Add Noise</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="filterNoiseText">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>360</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Filter Noisy Image</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="splitterUp_2">
+      <property name="geometry">
+       <rect>
+        <x>1323</x>
+        <y>337</y>
+        <width>26</width>
+        <height>3</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#fff;
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="prewittBtn">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>620</y>
+        <width>151</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Prewitt</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="uploadBtn_2">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>133</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Upload</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="gaussianRemoveBtn">
+      <property name="geometry">
+       <rect>
+        <x>1291</x>
+        <y>410</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Gaussian</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="saltNoiseBtn">
+      <property name="geometry">
+       <rect>
+        <x>1403</x>
+        <y>260</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Salt Pepper</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="medianRemoveBtn">
+      <property name="geometry">
+       <rect>
+        <x>1403</x>
+        <y>410</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Median</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="detectEdgeText">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>510</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Detect Edges</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="cannyBtn">
+      <property name="geometry">
+       <rect>
+        <x>1344</x>
+        <y>620</y>
+        <width>151</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Canny</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="uniformNoiseBtn">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>260</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Uniform</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="gaussianNoiseBtn">
+      <property name="geometry">
+       <rect>
+        <x>1291</x>
+        <y>260</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Gaussian</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="robertsBtn">
+      <property name="geometry">
+       <rect>
+        <x>1344</x>
+        <y>560</y>
+        <width>151</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Roberts</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="sobelBtn">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>560</y>
+        <width>151</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Sobel</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="splitterUp_3">
+      <property name="geometry">
+       <rect>
+        <x>1323</x>
+        <y>490</y>
+        <width>26</width>
+        <height>3</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#fff;
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="resetBtn">
+      <property name="geometry">
+       <rect>
+        <x>406</x>
+        <y>875</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="downPanel">
+      <property name="geometry">
+       <rect>
+        <x>8</x>
+        <y>720</y>
+        <width>1149</width>
+        <height>227</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #141725;
+border: 0px;
+border-radius: 35px;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="sigmaText">
+      <property name="geometry">
+       <rect>
+        <x>596</x>
+        <y>745</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Sigma</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="kernelValue">
+      <property name="geometry">
+       <rect>
+        <x>476</x>
+        <y>779</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+}</string>
+      </property>
+      <property name="text">
+       <string>121</string>
+      </property>
+      <property name="maxLength">
+       <number>6</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="kernelSizeText">
+      <property name="geometry">
+       <rect>
+        <x>226</x>
+        <y>745</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Kernel Size</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="kernelSlider">
+      <property name="geometry">
+       <rect>
+        <x>226</x>
+        <y>785</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">/* Define the slider style */
+QSlider {
+  border: none;
+  background: #222;
+  width: 300px;
+  height: 6px;
+}
+
+/* Define the handle style */
+QSlider::handle {
+  background: #fff;
+  border: none;
+  width: 16px;
+  height: 16px;
+  margin: -5px 0;
+  border-radius: 8px;
+  box-shadow: 0 0 1px #000;
+}
+
+/* Define the handle style on hover */
+QSlider::handle:hover {
+  background: #ccc;
+}
+
+/* Define the groove style */
+QSlider::groove {
+  background: #555;
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* Define the groove style on hover */
+QSlider::groove:hover {
+  background: #777;
+}</string>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="applyBtn">
+      <property name="geometry">
+       <rect>
+        <x>246</x>
+        <y>875</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="kernelSlider_2">
+      <property name="geometry">
+       <rect>
+        <x>596</x>
+        <y>785</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">/* Define the slider style */
+QSlider {
+  border: none;
+  background: #222;
+  width: 300px;
+  height: 6px;
+}
+
+/* Define the handle style */
+QSlider::handle {
+  background: #fff;
+  border: none;
+  width: 16px;
+  height: 16px;
+  margin: -5px 0;
+  border-radius: 8px;
+  box-shadow: 0 0 1px #000;
+}
+
+/* Define the handle style on hover */
+QSlider::handle:hover {
+  background: #ccc;
+}
+
+/* Define the groove style */
+QSlider::groove {
+  background: #555;
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* Define the groove style on hover */
+QSlider::groove:hover {
+  background: #777;
+}</string>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="kernelValue_2">
+      <property name="geometry">
+       <rect>
+        <x>840</x>
+        <y>779</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+}</string>
+      </property>
+      <property name="text">
+       <string>121</string>
+      </property>
+      <property name="maxLength">
+       <number>6</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="redoBtn">
+      <property name="geometry">
+       <rect>
+        <x>726</x>
+        <y>875</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Redo</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="undoBtn">
+      <property name="geometry">
+       <rect>
+        <x>566</x>
+        <y>875</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Undo</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="highFrequencyFilterBtn">
+      <property name="geometry">
+       <rect>
+        <x>1290</x>
+        <y>770</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Ideal High</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="frequencyFIltersText">
+      <property name="geometry">
+       <rect>
+        <x>1179</x>
+        <y>720</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Frequency-Domain Filters</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="splitterUp_4">
+      <property name="geometry">
+       <rect>
+        <x>1322</x>
+        <y>697</y>
+        <width>26</width>
+        <height>3</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#fff;
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="lowFrequencyFilterBtn">
+      <property name="geometry">
+       <rect>
+        <x>1179</x>
+        <y>770</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Ideal Low</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="gaussianFrequencyFilterBtn">
+      <property name="geometry">
+       <rect>
+        <x>1402</x>
+        <y>770</y>
+        <width>94</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Gaussian</string>
+      </property>
+     </widget>
+     <zorder>backgrounDark</zorder>
+     <zorder>backgroundLight</zorder>
+     <zorder>leftPanelBackgroundLower</zorder>
+     <zorder>leftPanelBackgroundUpper</zorder>
+     <zorder>leftPanelText</zorder>
+     <zorder>splitterUp</zorder>
+     <zorder>averageRemoveBtn</zorder>
+     <zorder>cannyBtn</zorder>
+     <zorder>uploadBtn_2</zorder>
+     <zorder>saltNoiseBtn</zorder>
+     <zorder>downloadBtn</zorder>
+     <zorder>gaussianRemoveBtn</zorder>
+     <zorder>gaussianNoiseBtn</zorder>
+     <zorder>prewittBtn</zorder>
+     <zorder>splitterUp_3</zorder>
+     <zorder>sobelBtn</zorder>
+     <zorder>addNoiseText</zorder>
+     <zorder>splitterUp_2</zorder>
+     <zorder>detectEdgeText</zorder>
+     <zorder>filterNoiseText</zorder>
+     <zorder>robertsBtn</zorder>
+     <zorder>medianRemoveBtn</zorder>
+     <zorder>uniformNoiseBtn</zorder>
+     <zorder>downPanel</zorder>
+     <zorder>sigmaText</zorder>
+     <zorder>kernelValue</zorder>
+     <zorder>kernelSizeText</zorder>
+     <zorder>kernelSlider</zorder>
+     <zorder>applyBtn</zorder>
+     <zorder>kernelSlider_2</zorder>
+     <zorder>kernelValue_2</zorder>
+     <zorder>redoBtn</zorder>
+     <zorder>undoBtn</zorder>
+     <zorder>resetBtn</zorder>
+     <zorder>highFrequencyFilterBtn</zorder>
+     <zorder>frequencyFIltersText</zorder>
+     <zorder>splitterUp_4</zorder>
+     <zorder>lowFrequencyFilterBtn</zorder>
+     <zorder>gaussianFrequencyFilterBtn</zorder>
     </widget>
     <widget class="QWidget" name="histogram_tab">
      <attribute name="title">
@@ -249,23 +1440,30 @@
          <item row="0" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_forphotoslabels"/>
          </item>
+         <item row="1" column="1" alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="label_Equalization">
+           <property name="text">
+            <string>Equalization</string>
+           </property>
+          </widget>
+         </item>
          <item row="4" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item alignment="Qt::AlignHCenter">
+           <item>
             <widget class="QLabel" name="label_Histogram">
              <property name="text">
               <string>Histogram</string>
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignHCenter">
+           <item>
             <widget class="QLabel" name="label_CumHist">
              <property name="text">
               <string>Cumulative Histogram</string>
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignHCenter">
+           <item>
             <widget class="QLabel" name="label_equalizedHist">
              <property name="text">
               <string>Equalized Histogram</string>
@@ -273,13 +1471,6 @@
             </widget>
            </item>
           </layout>
-         </item>
-         <item row="1" column="1" alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="label_Equalization">
-           <property name="text">
-            <string>Equalization</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>
@@ -308,7 +1499,6 @@
            <property name="font">
             <font>
              <pointsize>9</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -331,7 +1521,6 @@
            <property name="font">
             <font>
              <pointsize>9</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -348,7 +1537,6 @@
            <property name="font">
             <font>
              <pointsize>9</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -389,7 +1577,6 @@
            <property name="font">
             <font>
              <pointsize>8</pointsize>
-             <weight>50</weight>
              <bold>false</bold>
             </font>
            </property>
@@ -409,7 +1596,6 @@
            <property name="font">
             <font>
              <pointsize>8</pointsize>
-             <weight>50</weight>
              <bold>false</bold>
             </font>
            </property>
@@ -429,7 +1615,6 @@
            <property name="font">
             <font>
              <pointsize>8</pointsize>
-             <weight>50</weight>
              <bold>false</bold>
             </font>
            </property>
@@ -480,7 +1665,6 @@
            <property name="font">
             <font>
              <pointsize>8</pointsize>
-             <weight>50</weight>
              <bold>false</bold>
             </font>
            </property>
@@ -595,10 +1779,41 @@
      <zorder>horizontalWidget</zorder>
     </widget>
    </widget>
+   <widget class="QGraphicsView" name="backgrounDark_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1521</width>
+      <height>1001</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #141725;
+border: 0px;
+
+
+</string>
+    </property>
+    <property name="backgroundBrush">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>0</red>
+       <green>0</green>
+       <blue>0</blue>
+      </color>
+     </brush>
+    </property>
+   </widget>
+   <zorder>backgrounDark_2</zorder>
    <zorder>tabWidget</zorder>
-   <zorder>original_photo_2</zorder>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
