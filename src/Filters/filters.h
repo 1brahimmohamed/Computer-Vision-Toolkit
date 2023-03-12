@@ -11,16 +11,18 @@
 #ifndef FILTERS_H
 #define FILTERS_H
 
-#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+
 #include <vector>
 #include <QDebug>
 #include <algorithm>
 #include <queue>
+#include <vector>
 
 using namespace cv;
-
+using namespace std;
 class Filters
 {
 public:

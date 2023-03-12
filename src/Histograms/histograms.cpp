@@ -9,7 +9,7 @@
 
 
 #include "histograms.h"
-
+#include <vector>
 
 Histograms::Histograms()
 {
@@ -80,10 +80,6 @@ void Histograms:: histDisplay(int histogram[], const char* name)
     {
         line(histImage, Point(bin_w*(i), hist_h),Point(bin_w*(i), hist_h - hist[i]),Scalar(0,0,0), 1, 8, 0);
     }
-
-
-    namedWindow(name, CV_WINDOW_AUTOSIZE);
-    imshow(name, histImage);
 }
 
 int Histograms:: calculateImageSize(Mat image){

@@ -1,9 +1,11 @@
 #ifndef EDGEDETECTORS_H
 #define EDGEDETECTORS_H
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include<cstdint>
-#include <iostream>
+
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/opencv.hpp>
+
+
 using namespace cv;
 using namespace std;
 class EdgeDetectors

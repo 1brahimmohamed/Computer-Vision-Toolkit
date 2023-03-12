@@ -1,10 +1,10 @@
-#include"edgedetectors.h"
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgcodecs.hpp>
-#include <opencv2/core/core.hpp>
-#include<cstdint>
+#include <cstdint>
 #include <iostream>
+
+#include"edgedetectors.h"
+
+
+
 using namespace cv;
 using namespace std;
 EdgeDetectors::EdgeDetectors()

@@ -1,9 +1,6 @@
 #include "noiseaddatives.h"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/core/core.hpp>
-#include<cstdint>
+
+#include <cstdint>
 #include <iostream>
 using namespace cv;
 using namespace std;

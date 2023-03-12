@@ -14,8 +14,9 @@
 #include <QByteArray>
 #include <QPixmap>
 #include <QFileDialog>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/opencv.hpp>
 
 using namespace cv;
 
