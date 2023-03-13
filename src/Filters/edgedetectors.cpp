@@ -82,7 +82,8 @@ Mat EdgeDetectors::CannyEdgeDetector(Mat SrcImg)
 
   //to categorize the remaining edge pixels into three categories using a low and high threshold value.
   float magMax = 0.5, magMin = 0.1;
-  Mat strong = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
+//  Mat strong = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
+  Mat strong = magnitude.clone();
   inRange(magnitude, magMin, magMax, strong);
 
   return strong ;

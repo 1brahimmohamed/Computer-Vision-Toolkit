@@ -10,6 +10,8 @@
 
 
 #include "helperfunctions.h"
+#include <vector>
+using namespace std;
 
 HelperFunctions::HelperFunctions()
 {
@@ -68,3 +70,5 @@ Mat HelperFunctions::readImage_Mat(){
   }
   return Mat::zeros(1,1,CV_32F);
 }
+
+

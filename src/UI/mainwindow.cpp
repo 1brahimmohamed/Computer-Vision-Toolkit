@@ -13,7 +13,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+
 #include "src/Helpers/helperfunctions.h"
+#include "src/Frequency/fouriermixer.h"
 
 #include "src/Filters/imagesmoothers.h"
 #include "src/Filters/edgedetectors.h"
@@ -26,15 +30,15 @@ using namespace cv;
 Image filterTabImage, grayscaleTabImage, HistoTabImage,HybridImage1, HybridImage2;
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+  QMainWindow(parent),
+  ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+  delete ui;
 }
 
 void MainWindow::updateFilteredPicture(Mat updatedImage){
@@ -63,6 +67,25 @@ void MainWindow::downloadImage(Image &imgObj){
     }
 }
 
+void MainWindow::plotHistogram(const vector<int>& data , QString ChartName, QChartView* widget){
+  QChart *chart = new QChart();
+  QBarSeries *series = new QBarSeries();
+
+  QBarSet *set = new QBarSet("Data");
+  for (int value : data) {
+      *set << value;
+    }
+
+  series->append(set);
+  chart->addSeries(series);
+
+
+  chart->setTitle(ChartName);
+  chart->setBackgroundBrush(Qt::black);
+  chart->layout()->setContentsMargins(0, 0, 0, 0);
+  widget->setChart(chart);
+}
+
 
 // ------------------------  Filter Tab Handlers ------------------------ //
 
@@ -75,7 +98,7 @@ void MainWindow::on_uploadBtn_clicked()
       QPixmap pixmap = HelperFunctions::convertMatToPixmap(Image);
       QPixmap scaledpixmap = pixmap.scaled(ui->tabFilterOriginalImage->size(), Qt::IgnoreAspectRatio);
       ui->tabFilterOriginalImage->setPixmap(scaledpixmap);
-  }
+    }
 }
 
 void MainWindow::on_downloadBtn_clicked()
@@ -150,24 +173,27 @@ void MainWindow::on_cannyBtn_clicked()
 // Frequency Filters
 void MainWindow::on_lowFrequencyFilterBtn_clicked()
 {
-
+//  Mat outputImage = fouriermixer::apply_filter(filterTabImage.getCurrentImage(), "Ideal Low Pass", 30.0);
+//  updateFilteredPicture(outputImage);
 }
 
 void MainWindow::on_highFrequencyFilterBtn_clicked()
 {
-
+//  Mat outputImage = fouriermixer::apply_filter(filterTabImage.getCurrentImage(), "Ideal High Pass", 30.0);
+//  updateFilteredPicture(outputImage);
 }
 
 void MainWindow::on_gaussianFrequencyFilterBtn_clicked()
 {
-
+//  Mat outputImage = fouriermixer::apply_filter(filterTabImage.getCurrentImage(), "Gaussian", 30.0);
+//  updateFilteredPicture(outputImage);
 }
 
 // Controls
 void MainWindow::on_applyBtn_clicked()
 {
-    filterTabImage.setPreviousActionImage(filterTabImage.getCurrentImage());
-    updateCurrentPicture(filterTabImage.getFilteredImage());
+  filterTabImage.setPreviousActionImage(filterTabImage.getCurrentImage());
+  updateCurrentPicture(filterTabImage.getFilteredImage());
 }
 
 void MainWindow::on_resetBtn_clicked()
@@ -182,6 +208,7 @@ void MainWindow::on_resetBtn_clicked()
 void MainWindow::on_uploadRGB_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
+
   if (Image.cols != 1 && Image.rows != 1){
       grayscaleTabImage.setFirstUpload(Image);
       QPixmap pixmap = HelperFunctions::convertMatToPixmap(Image);
@@ -191,18 +218,30 @@ void MainWindow::on_uploadRGB_clicked()
       Mat grayscaleMat;
       cvtColor(Image,grayscaleMat, COLOR_BGR2GRAY);
       QPixmap grayPixmap = HelperFunctions::convertMatToPixmap(grayscaleMat);
-      ui->tabGrayGrayImage->setPixmap(grayPixmap);
-  }
+      QPixmap scaledgary = grayPixmap.scaled(ui->tabGrayGrayImage->size(), Qt::IgnoreAspectRatio);
+      ui->tabGrayGrayImage->setPixmap(scaledgary);
+
+      Mat histogramCDF = Histograms::plotRGBHistogramCDF(Image);
+      Mat histogramPDF = Histograms::plotRGBHistogramPDF(Image);
+
+      QPixmap hist1 = HelperFunctions::convertMatToPixmap(histogramCDF);
+      QPixmap scaledHist1 = hist1.scaled(ui->tabGrayHist1->size(), Qt::IgnoreAspectRatio);
+      ui->tabGrayHist1->setPixmap(scaledHist1);
+
+
+      QPixmap hist2 = HelperFunctions::convertMatToPixmap(histogramPDF);
+      QPixmap scaledHist2 = hist2.scaled(ui->tabGrayHist2->size(), Qt::IgnoreAspectRatio);
+      ui->tabGrayHist2->setPixmap(scaledHist2);
+    }
 }
 
 void MainWindow::on_downloadGray_clicked()
 {
-    downloadImage(grayscaleTabImage);
+  downloadImage(grayscaleTabImage);
 }
 
 
 // ------------------------  Histograms Tab Handlers ------------------------ //
-
 
 void MainWindow::on_uploadHist_clicked()
 {
@@ -236,12 +275,15 @@ void MainWindow::on_uploadHist_clicked()
       QPixmap normalizedPixmap = HelperFunctions::convertMatToPixmap(matNormalized);
       QPixmap scaledNormalizedPixmap = normalizedPixmap.scaled(ui->tabHistNormalizedImage->size(), Qt::IgnoreAspectRatio);
       ui->tabHistNormalizedImage->setPixmap(scaledNormalizedPixmap);
-  }
+
+      plotHistogram(histogram, "Histogram", ui->histogramWIdget);
+      plotHistogram(cumlautiveHistogram, "Cumulative Histogram", ui->cumhistogramWIdget);
+      plotHistogram(equalizedHistogram, "EqualizedHistogram", ui->equhistogramWIdget);
+
+    }
 }
 
 // ------------------------  Hybird Tab Handlers ------------------------ //
-
-
 
 
 void MainWindow::on_uploadImage1_clicked()
@@ -254,7 +296,6 @@ void MainWindow::on_uploadImage1_clicked()
       ui->tabMixerImage1->setPixmap(scaledpixmap);
     }
 }
-
 
 void MainWindow::on_uploadImage1_2_clicked()
 {

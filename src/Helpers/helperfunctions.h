@@ -29,6 +29,7 @@ public:
   static Mat readImage_Mat();
   static QPixmap convertQByteArrToPixmap(QByteArray arr);
   static QPixmap convertMatToPixmap(Mat imageMat);
+
 };
 
 #endif // HELPERFUNCTIONS_H

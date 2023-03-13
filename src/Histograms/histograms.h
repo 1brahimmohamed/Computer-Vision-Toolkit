@@ -37,6 +37,9 @@ public:
 
     static Mat NormalizeImage(Mat inputImage);
     static Mat normalizeMat(Mat inputMat, double minVal, double maxVal);
+
+    static Mat plotRGBHistogramPDF(Mat img);
+    static Mat plotRGBHistogramCDF(Mat img);
 };
 
 #endif // HISTOGRAM_H

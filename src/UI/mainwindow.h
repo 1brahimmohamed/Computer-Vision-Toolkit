@@ -9,6 +9,7 @@
 
 #include <QMainWindow>
 #include <vector>
+#include <QtCharts>
 
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
@@ -18,6 +19,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+using namespace std;
 
 namespace Ui {
   class MainWindow;
@@ -33,6 +35,7 @@ public:
   void updateFilteredPicture(cv::Mat updatedImage);
   void updateCurrentPicture(cv::Mat updatedImage);
   void downloadImage(Image &imageObj);
+  void plotHistogram(const vector<int>& data , QString ChartName, QChartView* widget);
 
 private slots:
 

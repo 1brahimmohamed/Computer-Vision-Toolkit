@@ -252,3 +252,122 @@ Mat Histograms::normalizeMat(cv::Mat inputMat, double minVal, double maxVal)
 
   return outputMat;
 }
+
+
+Mat Histograms::plotRGBHistogramCDF(Mat img){
+  // Declare variables
+     Mat histogram;
+
+     // Split the image channels into separate images
+     vector<Mat> bgrChannels;
+     split(img, bgrChannels);
+
+     // Set histogram parameters
+     int histSize = 256; // Number of bins
+     float range[] = {0, 256}; // Pixel value range
+     const float* histRange = {range};
+     bool uniform = true; // Bin sizes are uniform
+     bool accumulate = false; // Clear histogram for each channel
+
+     // Declare variables for calculating histograms
+     Mat bHist, gHist, rHist;
+
+     // Calculate histograms for each channel
+     calcHist(&bgrChannels[0], 1, 0, Mat(), bHist, 1, &histSize, &histRange, uniform, accumulate);
+     calcHist(&bgrChannels[1], 1, 0, Mat(), gHist, 1, &histSize, &histRange, uniform, accumulate);
+     calcHist(&bgrChannels[2], 1, 0, Mat(), rHist, 1, &histSize, &histRange, uniform, accumulate);
+
+     // Calculate the CDF for each channel
+     Mat bCDF, gCDF, rCDF;
+     bHist.copyTo(bCDF);
+     gHist.copyTo(gCDF);
+     rHist.copyTo(rCDF);
+     for (int i = 1; i < histSize; i++)
+     {
+         bCDF.at<float>(i) += bCDF.at<float>(i-1);
+         gCDF.at<float>(i) += gCDF.at<float>(i-1);
+         rCDF.at<float>(i) += rCDF.at<float>(i-1);
+     }
+
+     // Create histogram image
+     int histWidth = 512;
+     int histHeight = 400;
+     int binWidth = cvRound((double) histWidth/histSize);
+     histogram = Mat(histHeight, histWidth, CV_8UC3, Scalar(0, 0, 0));
+
+     // Normalize the CDFs to fit within the histogram image
+     normalize(bCDF, bCDF, 0, histogram.rows, NORM_MINMAX, -1, Mat());
+     normalize(gCDF, gCDF, 0, histogram.rows, NORM_MINMAX, -1, Mat());
+     normalize(rCDF, rCDF, 0, histogram.rows, NORM_MINMAX, -1, Mat());
+
+     // Draw histogram lines
+     for (int i = 1; i < histSize; i++)
+     {
+         line(histogram, Point(binWidth*(i-1), histHeight - cvRound(bCDF.at<float>(i-1))),
+             Point(binWidth*(i), histHeight - cvRound(bCDF.at<float>(i))), Scalar(255, 0, 0), 2, LINE_AA);
+
+         line(histogram, Point(binWidth*(i-1), histHeight - cvRound(gCDF.at<float>(i-1))),
+             Point(binWidth*(i), histHeight - cvRound(gCDF.at<float>(i))), Scalar(0, 255, 0), 2, LINE_AA);
+
+         line(histogram, Point(binWidth*(i-1), histHeight - cvRound(rCDF.at<float>(i-1))),
+             Point(binWidth*(i), histHeight - cvRound(rCDF.at<float>(i))), Scalar(0, 0, 255), 2, LINE_AA);
+     }
+     return(histogram);
+}
+
+Mat Histograms::plotRGBHistogramPDF(Mat img)
+{
+    // Declare variables
+    Mat histogram;
+
+    // Split the image channels into separate images
+    vector<Mat> bgrChannels;
+    split(img, bgrChannels);
+
+    // Set histogram parameters
+    int histSize = 256; // Number of bins
+    float range[] = {0, 256}; // Pixel value range
+    const float* histRange = {range};
+    bool uniform = true; // Bin sizes are uniform
+    bool accumulate = false; // Clear histogram for each channel
+
+    // Declare variables for calculating histograms
+    Mat bHist, gHist, rHist;
+
+    // Calculate histograms for each channel
+    calcHist(&bgrChannels[0], 1, 0, Mat(), bHist, 1, &histSize, &histRange, uniform, accumulate);
+    calcHist(&bgrChannels[1], 1, 0, Mat(), gHist, 1, &histSize, &histRange, uniform, accumulate);
+    calcHist(&bgrChannels[2], 1, 0, Mat(), rHist, 1, &histSize, &histRange, uniform, accumulate);
+
+    // Create histogram image
+    int histWidth = 512;
+    int histHeight = 400;
+    int binWidth = cvRound((double) histWidth/histSize);
+    histogram = Mat(histHeight, histWidth, CV_8UC3, Scalar(0, 0, 0));
+
+    // Normalize the histograms to fit within the histogram image
+    normalize(bHist, bHist, 0, histogram.rows, NORM_MINMAX, -1, Mat());
+    normalize(gHist, gHist, 0, histogram.rows, NORM_MINMAX, -1, Mat());
+    normalize(rHist, rHist, 0, histogram.rows, NORM_MINMAX, -1, Mat());
+
+    // Draw histogram points and vertical lines
+    for (int i = 1; i < histSize; i++)
+    {
+        int x = binWidth*(i-1); // Compute the x-axis coordinate of the current bin
+        int y_b = histHeight - cvRound(bHist.at<float>(i-1)); // Compute the y-axis coordinate of the blue circle
+        int y_g = histHeight - cvRound(gHist.at<float>(i-1)); // Compute the y-axis coordinate of the green circle
+        int y_r = histHeight - cvRound(rHist.at<float>(i-1)); // Compute the y-axis coordinate of the red circle
+
+        circle(histogram, Point(x, y_b), 2, Scalar(255, 0, 0), FILLED, LINE_AA);
+        line(histogram, Point(x, histHeight), Point(x, y_b), Scalar(255, 0, 0), 1, LINE_AA); // Draw vertical line to blue circle
+
+        circle(histogram, Point(x, y_g), 2, Scalar(0, 255, 0), FILLED, LINE_AA);
+        line(histogram, Point(x, histHeight), Point(x, y_g), Scalar(0, 255, 0), 1, LINE_AA); // Draw vertical line to green circle
+
+        circle(histogram, Point(x, y_r), 2, Scalar(0, 0, 255), FILLED, LINE_AA);
+        line(histogram, Point(x, histHeight), Point(x, y_r), Scalar(0, 0, 255), 1, LINE_AA); // Draw vertical line to red circle
+    }
+
+    // save the histogram image
+    return(histogram);
+}

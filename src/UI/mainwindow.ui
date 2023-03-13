@@ -162,7 +162,7 @@ margin-bottom: 0;
 </string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -828,8 +828,8 @@ background-color: #1e2236;
      <widget class="QPushButton" name="resetBtn">
       <property name="geometry">
        <rect>
-        <x>406</x>
-        <y>875</y>
+        <x>550</x>
+        <y>870</y>
         <width>148</width>
         <height>45</height>
        </rect>
@@ -984,8 +984,8 @@ QSlider::handle:horizontal:hover {
      <widget class="QPushButton" name="applyBtn">
       <property name="geometry">
        <rect>
-        <x>246</x>
-        <y>875</y>
+        <x>390</x>
+        <y>870</y>
         <width>148</width>
         <height>45</height>
        </rect>
@@ -1074,68 +1074,6 @@ border-radius: 10px;
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="redoBtn">
-      <property name="geometry">
-       <rect>
-        <x>726</x>
-        <y>875</y>
-        <width>148</width>
-        <height>45</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft Sans Serif</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: #266dff;
-color: #fff;
-border: 0;
-border-radius: 22px;
-}
-
-QPushButton::hover {
-background-color: #1d408d;
-}</string>
-      </property>
-      <property name="text">
-       <string>Redo</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="undoBtn">
-      <property name="geometry">
-       <rect>
-        <x>566</x>
-        <y>875</y>
-        <width>148</width>
-        <height>45</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft Sans Serif</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: #266dff;
-color: #fff;
-border: 0;
-border-radius: 22px;
-}
-
-QPushButton::hover {
-background-color: #1d408d;
-}</string>
-      </property>
-      <property name="text">
-       <string>Undo</string>
       </property>
      </widget>
      <widget class="QPushButton" name="highFrequencyFilterBtn">
@@ -1337,8 +1275,6 @@ background-color: #1e2236;
      <zorder>applyBtn</zorder>
      <zorder>kernelSlider_2</zorder>
      <zorder>kernelValue_2</zorder>
-     <zorder>redoBtn</zorder>
-     <zorder>undoBtn</zorder>
      <zorder>resetBtn</zorder>
      <zorder>splitterUp_4</zorder>
      <zorder>tabFilterOriginalImage</zorder>
@@ -1563,7 +1499,7 @@ border-radius: 35px;</string>
        </rect>
       </property>
       <property name="text">
-       <string>Original</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabGrayGrayImage">
@@ -1576,53 +1512,40 @@ border-radius: 35px;</string>
        </rect>
       </property>
       <property name="text">
-       <string>Gray</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabGrayHist2">
       <property name="geometry">
        <rect>
-        <x>422</x>
-        <y>560</y>
+        <x>710</x>
+        <y>570</y>
         <width>335</width>
         <height>335</height>
        </rect>
       </property>
       <property name="text">
-       <string>Hist 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabGrayHist1">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>560</y>
+        <x>270</x>
+        <y>570</y>
         <width>335</width>
         <height>335</height>
        </rect>
       </property>
       <property name="text">
-       <string>Hist 1</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="tabGrayHist3">
-      <property name="geometry">
-       <rect>
-        <x>806</x>
-        <y>560</y>
-        <width>335</width>
-        <height>335</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Hist 3</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="originalText">
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>540</y>
+        <y>530</y>
         <width>211</width>
         <height>21</height>
        </rect>
@@ -1648,7 +1571,7 @@ border-radius: 35px;</string>
       <property name="geometry">
        <rect>
         <x>790</x>
-        <y>540</y>
+        <y>530</y>
         <width>211</width>
         <height>21</height>
        </rect>
@@ -1670,6 +1593,58 @@ border-radius: 35px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="originalText_9">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>920</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>CDF</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_10">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>920</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <zorder>backgrounDark_3</zorder>
      <zorder>backgroundLight_2</zorder>
      <zorder>leftPanelBackgroundLower_2</zorder>
@@ -1682,9 +1657,10 @@ border-radius: 35px;</string>
      <zorder>splitterUp_5</zorder>
      <zorder>tabGrayHist2</zorder>
      <zorder>tabGrayHist1</zorder>
-     <zorder>tabGrayHist3</zorder>
      <zorder>originalText</zorder>
      <zorder>originalText_2</zorder>
+     <zorder>originalText_9</zorder>
+     <zorder>originalText_10</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1917,45 +1893,6 @@ background-color: #1d408d;
        <string>Picture 2</string>
       </property>
      </widget>
-     <widget class="QLabel" name="tabHistHist3">
-      <property name="geometry">
-       <rect>
-        <x>804</x>
-        <y>523</y>
-        <width>335</width>
-        <height>335</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Picture 2</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="tabHistHist1">
-      <property name="geometry">
-       <rect>
-        <x>38</x>
-        <y>523</y>
-        <width>335</width>
-        <height>335</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Picture 2</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="tabHistHist2">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>523</y>
-        <width>335</width>
-        <height>335</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Picture 2</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="tabHistNormalizedImage">
       <property name="geometry">
        <rect>
@@ -2078,6 +2015,36 @@ background-color: #1d408d;
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QChartView" name="histogramWIdget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>38</x>
+        <y>523</y>
+        <width>335</width>
+        <height>335</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QChartView" name="cumhistogramWIdget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>523</y>
+        <width>335</width>
+        <height>335</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QChartView" name="equhistogramWIdget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>520</y>
+        <width>335</width>
+        <height>335</height>
+       </rect>
+      </property>
+     </widget>
      <zorder>backgrounDark_4</zorder>
      <zorder>backgroundLight_3</zorder>
      <zorder>leftPanelBackgroundLower_3</zorder>
@@ -2088,14 +2055,14 @@ background-color: #1d408d;
      <zorder>uploadHist</zorder>
      <zorder>tabHistEqualizedImage</zorder>
      <zorder>tabHistOriginalImage</zorder>
-     <zorder>tabHistHist3</zorder>
-     <zorder>tabHistHist1</zorder>
-     <zorder>tabHistHist2</zorder>
      <zorder>tabHistNormalizedImage</zorder>
      <zorder>downloadEqualized_2</zorder>
      <zorder>originalText_3</zorder>
      <zorder>originalText_4</zorder>
      <zorder>originalText_5</zorder>
+     <zorder>histogramWIdget</zorder>
+     <zorder>cumhistogramWIdget</zorder>
+     <zorder>equhistogramWIdget</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -2538,6 +2505,14 @@ border: 0px;
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QWidget</extends>
+   <header>qchartview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
