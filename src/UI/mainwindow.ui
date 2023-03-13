@@ -1285,13 +1285,13 @@ background-color: #1e2236;
      <zorder>redoBtn</zorder>
      <zorder>undoBtn</zorder>
      <zorder>resetBtn</zorder>
-     <zorder>highFrequencyFilterBtn</zorder>
-     <zorder>frequencyFIltersText</zorder>
      <zorder>splitterUp_4</zorder>
-     <zorder>lowFrequencyFilterBtn</zorder>
-     <zorder>gaussianFrequencyFilterBtn</zorder>
      <zorder>tabFilterOriginalImage</zorder>
      <zorder>tabFilterFilteredImage</zorder>
+     <zorder>gaussianFrequencyFilterBtn</zorder>
+     <zorder>frequencyFIltersText</zorder>
+     <zorder>highFrequencyFilterBtn</zorder>
+     <zorder>lowFrequencyFilterBtn</zorder>
     </widget>
     <widget class="QWidget" name="histogramTab">
      <attribute name="title">
@@ -1563,6 +1563,58 @@ border-radius: 35px;</string>
        <string>Hist 3</string>
       </property>
      </widget>
+     <widget class="QLabel" name="originalText">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>540</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Original Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_2">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>540</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Grayscale Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <zorder>backgrounDark_3</zorder>
      <zorder>backgroundLight_2</zorder>
      <zorder>leftPanelBackgroundLower_2</zorder>
@@ -1576,6 +1628,8 @@ border-radius: 35px;</string>
      <zorder>tabGrayHist2</zorder>
      <zorder>tabGrayHist1</zorder>
      <zorder>tabGrayHist3</zorder>
+     <zorder>originalText</zorder>
+     <zorder>originalText_2</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1891,6 +1945,84 @@ background-color: #1d408d;
        <string>Download Normalized Image</string>
       </property>
      </widget>
+     <widget class="QLabel" name="originalText_3">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>430</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Equalized Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_4">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>440</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Original Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_5">
+      <property name="geometry">
+       <rect>
+        <x>870</x>
+        <y>430</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Noramlized Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <zorder>backgrounDark_4</zorder>
      <zorder>backgroundLight_3</zorder>
      <zorder>leftPanelBackgroundLower_3</zorder>
@@ -1906,6 +2038,9 @@ background-color: #1d408d;
      <zorder>tabHistHist2</zorder>
      <zorder>tabHistNormalizedImage</zorder>
      <zorder>downloadEqualized_2</zorder>
+     <zorder>originalText_3</zorder>
+     <zorder>originalText_4</zorder>
+     <zorder>originalText_5</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -2143,12 +2278,12 @@ background-color: #1d408d;
        <rect>
         <x>45</x>
         <y>40</y>
-        <width>460</width>
-        <height>460</height>
+        <width>375</width>
+        <height>375</height>
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabMixerImage2">
@@ -2156,25 +2291,103 @@ background-color: #1d408d;
        <rect>
         <x>660</x>
         <y>40</y>
-        <width>460</width>
-        <height>460</height>
+        <width>375</width>
+        <height>375</height>
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabMixerImageMixed">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>480</y>
-        <width>460</width>
-        <height>460</height>
+        <x>340</x>
+        <y>500</y>
+        <width>375</width>
+        <height>375</height>
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_6">
+      <property name="geometry">
+       <rect>
+        <x>128</x>
+        <y>440</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Image 1</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_7">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>900</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Hybrid Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="originalText_8">
+      <property name="geometry">
+       <rect>
+        <x>745</x>
+        <y>440</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Image 2</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <zorder>backgrounDark_5</zorder>
@@ -2190,6 +2403,9 @@ background-color: #1d408d;
      <zorder>tabMixerImage1</zorder>
      <zorder>tabMixerImage2</zorder>
      <zorder>tabMixerImageMixed</zorder>
+     <zorder>originalText_6</zorder>
+     <zorder>originalText_7</zorder>
+     <zorder>originalText_8</zorder>
     </widget>
    </widget>
    <widget class="QGraphicsView" name="backgrounDark_2">

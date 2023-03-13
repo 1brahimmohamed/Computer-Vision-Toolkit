@@ -31,7 +31,7 @@ public:
     void equalizedHistogram(Mat image, int final[],int histogram[],int Sk[]);
 
     static Mat NormalizeImage(Mat inputImage);
-
+    static Mat normalizeMat(cv::Mat inputMat, double minVal, double maxVal);
 
 private:
     int histogram[256];

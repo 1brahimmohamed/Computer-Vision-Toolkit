@@ -8,8 +8,8 @@
  *
  *******************************************************************************/
 
-#ifndef FILTERS_H
-#define FILTERS_H
+#ifndef IMAGESMOOTHERS_H
+#define IMAGESMOOTHERS_H
 
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -23,11 +23,11 @@
 
 using namespace cv;
 using namespace std;
-class Filters
+class ImageSmoothers
 {
 public:
-  Filters();
-  ~Filters();
+  ImageSmoothers();
+  ~ImageSmoothers();
 
   static Mat OpenCVAvgFilter(Mat inputImage, int kernelSize);
   static Mat OpenCVGuassianFilter(Mat inputImage, int kernelSize, float sigma);
@@ -41,4 +41,4 @@ public:
 
 };
 
-#endif // FILTERS_H
+#endif // IMAGESMOOTHERS_H

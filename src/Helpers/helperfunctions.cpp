@@ -28,11 +28,26 @@ QPixmap HelperFunctions::convertQByteArrToPixmap(QByteArray arr){
 }
 
 QPixmap HelperFunctions::convertMatToPixmap(Mat imageMat){
-    Mat rgbImage;
-    cvtColor(imageMat, rgbImage, COLOR_BGR2RGB);
-    QImage qimage(rgbImage.data, rgbImage.cols, rgbImage.rows, static_cast<int>(rgbImage.step), QImage::Format_RGB888);
-    QPixmap pixmap= QPixmap::fromImage(qimage);
-    return pixmap;
+
+    QPixmap outputPixmap;
+
+    switch(imageMat.type())
+      {
+        case CV_8UC3:
+          {
+            QImage qimage(imageMat.data, imageMat.cols, imageMat.rows, static_cast<int>(imageMat.step), QImage::Format_BGR888);
+            outputPixmap = QPixmap::fromImage(qimage);
+            break;
+          }
+      case CV_8UC1:
+        {
+          QImage qimage(imageMat.data, imageMat.cols, imageMat.rows, static_cast<int>(imageMat.step), QImage::Format_Grayscale8);
+          outputPixmap = QPixmap::fromImage(qimage.rgbSwapped());
+          break;
+        }
+      }
+
+    return outputPixmap;
 }
 
 QByteArray HelperFunctions::readImage_QByte(){
@@ -47,6 +62,9 @@ QByteArray HelperFunctions::readImage_QByte(){
 
 Mat HelperFunctions::readImage_Mat(){
   QString filePath = QFileDialog::getOpenFileName(nullptr, "Open Image File", "", "Image Files (*.png *.jpg *.bmp)");
-  cv::Mat image = cv::imread(filePath.toStdString());
-  return image;
+  if (!filePath.isEmpty()){
+      Mat image = cv::imread(filePath.toStdString());
+      return image;
+  }
+  return Mat::zeros(1,1,CV_32F);
 }

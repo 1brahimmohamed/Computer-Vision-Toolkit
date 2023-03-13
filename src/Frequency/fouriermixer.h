@@ -20,7 +20,7 @@ public:
     static void calculateDFT(Mat &scr, Mat &dst);
     static void construct_H(Mat &scr, Mat &dst, String type, float D0);
     static void filtering(Mat &scr, Mat &dst, Mat &H);
-    static void apply_filter(String path, Mat &imgOut, String filter_type, float D0);
+    static void apply_filter(String path, String filter_type, float D0);
     static void mix_images(Mat imgLow, Mat imgHigh, Mat &imgHybrid);
 };
 

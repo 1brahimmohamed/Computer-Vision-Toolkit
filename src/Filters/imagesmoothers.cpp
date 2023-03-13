@@ -8,16 +8,16 @@
  *
  *******************************************************************************/
 
-#include "filters.h"
+#include "imagesmoothers.h"
 
 using namespace cv;
 
-Filters::Filters()
+ImageSmoothers::ImageSmoothers()
 {
 
 }
 
-Filters::~Filters()
+ImageSmoothers::~ImageSmoothers()
 {
 
 }
@@ -29,7 +29,7 @@ Filters::~Filters()
  * @param kernelSize {int} - size of the used kernel
  * @return filteredImage {cv::Mat}
  */
-Mat Filters::applyAverageFilter(Mat inputImage, int kernelSize){
+Mat ImageSmoothers::applyAverageFilter(Mat inputImage, int kernelSize){
 
   // make a copy of the input image
   Mat outputImage = inputImage.clone();
@@ -77,7 +77,7 @@ Mat Filters::applyAverageFilter(Mat inputImage, int kernelSize){
  * @param sigma {float} - standard deviation
  * @return filteredImage {cv::Mat}
  */
-Mat Filters::applyGaussianFilter(Mat inputImage, int kernelSize, float sigma){
+Mat ImageSmoothers::applyGaussianFilter(Mat inputImage, int kernelSize, float sigma){
    // Split input image into its color channels
    std::vector<Mat> channels;
    split(inputImage, channels);
@@ -124,7 +124,7 @@ Mat Filters::applyGaussianFilter(Mat inputImage, int kernelSize, float sigma){
  * @param sigma {float} - standard deviation
  * @return kernel {vector<vector<double>>}
  */
-vector<vector<double>> Filters::computeGuassianKernel(int kernelSize, float sigma){
+vector<vector<double>> ImageSmoothers::computeGuassianKernel(int kernelSize, float sigma){
 
   // Compute Gaussian kernel
   vector<vector<double>> kernel(kernelSize,vector<double>(kernelSize, 0.0));
@@ -157,7 +157,7 @@ vector<vector<double>> Filters::computeGuassianKernel(int kernelSize, float sigm
  * @param kernelSize {int} - size of the used kernel
  * @return outputImage {cv::Mat}
  */
-Mat Filters::applyMedianFilter(Mat inputImage, int kernelSize){
+Mat ImageSmoothers::applyMedianFilter(Mat inputImage, int kernelSize){
 
 
   Mat outputImage(inputImage.size(), inputImage.type());
@@ -200,7 +200,7 @@ Mat Filters::applyMedianFilter(Mat inputImage, int kernelSize){
 
 // ------------------------------------ OpenCV Functions  -----------------------------------------//
 
-Mat Filters::OpenCVAvgFilter(Mat inputImage, int kernelSize){
+Mat ImageSmoothers::OpenCVAvgFilter(Mat inputImage, int kernelSize){
    Mat outputImage;
    Mat kernel = Mat::ones(kernelSize, kernelSize, CV_32F) / (float)(kernelSize*kernelSize);
 
@@ -210,13 +210,13 @@ Mat Filters::OpenCVAvgFilter(Mat inputImage, int kernelSize){
    return outputImage;
 }
 
-Mat Filters::OpenCVGuassianFilter(Mat inputImage, int kernelSize, float sigma){
+Mat ImageSmoothers::OpenCVGuassianFilter(Mat inputImage, int kernelSize, float sigma){
   Mat outputImage;
   GaussianBlur(inputImage, outputImage, Size(kernelSize, kernelSize), sigma);
   return outputImage;
 }
 
-Mat Filters::OpenCVMedianFilter(Mat inputImage, int kernelSize){
+Mat ImageSmoothers::OpenCVMedianFilter(Mat inputImage, int kernelSize){
   Mat outputImage;
   medianBlur(inputImage, outputImage, kernelSize);
   return outputImage;

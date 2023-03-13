@@ -10,6 +10,7 @@
 
 #include "histograms.h"
 #include <vector>
+#include <QDebug>
 
 Histograms::Histograms()
 {
@@ -24,116 +25,116 @@ Histograms::~Histograms()
 void Histograms:: Histo(Mat image, int histogram[])
 {
 
-    // initialize all intensity values to 0
-    for(int i = 0; i < 256; i++)
+  // initialize all intensity values to 0
+  for(int i = 0; i < 256; i++)
     {
-        histogram[i] = 0;
+      histogram[i] = 0;
     }
 
-    // calculate the no of pixels for each intensity values
-    for(int y = 0; y < image.rows; y++)
-        for(int x = 0; x < image.cols; x++)
-            histogram[(int)image.at<uchar>(y,x)]++;
+  // calculate the no of pixels for each intensity values
+  for(int y = 0; y < image.rows; y++)
+    for(int x = 0; x < image.cols; x++)
+      histogram[(int)image.at<uchar>(y,x)]++;
 
 }
 
 void Histograms:: cumHist(int histogram[], int cumhistogram[])
 {
-    cumhistogram[0] = histogram[0];
+  cumhistogram[0] = histogram[0];
 
-    for(int i = 1; i < 256; i++)
+  for(int i = 1; i < 256; i++)
     {
-        cumhistogram[i] = histogram[i] + cumhistogram[i-1];
+      cumhistogram[i] = histogram[i] + cumhistogram[i-1];
     }
 }
 
 void Histograms:: histDisplay(int histogram[], const char* name)
 {
-    int hist[256];
-    for(int i = 0; i < 256; i++)
+  int hist[256];
+  for(int i = 0; i < 256; i++)
     {
-        hist[i]=histogram[i];
+      hist[i]=histogram[i];
     }
-    // draw the histograms
-    int hist_w = 512; int hist_h = 256;
-    int bin_w = cvRound((double) hist_w/256);
+  // draw the histograms
+  int hist_w = 512; int hist_h = 256;
+  int bin_w = cvRound((double) hist_w/256);
 
-    Mat histImage(hist_h, hist_w, CV_8UC1, Scalar(255, 255, 255));
+  Mat histImage(hist_h, hist_w, CV_8UC1, Scalar(255, 255, 255));
 
-    // find the maximum intensity element from histogram
-    int max = hist[0];
-    for(int i = 1; i < 256; i++){
-        if(max < hist[i]){
-            max = hist[i];
+  // find the maximum intensity element from histogram
+  int max = hist[0];
+  for(int i = 1; i < 256; i++){
+      if(max < hist[i]){
+          max = hist[i];
         }
     }
 
-    // normalize the histogram between 0 and histImage.rows
+  // normalize the histogram between 0 and histImage.rows
 
-    for(int i = 0; i < 256; i++){
-        hist[i] = ((double)hist[i]/max)*histImage.rows;
+  for(int i = 0; i < 256; i++){
+      hist[i] = ((double)hist[i]/max)*histImage.rows;
     }
 
 
-    // draw the intensity line for histogram
-    for(int i = 0; i < 256; i++)
+  // draw the intensity line for histogram
+  for(int i = 0; i < 256; i++)
     {
-        line(histImage, Point(bin_w*(i), hist_h),Point(bin_w*(i), hist_h - hist[i]),Scalar(0,0,0), 1, 8, 0);
+      line(histImage, Point(bin_w*(i), hist_h),Point(bin_w*(i), hist_h - hist[i]),Scalar(0,0,0), 1, 8, 0);
     }
 }
 
 int Histograms:: calculateImageSize(Mat image){
-    int size = image.rows * image.cols;
-    return size;
+  int size = image.rows * image.cols;
+  return size;
 }
 
 Mat Histograms:: equilization(Mat image, int histogram[], int cumhistogram[], int Sk[]){
 
-    int size = calculateImageSize(image);
-    float alpha = 255.0/size;
+  int size = calculateImageSize(image);
+  float alpha = 255.0/size;
 
 
-    // Scale the histogram
+  // Scale the histogram
 
-    for(int i = 0; i < 256; i++)
+  for(int i = 0; i < 256; i++)
     {
-        Sk[i] = cvRound((double)cumhistogram[i] * alpha);
+      Sk[i] = cvRound((double)cumhistogram[i] * alpha);
     }
 
 
-    Mat new_image = image.clone();
+  Mat new_image = image.clone();
 
-    for(int y = 0; y < image.rows; y++)
-        for(int x = 0; x < image.cols; x++)
-            new_image.at<uchar>(y,x) = saturate_cast<uchar>(Sk[image.at<uchar>(y,x)]);
+  for(int y = 0; y < image.rows; y++)
+    for(int x = 0; x < image.cols; x++)
+      new_image.at<uchar>(y,x) = saturate_cast<uchar>(Sk[image.at<uchar>(y,x)]);
 
-    return new_image;
+  return new_image;
 }
 
 void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int sk[]){
 
 
-    // Calculate the probability of each intensity
-    float PDF[256];
-    for(int i = 0; i < 256; i++)
+  // Calculate the probability of each intensity
+  float PDF[256];
+  for(int i = 0; i < 256; i++)
     {
-        PDF[i] = (double)histogram[i] / calculateImageSize(image);
+      PDF[i] = (double)histogram[i] / calculateImageSize(image);
     }
 
 
 
-    // Generate the equlized histogram
-    float PsSk[256]={0};
+  // Generate the equlized histogram
+  float PsSk[256]={0};
 
-    //new level
-    for(int i = 0; i < 256; i++)
+  //new level
+  for(int i = 0; i < 256; i++)
     {
-        PsSk[sk[i]] += PDF[i];
+      PsSk[sk[i]] += PDF[i];
     }
 
 
-    for(int i = 0; i < 256; i++)
-        final[i] = cvRound(PsSk[i]*255);
+  for(int i = 0; i < 256; i++)
+    final[i] = cvRound(PsSk[i]*255);
 
 }
 Mat Histograms::NormalizeImage(Mat inputImage){
@@ -159,4 +160,82 @@ Mat Histograms::NormalizeImage(Mat inputImage){
 
   // return the normalized RGB image
   return normalized_rgb_img;
+}
+
+Mat Histograms::normalizeMat(cv::Mat inputMat, double minVal, double maxVal)
+{
+  // Create an outputMat of the same size and type as the inputMat
+  Mat outputMat(inputMat.rows, inputMat.cols, inputMat.type());
+
+  switch (inputMat.type())
+    {
+    case CV_8UC1: // Grayscale image
+      {
+        qDebug("CASe 1");
+        // Calculate the current min and max values in the inputMat
+        uchar currentMinVal = inputMat.at<uchar>(0, 0);
+        uchar currentMaxVal = inputMat.at<uchar>(0, 0);
+
+        for (int row = 0; row < inputMat.rows; ++row) {
+            for (int col = 0; col < inputMat.cols; ++col) {
+                uchar currentVal = inputMat.at<uchar>(row, col);
+                if (currentVal < currentMinVal) {
+                    currentMinVal = currentVal;
+                  }
+                if (currentVal > currentMaxVal) {
+                    currentMaxVal = currentVal;
+                  }
+              }
+          }
+
+        // Normalize the inputMat to the specified range
+        for (int row = 0; row < inputMat.rows; ++row) {
+            for (int col = 0; col < inputMat.cols; ++col) {
+                uchar currentVal = inputMat.at<uchar>(row, col);
+                uchar normalizedVal = static_cast<uchar>((currentVal - currentMinVal) * (maxVal - minVal) / (currentMaxVal - currentMinVal) + minVal);
+                outputMat.at<uchar>(row, col) = normalizedVal;
+              }
+          }
+
+        break;
+      }
+    case CV_8UC3: // BGR color image
+      {
+        qDebug("CASe 2");
+        // Separate the inputMat into its 3 channels
+        std::vector<cv::Mat> inputChannels;
+        cv::split(inputMat, inputChannels);
+
+        // Normalize each channel of the inputMat to the specified range using basic arithmetic operations
+        for (int channel = 0; channel < 3; ++channel) {
+            // Calculate the current min and max values in the inputMat channel
+            uchar currentMinVal = inputChannels[channel].at<uchar>(0, 0);
+            uchar currentMaxVal = inputChannels[channel].at<uchar>(0, 0);
+
+            for (int row = 0; row < inputMat.rows; ++row) {
+                for (int col = 0; col < inputMat.cols; ++col) {
+                    uchar currentVal = inputChannels[channel].at<uchar>(row, col);
+                    if (currentVal < currentMinVal) {
+                        currentMinVal = currentVal;
+                      }
+                    if (currentVal > currentMaxVal) {
+                        currentMaxVal = currentVal;
+                      }
+                  }
+              }
+
+            // Normalize the inputMat channel to the specified range using basic arithmetic operations
+            for (int row = 0; row < inputMat.rows; ++row) {
+                for (int col = 0; col < inputMat.cols; ++col) {
+                    uchar currentVal = inputChannels[channel].at<uchar>(row, col);
+                    uchar normalizedVal = static_cast<uchar>((currentVal - currentMinVal) * (maxVal - minVal) / (currentMaxVal - currentMinVal) + minVal);
+                    outputMat.at<cv::Vec3b>(row, col)[channel] = normalizedVal;
+                  }
+              }
+          }
+        break;
+      }
+    }
+
+  return outputMat;
 }

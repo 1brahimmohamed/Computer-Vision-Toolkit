@@ -8,15 +8,16 @@
 
 using namespace cv;
 using namespace std;
+
 class EdgeDetectors
 {
 public:
     EdgeDetectors();
    ~EdgeDetectors();
-    Mat CannyEdgeDetector(Mat srcImg);
-    Mat RobertEdgeDetector(Mat SrcImg);
-    Mat PerwittEdgeDetector(Mat SrcImg);
-    Mat SobalEdgeDetector(Mat SrcImg);
+    static Mat CannyEdgeDetector(Mat srcImg);
+    static Mat RobertEdgeDetector(Mat SrcImg);
+    static Mat PerwittEdgeDetector(Mat SrcImg);
+    static Mat SobalEdgeDetector(Mat SrcImg);
 };
 
 #endif // EDGEDETECTORS_H
