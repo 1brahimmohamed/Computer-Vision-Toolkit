@@ -48,20 +48,21 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg, Mat &DstImg,double Mean=0.0,
 Mat NoiseAddatives::SaltAndPepperNoise(Mat SrcImg)
 {
   Mat ResultImg = SrcImg.clone();
+
     int r = 15;
       for (int i = 0; i < ResultImg.rows; i++) {
           for (int k = 0; k <ResultImg.cols; k++) {
               int random = rand() % r + 1;
               if (random == 1) {
-                  ResultImg.at<uchar>(i, k) = 255;
+                  ResultImg.at<float>(i, k) = 255;
                 }
               if (random == 2) {
-                  ResultImg.at<uchar>(i, k) = 0;
+                  ResultImg.at<float>(i, k) = 0;
                 }
 
             }
 
         }
-        return ResultImg;
+  return ResultImg;
 }
 

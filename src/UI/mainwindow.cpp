@@ -207,6 +207,7 @@ void MainWindow::on_downloadGray_clicked()
 void MainWindow::on_uploadHist_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
+
   if (Image.cols != 1 && Image.rows != 1){
       HistoTabImage.setFirstUpload(Image);
       Mat grayscaleMat;
@@ -217,17 +218,24 @@ void MainWindow::on_uploadHist_clicked()
       QPixmap scaledpixmap = pixmap.scaled(ui->tabHistOriginalImage->size(), Qt::IgnoreAspectRatio);
       ui->tabHistOriginalImage->setPixmap(scaledpixmap);
 
-
       // Equalize
+      vector<int> histogram = Histograms::Histo(grayscaleMat);
+      vector<int> cumlautiveHistogram = Histograms::cumHist(histogram);
+      vector<int> scale = Histograms::calcuateScale(Image, cumlautiveHistogram);
+
+      Mat matEqualized = Histograms::equilization(grayscaleMat, scale);
+
+      QPixmap equalizedPixmap = HelperFunctions::convertMatToPixmap(matEqualized);
+      QPixmap scaledEqualizedPixmap = equalizedPixmap.scaled(ui->tabHistEqualizedImage->size(), Qt::IgnoreAspectRatio);
+      ui->tabHistEqualizedImage->setPixmap(scaledEqualizedPixmap);
+
+      vector<int> equalizedHistogram = Histograms::equalizedHistogram(grayscaleMat, histogram, scale);
 
       // Normalize
-      Mat outputImage = Histograms::normalizeMat(grayscaleMat, 0, 255);
-      QPixmap normalizedPixmap = HelperFunctions::convertMatToPixmap(outputImage);
+      Mat matNormalized = Histograms::normalizeMat(grayscaleMat, 0, 255);
+      QPixmap normalizedPixmap = HelperFunctions::convertMatToPixmap(matNormalized);
       QPixmap scaledNormalizedPixmap = normalizedPixmap.scaled(ui->tabHistNormalizedImage->size(), Qt::IgnoreAspectRatio);
       ui->tabHistNormalizedImage->setPixmap(scaledNormalizedPixmap);
-
-      // Histogram
-
   }
 }
 

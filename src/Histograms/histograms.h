@@ -11,6 +11,7 @@
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 
+#include <vector>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
@@ -23,22 +24,19 @@ class Histograms
 public:
     Histograms();
     ~Histograms();
-    void Histo(Mat image, int histogram[]);
-    void cumHist(int histogram[], int cumhistogram[]);
-    void histDisplay(int histogram[], const char* name);
-    int calculateImageSize(Mat image);
-    Mat equilization(Mat image, int histogram[], int cumhistogram[],int Sk[]);
-    void equalizedHistogram(Mat image, int final[],int histogram[],int Sk[]);
+
+    static vector<int> Histo(Mat image);
+
+    static vector<int> cumHist(vector<int> histogram);
+    static void histDisplay(int histogram[], const char* name);
+    static int  calculateImageSize(Mat image);
+    static vector<int> calcuateScale(Mat image,vector<int> cumhistogram);
+
+    static Mat  equilization(Mat image, vector<int> Sk);
+    static vector<int> equalizedHistogram(Mat image, vector<int> histogram, vector<int> sk);
 
     static Mat NormalizeImage(Mat inputImage);
-    static Mat normalizeMat(cv::Mat inputMat, double minVal, double maxVal);
-
-private:
-    int histogram[256];
-    int cumhistogram[256];
-    int final[256];
-    int Sk[256];
-
+    static Mat normalizeMat(Mat inputMat, double minVal, double maxVal);
 };
 
 #endif // HISTOGRAM_H

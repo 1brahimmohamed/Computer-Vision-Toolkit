@@ -51,7 +51,7 @@ QPixmap HelperFunctions::convertMatToPixmap(Mat imageMat){
 }
 
 QByteArray HelperFunctions::readImage_QByte(){
-    QString filePath = QFileDialog::getOpenFileName(nullptr, "Open Image File", "", "Image Files (*.png *.jpg *.bmp)");
+    QString filePath = QFileDialog::getOpenFileName(nullptr, "Open Image File", "", "Image Files (*.png *.jpg *.bmp *.jpeg)");
 
     QFile file(filePath);
     file.open(QIODevice::ReadOnly);

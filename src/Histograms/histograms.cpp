@@ -9,7 +9,6 @@
 
 
 #include "histograms.h"
-#include <vector>
 #include <QDebug>
 
 Histograms::Histograms()
@@ -22,30 +21,35 @@ Histograms::~Histograms()
 
 }
 
-void Histograms:: Histo(Mat image, int histogram[])
+vector<int> Histograms::Histo(Mat image)
 {
+  vector<int> histogram(256, 0);
 
-  // initialize all intensity values to 0
-  for(int i = 0; i < 256; i++)
-    {
-      histogram[i] = 0;
-    }
+//  // initialize all intensity values to 0
+//  for(int i = 0; i < 256; i++)
+//    {
+//      histogram[i] = 0;
+//    }
 
   // calculate the no of pixels for each intensity values
   for(int y = 0; y < image.rows; y++)
     for(int x = 0; x < image.cols; x++)
       histogram[(int)image.at<uchar>(y,x)]++;
 
+  return histogram;
 }
 
-void Histograms:: cumHist(int histogram[], int cumhistogram[])
+vector<int> Histograms:: cumHist(vector<int> histogram)
 {
+  vector<int> cumhistogram(256);
   cumhistogram[0] = histogram[0];
 
   for(int i = 1; i < 256; i++)
     {
       cumhistogram[i] = histogram[i] + cumhistogram[i-1];
     }
+
+  return cumhistogram;
 }
 
 void Histograms:: histDisplay(int histogram[], const char* name)
@@ -88,19 +92,7 @@ int Histograms:: calculateImageSize(Mat image){
   return size;
 }
 
-Mat Histograms:: equilization(Mat image, int histogram[], int cumhistogram[], int Sk[]){
-
-  int size = calculateImageSize(image);
-  float alpha = 255.0/size;
-
-
-  // Scale the histogram
-
-  for(int i = 0; i < 256; i++)
-    {
-      Sk[i] = cvRound((double)cumhistogram[i] * alpha);
-    }
-
+Mat Histograms:: equilization(Mat image, vector<int> Sk){
 
   Mat new_image = image.clone();
 
@@ -111,20 +103,19 @@ Mat Histograms:: equilization(Mat image, int histogram[], int cumhistogram[], in
   return new_image;
 }
 
-void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int sk[]){
-
+vector<int> Histograms:: equalizedHistogram(Mat image, vector<int> histogram, vector<int> sk){
 
   // Calculate the probability of each intensity
   float PDF[256];
+  int imageSize = calculateImageSize(image);
+
   for(int i = 0; i < 256; i++)
-    {
-      PDF[i] = (double)histogram[i] / calculateImageSize(image);
-    }
-
-
+  {
+    PDF[i] = (double)histogram[i]/imageSize ;
+  }
 
   // Generate the equlized histogram
-  float PsSk[256]={0};
+  float PsSk[256]= {0};
 
   //new level
   for(int i = 0; i < 256; i++)
@@ -132,11 +123,33 @@ void Histograms:: equalizedHistogram(Mat image, int final[], int histogram[],int
       PsSk[sk[i]] += PDF[i];
     }
 
+  vector<int> equalizedHistogram(256,0);
 
   for(int i = 0; i < 256; i++)
-    final[i] = cvRound(PsSk[i]*255);
+    equalizedHistogram[i] = cvRound(PsSk[i]*255);
+
+  return equalizedHistogram;
 
 }
+
+vector<int> Histograms::calcuateScale(Mat image, vector<int> cumhistogram)
+{
+
+  vector<int> Sk (256,0);
+
+  int size = calculateImageSize(image);
+  float alpha = 255.0/size;
+
+  // Scale the histogram
+
+  for(int i = 0; i < 256; i++)
+    {
+      Sk[i] = cvRound((double)cumhistogram[i] * alpha);
+    }
+
+  return Sk;
+}
+
 Mat Histograms::NormalizeImage(Mat inputImage){
 
   vector<Mat> bgr_channels;
