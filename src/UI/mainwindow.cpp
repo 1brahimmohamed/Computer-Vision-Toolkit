@@ -55,11 +55,13 @@ void MainWindow::updateCurrentPicture(Mat updatedImage){
   ui->tabFilterOriginalImage->setPixmap(scaledpixmap);
 }
 
-void MainWindow::downloadImage(Image &imgObj){
+void MainWindow::downloadImage(Mat image){
   QString fileName = QFileDialog::getSaveFileName(nullptr, "Save Image", QDir::homePath(), "PNG Image (*.png);;JPEG Image (*.jpg)");
 
   if (!fileName.isEmpty()) {
-      bool result = cv::imwrite(fileName.toStdString(), imgObj.getFilteredImage());
+
+
+      bool result = cv::imwrite(fileName.toStdString(), image);
 
       if (!result) {
           QMessageBox::warning(nullptr, "Error", "Failed to save image!");
@@ -103,7 +105,7 @@ void MainWindow::on_uploadBtn_clicked()
 
 void MainWindow::on_downloadBtn_clicked()
 {
-  downloadImage(filterTabImage);
+  downloadImage(filterTabImage.getFilteredImage());
 }
 
 // Photo Smoothness
@@ -141,7 +143,7 @@ void MainWindow::on_saltNoiseBtn_clicked()
 
 void MainWindow::on_gaussianNoiseBtn_clicked()
 {
-  Mat outputImage = NoiseAddatives::GaussianNoise(filterTabImage.getCurrentImage(), outputImage, 1,1);
+  Mat outputImage = NoiseAddatives::GaussianNoise(filterTabImage.getCurrentImage(), 20,15);
   updateFilteredPicture(outputImage);
 }
 
@@ -166,33 +168,34 @@ void MainWindow::on_prewittBtn_clicked()
 
 void MainWindow::on_cannyBtn_clicked()
 {
+//  Mat outputImage = ImageSmoothers::cannyEdgeDetection(filterTabImage.getCurrentImage(), 50,150);
   Mat outputImage = EdgeDetectors::CannyEdgeDetector(filterTabImage.getCurrentImage());
+
   updateFilteredPicture(outputImage);
 }
 
 // Frequency Filters
 void MainWindow::on_lowFrequencyFilterBtn_clicked()
 {
-//  Mat outputImage = fouriermixer::apply_filter(filterTabImage.getCurrentImage(), "Ideal Low Pass", 30.0);
-//  updateFilteredPicture(outputImage);
+  Mat outputImage = FourierMix::apply_filter(filterTabImage.getCurrentImage(), "Ideal Low Pass", 30.0);
+  updateFilteredPicture(outputImage);
 }
 
 void MainWindow::on_highFrequencyFilterBtn_clicked()
 {
-//  Mat outputImage = fouriermixer::apply_filter(filterTabImage.getCurrentImage(), "Ideal High Pass", 30.0);
-//  updateFilteredPicture(outputImage);
+  Mat outputImage = FourierMix::apply_filter(filterTabImage.getCurrentImage(), "Ideal High Pass", 30.0);
+  updateFilteredPicture(outputImage);
 }
 
 void MainWindow::on_gaussianFrequencyFilterBtn_clicked()
 {
-//  Mat outputImage = fouriermixer::apply_filter(filterTabImage.getCurrentImage(), "Gaussian", 30.0);
-//  updateFilteredPicture(outputImage);
+  Mat outputImage = FourierMix::apply_filter(filterTabImage.getCurrentImage(), "Gaussian", 30.0);
+  updateFilteredPicture(outputImage);
 }
 
 // Controls
 void MainWindow::on_applyBtn_clicked()
 {
-  filterTabImage.setPreviousActionImage(filterTabImage.getCurrentImage());
   updateCurrentPicture(filterTabImage.getFilteredImage());
 }
 
@@ -215,19 +218,24 @@ void MainWindow::on_uploadRGB_clicked()
       QPixmap scaledpixmap = pixmap.scaled(ui->tabGrayOriginalImage->size(), Qt::IgnoreAspectRatio);
       ui->tabGrayOriginalImage->setPixmap(scaledpixmap);
 
+      // convert to grayscale
       Mat grayscaleMat;
       cvtColor(Image,grayscaleMat, COLOR_BGR2GRAY);
+      grayscaleTabImage.setFilteredImage(grayscaleMat);
+
+      // view  the gray scale image
       QPixmap grayPixmap = HelperFunctions::convertMatToPixmap(grayscaleMat);
       QPixmap scaledgary = grayPixmap.scaled(ui->tabGrayGrayImage->size(), Qt::IgnoreAspectRatio);
       ui->tabGrayGrayImage->setPixmap(scaledgary);
 
+      // create the histograms
       Mat histogramCDF = Histograms::plotRGBHistogramCDF(Image);
       Mat histogramPDF = Histograms::plotRGBHistogramPDF(Image);
 
+      // display the histograms
       QPixmap hist1 = HelperFunctions::convertMatToPixmap(histogramCDF);
       QPixmap scaledHist1 = hist1.scaled(ui->tabGrayHist1->size(), Qt::IgnoreAspectRatio);
       ui->tabGrayHist1->setPixmap(scaledHist1);
-
 
       QPixmap hist2 = HelperFunctions::convertMatToPixmap(histogramPDF);
       QPixmap scaledHist2 = hist2.scaled(ui->tabGrayHist2->size(), Qt::IgnoreAspectRatio);
@@ -237,7 +245,7 @@ void MainWindow::on_uploadRGB_clicked()
 
 void MainWindow::on_downloadGray_clicked()
 {
-  downloadImage(grayscaleTabImage);
+  downloadImage(grayscaleTabImage.getFilteredImage());
 }
 
 
@@ -263,7 +271,7 @@ void MainWindow::on_uploadHist_clicked()
       vector<int> scale = Histograms::calcuateScale(Image, cumlautiveHistogram);
 
       Mat matEqualized = Histograms::equilization(grayscaleMat, scale);
-
+      HistoTabImage.setFilteredImage(matEqualized);
       QPixmap equalizedPixmap = HelperFunctions::convertMatToPixmap(matEqualized);
       QPixmap scaledEqualizedPixmap = equalizedPixmap.scaled(ui->tabHistEqualizedImage->size(), Qt::IgnoreAspectRatio);
       ui->tabHistEqualizedImage->setPixmap(scaledEqualizedPixmap);
@@ -275,6 +283,8 @@ void MainWindow::on_uploadHist_clicked()
       QPixmap normalizedPixmap = HelperFunctions::convertMatToPixmap(matNormalized);
       QPixmap scaledNormalizedPixmap = normalizedPixmap.scaled(ui->tabHistNormalizedImage->size(), Qt::IgnoreAspectRatio);
       ui->tabHistNormalizedImage->setPixmap(scaledNormalizedPixmap);
+
+      HistoTabImage.setNormalizedImage(matNormalized);
 
       plotHistogram(histogram, "Histogram", ui->histogramWIdget);
       plotHistogram(cumlautiveHistogram, "Cumulative Histogram", ui->cumhistogramWIdget);
@@ -297,7 +307,37 @@ void MainWindow::on_uploadImage1_clicked()
     }
 }
 
-void MainWindow::on_uploadImage1_2_clicked()
+void MainWindow::on_prewittBtn_2_clicked()
+{
+  Mat outputImage = ImageSmoothers::cannyEdgeDetection(filterTabImage.getCurrentImage(), 50,150);
+  updateFilteredPicture(outputImage);
+}
+
+void MainWindow::on_downloadEqualized_clicked()
+{
+    downloadImage(HistoTabImage.getFilteredImage());
+}
+
+void MainWindow::on_downloadNormalized_clicked()
+{
+    downloadImage(HistoTabImage.getNormalizedImage());
+}
+
+
+void MainWindow::on_mixImagesBtn_clicked()
+{
+  Mat outputImageHigh = FourierMix::apply_filter(HybridImage1.getCurrentImage(), "Ideal High Pass", 30.0);
+  Mat outputImageLow = FourierMix::apply_filter(HybridImage2.getCurrentImage(), "Ideal Low Pass", 30.0);
+
+  Mat mixed = FourierMix::mix_images(outputImageHigh,outputImageLow);
+
+  QPixmap pixmap = HelperFunctions::convertMatToPixmap(mixed);
+  QPixmap scaledpixmap = pixmap.scaled(ui->tabMixerImage2->size(), Qt::IgnoreAspectRatio);
+  ui->tabMixerImageMixed->setPixmap(scaledpixmap);
+}
+
+
+void MainWindow::on_uploadImage2_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
   if (Image.cols != 1 && Image.rows != 1){
@@ -305,7 +345,6 @@ void MainWindow::on_uploadImage1_2_clicked()
       QPixmap pixmap = HelperFunctions::convertMatToPixmap(Image);
       QPixmap scaledpixmap = pixmap.scaled(ui->tabMixerImage2->size(), Qt::IgnoreAspectRatio);
       ui->tabMixerImage2->setPixmap(scaledpixmap);
-      ui->tabMixerImageMixed->setPixmap(scaledpixmap);
     }
 }
 

@@ -34,7 +34,7 @@ public:
   ~MainWindow();
   void updateFilteredPicture(cv::Mat updatedImage);
   void updateCurrentPicture(cv::Mat updatedImage);
-  void downloadImage(Image &imageObj);
+  void downloadImage(Mat image);
   void plotHistogram(const vector<int>& data , QString ChartName, QChartView* widget);
 
 private slots:
@@ -81,7 +81,15 @@ private slots:
 
   void on_uploadImage1_clicked();
 
-  void on_uploadImage1_2_clicked();
+  void on_prewittBtn_2_clicked();
+
+  void on_downloadEqualized_clicked();
+
+  void on_downloadNormalized_clicked();
+
+  void on_mixImagesBtn_clicked();
+
+  void on_uploadImage2_clicked();
 
 private:
   Ui::MainWindow *ui;

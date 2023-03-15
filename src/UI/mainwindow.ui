@@ -162,7 +162,7 @@ margin-bottom: 0;
 </string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -634,41 +634,6 @@ background-color: #1e2236;
       </property>
       <property name="text">
        <string>Detect Edges</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="cannyBtn">
-      <property name="geometry">
-       <rect>
-        <x>1344</x>
-        <y>620</y>
-        <width>151</width>
-        <height>45</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Microsoft Sans Serif</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: #22273c;
-color: #fff;
-border: 0;
-border-radius: 22px;
-}
-
-QPushButton::focus{
-background-color: #000;
-}
-
-QPushButton::hover{
-background-color: #1e2236;
-}</string>
-      </property>
-      <property name="text">
-       <string>Canny</string>
       </property>
      </widget>
      <widget class="QPushButton" name="uniformNoiseBtn">
@@ -1244,6 +1209,41 @@ background-color: #1e2236;
        <string>Picture 2</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="cannyBtn">
+      <property name="geometry">
+       <rect>
+        <x>1345</x>
+        <y>620</y>
+        <width>151</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #22273c;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::focus{
+background-color: #000;
+}
+
+QPushButton::hover{
+background-color: #1e2236;
+}</string>
+      </property>
+      <property name="text">
+       <string>Canny</string>
+      </property>
+     </widget>
      <zorder>backgrounDark</zorder>
      <zorder>backgroundLight</zorder>
      <zorder>tabFilterleftPanelBackgroundLower</zorder>
@@ -1251,7 +1251,6 @@ background-color: #1e2236;
      <zorder>leftPanelText</zorder>
      <zorder>splitterUp</zorder>
      <zorder>averageRemoveBtn</zorder>
-     <zorder>cannyBtn</zorder>
      <zorder>uploadBtn</zorder>
      <zorder>saltNoiseBtn</zorder>
      <zorder>downloadBtn</zorder>
@@ -1283,6 +1282,7 @@ background-color: #1e2236;
      <zorder>frequencyFIltersText</zorder>
      <zorder>highFrequencyFilterBtn</zorder>
      <zorder>lowFrequencyFilterBtn</zorder>
+     <zorder>cannyBtn</zorder>
     </widget>
     <widget class="QWidget" name="histogramTab">
      <attribute name="title">
@@ -1906,7 +1906,7 @@ background-color: #1d408d;
        <string>Picture 2</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="downloadEqualized_2">
+     <widget class="QPushButton" name="downloadNormalized">
       <property name="geometry">
        <rect>
         <x>1210</x>
@@ -2056,7 +2056,7 @@ background-color: #1d408d;
      <zorder>tabHistEqualizedImage</zorder>
      <zorder>tabHistOriginalImage</zorder>
      <zorder>tabHistNormalizedImage</zorder>
-     <zorder>downloadEqualized_2</zorder>
+     <zorder>downloadNormalized</zorder>
      <zorder>originalText_3</zorder>
      <zorder>originalText_4</zorder>
      <zorder>originalText_5</zorder>
@@ -2106,8 +2106,8 @@ border: 0px;
       </property>
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>20</y>
+        <x>10</x>
+        <y>-30</y>
         <width>1524</width>
         <height>969</height>
        </rect>
@@ -2172,7 +2172,7 @@ border-radius: 35px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="uploadImage1_2">
+     <widget class="QPushButton" name="uploadImage2">
       <property name="geometry">
        <rect>
         <x>1348</x>
@@ -2209,7 +2209,7 @@ background-color: #1d408d;
         <x>1166</x>
         <y>110</y>
         <width>338</width>
-        <height>291</height>
+        <height>161</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -2267,70 +2267,6 @@ background-color: #1d408d;
       </property>
       <property name="text">
        <string>Upload Image 1</string>
-      </property>
-     </widget>
-     <widget class="QSlider" name="mixerFirstSlider">
-      <property name="geometry">
-       <rect>
-        <x>1210</x>
-        <y>230</y>
-        <width>261</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QSlider:horizontal {
-    min-height: 60px;
-}
-QSlider::groove:horizontal {
-    height: 1px;
-    background: white; 
-}
-QSlider::handle:horizontal {
-    width: 30px;
-    margin-top: -15px;
-    margin-bottom: -15px;
-    border-radius: 15px;
-    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
-}
-QSlider::handle:horizontal:hover {
-    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
-}</string>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QSlider" name="mixerSecondSlider">
-      <property name="geometry">
-       <rect>
-        <x>1210</x>
-        <y>310</y>
-        <width>261</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QSlider:horizontal {
-    min-height: 60px;
-}
-QSlider::groove:horizontal {
-    height: 1px;
-    background: white; 
-}
-QSlider::handle:horizontal {
-    width: 30px;
-    margin-top: -15px;
-    margin-bottom: -15px;
-    border-radius: 15px;
-    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
-}
-QSlider::handle:horizontal:hover {
-    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
-}</string>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
      <widget class="QLabel" name="tabMixerImage1">
@@ -2450,6 +2386,37 @@ QSlider::handle:horizontal:hover {
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="mixImagesBtn">
+      <property name="geometry">
+       <rect>
+        <x>1260</x>
+        <y>200</y>
+        <width>148</width>
+        <height>45</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+background-color: #266dff;
+color: #fff;
+border: 0;
+border-radius: 22px;
+}
+
+QPushButton::hover {
+background-color: #1d408d;
+}</string>
+      </property>
+      <property name="text">
+       <string>Mix</string>
+      </property>
+     </widget>
      <zorder>backgrounDark_5</zorder>
      <zorder>backgroundLight_4</zorder>
      <zorder>leftPanelBackgroundLower_4</zorder>
@@ -2457,15 +2424,14 @@ QSlider::handle:horizontal:hover {
      <zorder>leftPanelBackgroundUpper_4</zorder>
      <zorder>splitterUp_7</zorder>
      <zorder>uploadImage1</zorder>
-     <zorder>uploadImage1_2</zorder>
-     <zorder>mixerFirstSlider</zorder>
-     <zorder>mixerSecondSlider</zorder>
+     <zorder>uploadImage2</zorder>
      <zorder>tabMixerImage1</zorder>
      <zorder>tabMixerImage2</zorder>
      <zorder>tabMixerImageMixed</zorder>
      <zorder>originalText_6</zorder>
      <zorder>originalText_7</zorder>
      <zorder>originalText_8</zorder>
+     <zorder>mixImagesBtn</zorder>
     </widget>
    </widget>
    <widget class="QGraphicsView" name="backgrounDark_2">

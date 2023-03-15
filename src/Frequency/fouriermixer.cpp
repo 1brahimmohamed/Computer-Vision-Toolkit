@@ -1,18 +1,20 @@
 #include "fouriermixer.h"
+#include <QDebug>
+#include <iostream>
 
-fouriermixer::fouriermixer()
+FourierMix::FourierMix()
 {
 
 }
 
-fouriermixer::~fouriermixer()
+FourierMix::~FourierMix()
 {
 
 }
 
 Size2i imageSize = Size(500,500);
 
-void fftshift(const Mat &input_img, Mat &output_img)
+void FourierMix::fftshift(const Mat &input_img, Mat &output_img)
 {
   output_img = input_img.clone();
   int cx = output_img.cols / 2;
@@ -32,7 +34,7 @@ void fftshift(const Mat &input_img, Mat &output_img)
 }
 
 
-void calculateDFT(Mat &scr, Mat &dst)
+void FourierMix::calculateDFT(Mat &scr, Mat &dst)
 {
   // define mat consists of two mat, one for real values and the other for complex values
   Mat planes[] = { scr, Mat::zeros(scr.size(), CV_32F) };
@@ -44,7 +46,7 @@ void calculateDFT(Mat &scr, Mat &dst)
 }
 
 
-void construct_H(Mat &scr, Mat &dst, String type, float D0)
+void FourierMix::construct_H(Mat &scr, Mat &dst, String type, float D0)
 {
   Mat H(scr.size(), CV_32F, Scalar(1));
   float D = 0;
@@ -65,6 +67,7 @@ void construct_H(Mat &scr, Mat &dst, String type, float D0)
     }
   else if (type == "Gaussian")
     {
+
       for (int  u = 0; u < H.rows; u++)
         {
           for (int v = 0; v < H.cols; v++)
@@ -77,6 +80,7 @@ void construct_H(Mat &scr, Mat &dst, String type, float D0)
     }
   else if (type == "Ideal High Pass")
     {
+
       for (int u = 0; u < H.rows; u++)
         {
           for (int  v = 0; v < H.cols; v++)
@@ -93,7 +97,7 @@ void construct_H(Mat &scr, Mat &dst, String type, float D0)
 }
 
 
-void filtering(Mat &scr, Mat &dst, Mat &H)
+void FourierMix::filtering(Mat &scr, Mat &dst, Mat &H)
 {
   fftshift(H, H);
   Mat planesH[] = { Mat_<float>(H.clone()), Mat_<float>(H.clone()) };
@@ -109,36 +113,38 @@ void filtering(Mat &scr, Mat &dst, Mat &H)
 
 }
 
-Mat apply_filter(Mat imgIn, String filter_type, float D0){
+Mat FourierMix::apply_filter(Mat imgIn, String filter_type, float D0){
   Mat imgOut;
 
   cvtColor(imgIn, imgIn, COLOR_BGR2GRAY);
 
   resize(imgIn, imgIn, imageSize);
+
   imgIn.convertTo(imgIn, CV_32F);
 
   // DFT
   Mat DFT_image;
-  calculateDFT(imgIn, DFT_image);
+  FourierMix::calculateDFT(imgIn, DFT_image);
 
   // construct H
   Mat H;
-  construct_H(imgIn, H, filter_type, D0);
+  FourierMix::construct_H(imgIn, H, filter_type, D0);
 
   // filtering
   Mat complexIH;
-  filtering(DFT_image, complexIH, H);
+  FourierMix::filtering(DFT_image, complexIH, H);
 
   // IDFT
   dft(complexIH, imgOut, DFT_INVERSE | DFT_REAL_OUTPUT);
 
-  normalize(imgOut, imgOut, 0, 1, NORM_MINMAX);
+    normalize(imgOut, imgOut, 0, 1, NORM_MINMAX);
+
 
   return imgOut;
 }
 
 
-Mat mix_images(Mat imgLow, Mat imgHigh){
+Mat FourierMix::mix_images(Mat imgLow, Mat imgHigh){
   Mat imgHybrid;
   imgHybrid = imgLow + imgHigh;
   return imgHybrid;

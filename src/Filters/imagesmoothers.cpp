@@ -221,3 +221,21 @@ Mat ImageSmoothers::OpenCVMedianFilter(Mat inputImage, int kernelSize){
   medianBlur(inputImage, outputImage, kernelSize);
   return outputImage;
 }
+
+Mat ImageSmoothers::cannyEdgeDetection(const cv::Mat& input, double threshold1, double threshold2)
+{
+    // Convert the input image to grayscale
+    Mat gray;
+    cvtColor(input, gray, cv::COLOR_BGR2GRAY);
+
+    // Apply Gaussian blur to reduce noise
+    Mat blurred;
+    GaussianBlur(gray, blurred, cv::Size(5, 5), 0);
+
+    // Perform Canny edge detection
+    Mat edges;
+    Canny(blurred, edges, threshold1, threshold2);
+
+    return edges;
+}
+

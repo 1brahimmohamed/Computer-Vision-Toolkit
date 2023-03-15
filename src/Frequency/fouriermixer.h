@@ -10,11 +10,11 @@
 
 using namespace cv;
 
-class fouriermixer
+class FourierMix
 {
 public:
-    fouriermixer();
-    ~fouriermixer();
+    FourierMix();
+    ~FourierMix();
 
     static void fftshift(const Mat &input_img, Mat &output_img);
     static void calculateDFT(Mat &scr, Mat &dst);

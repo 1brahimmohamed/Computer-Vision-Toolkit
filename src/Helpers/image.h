@@ -18,21 +18,19 @@ public:
   void setFirstUpload(Mat image);
   void setCurrentImage(Mat image);
   void setFilteredImage(Mat image);
-  void setPreviousActionImage(Mat image);
-  void setNextActionImage(Mat image);
+  void setNormalizedImage(Mat image);
 
   Mat getOriginalImage();
   Mat getCurrentImage();
   Mat getFilteredImage();
-  Mat getPreviousActionImage();
-  Mat getNextActionImage();
+  Mat getNormalizedImage();
 
 private:
   Mat Original;
   Mat Current;
   Mat Filtered;
   Mat Previous;
-  Mat Next;
+  Mat Normalized;
 };
 
 #endif // IMAGE_H
