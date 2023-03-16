@@ -33,7 +33,8 @@ HistoTabImage = {},
 HybridImage1 = {},
 HybridImage2 = {};
 
-
+float d1note = 30.0,
+d2note = 30.0;
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -326,8 +327,8 @@ void MainWindow::on_downloadNormalized_clicked()
 
 void MainWindow::on_mixImagesBtn_clicked()
 {
-  Mat outputImageHigh = FourierMix::apply_filter(HybridImage1.getCurrentImage(), "Ideal High Pass", 30.0);
-  Mat outputImageLow = FourierMix::apply_filter(HybridImage2.getCurrentImage(), "Ideal Low Pass", 30.0);
+  Mat outputImageHigh = FourierMix::apply_filter(HybridImage1.getCurrentImage(), "Ideal High Pass",d1note);
+  Mat outputImageLow = FourierMix::apply_filter(HybridImage2.getCurrentImage(), "Ideal Low Pass", d2note);
 
   Mat mixed = FourierMix::mix_images(outputImageHigh,outputImageLow);
 
@@ -396,5 +397,20 @@ void MainWindow::on_meanSlider_valueChanged(int value)
 {
   filterTabImage.mean = value;
   ui->meanValue->setText(QString::number(value));
+}
+
+
+
+void MainWindow::on_pic1d0_valueChanged(int value)
+{
+  d1note = value;
+  ui->d1noteVal->setText(QString::number(value));
+}
+
+
+void MainWindow::on_pic2d0_valueChanged(int value)
+{
+  d2note = value;
+  ui->d2noteVal->setText(QString::number(value));
 }
 

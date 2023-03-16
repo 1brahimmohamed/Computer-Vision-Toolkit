@@ -162,7 +162,7 @@ margin-bottom: 0;
 </string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="iconSize">
      <size>
@@ -1029,6 +1029,9 @@ QSlider::handle:horizontal {
 QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
+      </property>
+      <property name="minimum">
+       <number>1</number>
       </property>
       <property name="maximum">
        <number>30</number>
@@ -2356,7 +2359,7 @@ background-color: #1d408d;
         <x>1166</x>
         <y>110</y>
         <width>338</width>
-        <height>161</height>
+        <height>371</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -2564,6 +2567,230 @@ background-color: #1d408d;
        <string>Mix</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="d1noteVal">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>310</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+color: #fff;
+}</string>
+      </property>
+      <property name="text">
+       <string>30</string>
+      </property>
+      <property name="maxLength">
+       <number>6</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QSlider" name="pic1d0">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>301</y>
+        <width>221</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
+}
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
+}
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
+}
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+}</string>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>50</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
+      </property>
+      <property name="value">
+       <number>30</number>
+      </property>
+      <property name="sliderPosition">
+       <number>30</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::NoTicks</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pic1DoText">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>276</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Picture 1 D0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pic2DoText">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>366</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Pictuire 2 D0</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="pic2d0">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>391</y>
+        <width>221</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
+}
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
+}
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
+}
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+}</string>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>50</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
+      </property>
+      <property name="value">
+       <number>30</number>
+      </property>
+      <property name="sliderPosition">
+       <number>30</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::NoTicks</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="d2noteVal">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>400</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+color: #fff;
+}</string>
+      </property>
+      <property name="text">
+       <string>30</string>
+      </property>
+      <property name="maxLength">
+       <number>6</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <zorder>backgrounDark_5</zorder>
      <zorder>backgroundLight_4</zorder>
      <zorder>leftPanelBackgroundLower_4</zorder>
@@ -2579,6 +2806,12 @@ background-color: #1d408d;
      <zorder>originalText_7</zorder>
      <zorder>originalText_8</zorder>
      <zorder>mixImagesBtn</zorder>
+     <zorder>d1noteVal</zorder>
+     <zorder>pic1d0</zorder>
+     <zorder>pic1DoText</zorder>
+     <zorder>pic2DoText</zorder>
+     <zorder>pic2d0</zorder>
+     <zorder>d2noteVal</zorder>
     </widget>
    </widget>
    <widget class="QGraphicsView" name="backgrounDark_2">

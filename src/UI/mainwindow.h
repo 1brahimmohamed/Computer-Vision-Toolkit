@@ -95,6 +95,10 @@ private slots:
 
   void on_meanSlider_valueChanged(int value);
 
+  void on_pic1d0_valueChanged(int value);
+
+  void on_pic2d0_valueChanged(int value);
+
 private:
   Ui::MainWindow *ui;
 };
