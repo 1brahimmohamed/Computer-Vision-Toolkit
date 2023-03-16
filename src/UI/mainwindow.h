@@ -81,8 +81,6 @@ private slots:
 
   void on_uploadImage1_clicked();
 
-  void on_prewittBtn_2_clicked();
-
   void on_downloadEqualized_clicked();
 
   void on_downloadNormalized_clicked();
@@ -90,6 +88,12 @@ private slots:
   void on_mixImagesBtn_clicked();
 
   void on_uploadImage2_clicked();
+
+  void on_kernelSlider_valueChanged(int value);
+
+  void on_sigmaSlider_valueChanged(int value);
+
+  void on_meanSlider_valueChanged(int value);
 
 private:
   Ui::MainWindow *ui;

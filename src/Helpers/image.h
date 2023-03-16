@@ -14,6 +14,8 @@ public:
 
   int kenerlSize;
   float sigma;
+  int mean;
+  float noiseSigma;
 
   void setFirstUpload(Mat image);
   void setCurrentImage(Mat image);

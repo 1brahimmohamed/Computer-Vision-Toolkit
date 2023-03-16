@@ -19,7 +19,7 @@ inline unsigned char NoiseAddatives::Clamp(int n)
   return n<0 ? 0 : n;
 }
 
-Mat NoiseAddatives::GaussianNoise(const Mat SrcImg,double Mean=0.0, double StdDev=10.0)
+Mat NoiseAddatives::GaussianNoise(const Mat SrcImg, double Mean=0.0, double StdDev=10.0)
 {   //check for the provided image
   Mat DstImg = SrcImg.clone();
 
@@ -34,6 +34,7 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg,double Mean=0.0, double StdDe
   randn(mGaussian_noise,Scalar::all(Mean),Scalar::all(StdDev));
   //gaussian noise + pixel value
 
+  int Dest_Pixel = 0;
 
   for (int Rows = 0; Rows < SrcImg.rows; Rows++)
     {
@@ -45,7 +46,7 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg,double Mean=0.0, double StdDe
 
           for (int i = 0; i < 3; i++)
             {
-              int Dest_Pixel = Source_Pixel.val[i] + Noise_Pixel.val[i];
+              Dest_Pixel = Source_Pixel.val[i] + Noise_Pixel.val[i];
               Des_Pixel.val[i] = Clamp(Dest_Pixel);
             }
         }
@@ -54,22 +55,23 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg,double Mean=0.0, double StdDe
 }
 Mat NoiseAddatives::SaltAndPepperNoise(Mat SrcImg)
 {
-  Mat ResultImg = SrcImg.clone();
+  Mat resultImg  = SrcImg.clone();
+  int r = 15;
+  int random = 0;
 
-    int r = 15;
-      for (int i = 0; i < ResultImg.rows; i++) {
-          for (int k = 0; k <ResultImg.cols; k++) {
-              int random = rand() % r + 1;
-              if (random == 1) {
-                  ResultImg.at<float>(i, k) = 255;
-                }
-              if (random == 2) {
-                  ResultImg.at<float>(i, k) = 0;
-                }
+  for (int i = 0; i < resultImg.rows; i++) {
 
-            }
+      for (int k = 0; k < resultImg.cols; k++) {
+        random = rand() % r + 1;
 
-        }
-  return ResultImg;
+        if (random == 1)
+          resultImg.at<float>(i, k) = 255;
+
+        else if (random == 2) {
+          resultImg.at<float>(i, k) = 0;
+      }
+    }
+  }
+  return resultImg;
 }
 

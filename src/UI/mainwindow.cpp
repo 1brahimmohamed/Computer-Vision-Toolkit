@@ -27,7 +27,12 @@
 
 using namespace cv;
 
-Image filterTabImage, grayscaleTabImage, HistoTabImage,HybridImage1, HybridImage2;
+Image filterTabImage = {},
+grayscaleTabImage = {},
+HistoTabImage = {},
+HybridImage1 = {},
+HybridImage2 = {};
+
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -42,6 +47,8 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::updateFilteredPicture(Mat updatedImage){
+
+  qDebug() << updatedImage.type();
   filterTabImage.setFilteredImage(updatedImage);
   QPixmap pixmap = HelperFunctions::convertMatToPixmap(updatedImage);
   QPixmap scaledpixmap = pixmap.scaled(ui->tabFilterFilteredImage->size(), Qt::IgnoreAspectRatio);
@@ -143,7 +150,7 @@ void MainWindow::on_saltNoiseBtn_clicked()
 
 void MainWindow::on_gaussianNoiseBtn_clicked()
 {
-  Mat outputImage = NoiseAddatives::GaussianNoise(filterTabImage.getCurrentImage(), 20,15);
+  Mat outputImage = NoiseAddatives::GaussianNoise(filterTabImage.getCurrentImage(), filterTabImage.sigma , filterTabImage.mean);
   updateFilteredPicture(outputImage);
 }
 
@@ -168,7 +175,7 @@ void MainWindow::on_prewittBtn_clicked()
 
 void MainWindow::on_cannyBtn_clicked()
 {
-//  Mat outputImage = ImageSmoothers::cannyEdgeDetection(filterTabImage.getCurrentImage(), 50,150);
+  //  Mat outputImage = ImageSmoothers::cannyEdgeDetection(filterTabImage.getCurrentImage(), 50,150);
   Mat outputImage = EdgeDetectors::CannyEdgeDetector(filterTabImage.getCurrentImage());
 
   updateFilteredPicture(outputImage);
@@ -307,22 +314,15 @@ void MainWindow::on_uploadImage1_clicked()
     }
 }
 
-void MainWindow::on_prewittBtn_2_clicked()
-{
-  Mat outputImage = ImageSmoothers::cannyEdgeDetection(filterTabImage.getCurrentImage(), 50,150);
-  updateFilteredPicture(outputImage);
-}
-
 void MainWindow::on_downloadEqualized_clicked()
 {
-    downloadImage(HistoTabImage.getFilteredImage());
+  downloadImage(HistoTabImage.getFilteredImage());
 }
 
 void MainWindow::on_downloadNormalized_clicked()
 {
-    downloadImage(HistoTabImage.getNormalizedImage());
+  downloadImage(HistoTabImage.getNormalizedImage());
 }
-
 
 void MainWindow::on_mixImagesBtn_clicked()
 {
@@ -336,7 +336,6 @@ void MainWindow::on_mixImagesBtn_clicked()
   ui->tabMixerImageMixed->setPixmap(scaledpixmap);
 }
 
-
 void MainWindow::on_uploadImage2_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
@@ -346,5 +345,56 @@ void MainWindow::on_uploadImage2_clicked()
       QPixmap scaledpixmap = pixmap.scaled(ui->tabMixerImage2->size(), Qt::IgnoreAspectRatio);
       ui->tabMixerImage2->setPixmap(scaledpixmap);
     }
+}
+
+
+void MainWindow::on_kernelSlider_valueChanged(int value)
+{
+  int boxVal;
+  switch (value) {
+    case 1:{
+        boxVal = value;
+        break;
+      }
+    case 2: {
+        boxVal = value+1;
+        break;
+      }
+    case 3: {
+        boxVal =value+2;
+        break;
+      }
+    case 4: {
+        boxVal = value+3;
+        break;
+      }
+    case 5: {
+        boxVal = value+4;
+        break;
+      }
+    case 6: {
+        boxVal = value+5;
+        break;
+      }
+    }
+  ;
+
+  filterTabImage.kenerlSize = boxVal;
+  ui->kernelValue->setText(QString::number(boxVal));
+}
+
+
+
+void MainWindow::on_sigmaSlider_valueChanged(int value)
+{
+  filterTabImage.sigma = value;
+  ui->sigmaValue->setText(QString::number(value));
+}
+
+
+void MainWindow::on_meanSlider_valueChanged(int value)
+{
+  filterTabImage.mean = value;
+  ui->meanValue->setText(QString::number(value));
 }
 

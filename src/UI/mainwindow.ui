@@ -839,7 +839,7 @@ border-radius: 35px;</string>
      <widget class="QLabel" name="sigmaText">
       <property name="geometry">
        <rect>
-        <x>596</x>
+        <x>436</x>
         <y>745</y>
         <width>211</width>
         <height>21</height>
@@ -862,7 +862,7 @@ border-radius: 35px;</string>
      <widget class="QLineEdit" name="kernelValue">
       <property name="geometry">
        <rect>
-        <x>476</x>
+        <x>316</x>
         <y>779</y>
         <width>51</width>
         <height>41</height>
@@ -879,10 +879,11 @@ border-radius: 35px;</string>
 background-color: #252a41;
 border: 0;
 border-radius: 10px;
+color: #fff;
 }</string>
       </property>
       <property name="text">
-       <string>121</string>
+       <string>5</string>
       </property>
       <property name="maxLength">
        <number>6</number>
@@ -894,7 +895,7 @@ border-radius: 10px;
      <widget class="QLabel" name="kernelSizeText">
       <property name="geometry">
        <rect>
-        <x>226</x>
+        <x>66</x>
         <y>745</y>
         <width>211</width>
         <height>21</height>
@@ -917,7 +918,7 @@ border-radius: 10px;
      <widget class="QSlider" name="kernelSlider">
       <property name="geometry">
        <rect>
-        <x>226</x>
+        <x>66</x>
         <y>770</y>
         <width>221</width>
         <height>60</height>
@@ -942,8 +943,32 @@ QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
       </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>6</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
+      </property>
+      <property name="value">
+       <number>3</number>
+      </property>
+      <property name="sliderPosition">
+       <number>3</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::NoTicks</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="applyBtn">
@@ -977,10 +1002,10 @@ background-color: #1d408d;
        <string>Apply</string>
       </property>
      </widget>
-     <widget class="QSlider" name="kernelSlider_2">
+     <widget class="QSlider" name="sigmaSlider">
       <property name="geometry">
        <rect>
-        <x>596</x>
+        <x>436</x>
         <y>770</y>
         <width>221</width>
         <height>60</height>
@@ -1005,14 +1030,20 @@ QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
       </property>
+      <property name="maximum">
+       <number>30</number>
+      </property>
+      <property name="value">
+       <number>15</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLineEdit" name="kernelValue_2">
+     <widget class="QLineEdit" name="sigmaValue">
       <property name="geometry">
        <rect>
-        <x>840</x>
+        <x>680</x>
         <y>779</y>
         <width>51</width>
         <height>41</height>
@@ -1029,10 +1060,11 @@ QSlider::handle:horizontal:hover {
 background-color: #252a41;
 border: 0;
 border-radius: 10px;
+color: #fff;
 }</string>
       </property>
       <property name="text">
-       <string>121</string>
+       <string>15</string>
       </property>
       <property name="maxLength">
        <number>6</number>
@@ -1193,7 +1225,7 @@ background-color: #1e2236;
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabFilterFilteredImage">
@@ -1206,7 +1238,7 @@ background-color: #1e2236;
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="cannyBtn">
@@ -1244,6 +1276,118 @@ background-color: #1e2236;
        <string>Canny</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="meanValue">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>780</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+color: #fff;
+}</string>
+      </property>
+      <property name="text">
+       <string>20</string>
+      </property>
+      <property name="maxLength">
+       <number>6</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QSlider" name="meanSlider">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>771</y>
+        <width>221</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider:horizontal {
+    min-height: 60px;
+}
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
+}
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
+}
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+}</string>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>30</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
+      </property>
+      <property name="value">
+       <number>20</number>
+      </property>
+      <property name="sliderPosition">
+       <number>20</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::NoTicks</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="meanText">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>746</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Microsoft Sans Serif</family>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #fff;</string>
+      </property>
+      <property name="text">
+       <string>Mean</string>
+      </property>
+     </widget>
      <zorder>backgrounDark</zorder>
      <zorder>backgroundLight</zorder>
      <zorder>tabFilterleftPanelBackgroundLower</zorder>
@@ -1272,8 +1416,8 @@ background-color: #1e2236;
      <zorder>kernelSizeText</zorder>
      <zorder>kernelSlider</zorder>
      <zorder>applyBtn</zorder>
-     <zorder>kernelSlider_2</zorder>
-     <zorder>kernelValue_2</zorder>
+     <zorder>sigmaSlider</zorder>
+     <zorder>sigmaValue</zorder>
      <zorder>resetBtn</zorder>
      <zorder>splitterUp_4</zorder>
      <zorder>tabFilterOriginalImage</zorder>
@@ -1283,6 +1427,9 @@ background-color: #1e2236;
      <zorder>highFrequencyFilterBtn</zorder>
      <zorder>lowFrequencyFilterBtn</zorder>
      <zorder>cannyBtn</zorder>
+     <zorder>meanValue</zorder>
+     <zorder>meanSlider</zorder>
+     <zorder>meanText</zorder>
     </widget>
     <widget class="QWidget" name="histogramTab">
      <attribute name="title">
@@ -1877,7 +2024,7 @@ background-color: #1d408d;
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabHistOriginalImage">
@@ -1890,7 +2037,7 @@ background-color: #1d408d;
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="tabHistNormalizedImage">
@@ -1903,7 +2050,7 @@ background-color: #1d408d;
        </rect>
       </property>
       <property name="text">
-       <string>Picture 2</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="downloadNormalized">

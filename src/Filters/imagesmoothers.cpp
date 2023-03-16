@@ -78,6 +78,7 @@ Mat ImageSmoothers::applyAverageFilter(Mat inputImage, int kernelSize){
  * @return filteredImage {cv::Mat}
  */
 Mat ImageSmoothers::applyGaussianFilter(Mat inputImage, int kernelSize, float sigma){
+
    // Split input image into its color channels
    std::vector<Mat> channels;
    split(inputImage, channels);

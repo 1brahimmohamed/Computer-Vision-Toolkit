@@ -3,7 +3,8 @@
 Image::Image()
 {
   this->kenerlSize = 5;
-  this->sigma = 1.0;
+  this->sigma = 15.0;
+  this->mean = 20;
 
   this->Original = NULL;
   this->Current = NULL;
