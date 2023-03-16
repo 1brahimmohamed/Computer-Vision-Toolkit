@@ -399,8 +399,6 @@ void MainWindow::on_meanSlider_valueChanged(int value)
   ui->meanValue->setText(QString::number(value));
 }
 
-
-
 void MainWindow::on_pic1d0_valueChanged(int value)
 {
   d1note = value;
