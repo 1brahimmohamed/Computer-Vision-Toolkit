@@ -75,6 +75,11 @@ LIBS += -L<yourCV build folder path>\release\lib \
 
 
 ### Project Overview
+![Filters Tab](./images/gifs/1.gif)
+![GrayScale Tab](./images/gifs/2.gif)
+![Histogram Tab](./images/gifs/3.gif)
+![Histogram Tab](./images/gifs/4.gif)
+
 
 ### Team
 
@@ -85,8 +90,8 @@ Second Semester - Computer Vision (SBE3230) class project created by:
 | [Ibrahim Mohamed](https://github.com/1brahimmohamed)      |    1    |  2   |
 | [Mahmoud Yaser](https://github.com/mahmoud1yaser)         |    2    |  30  |
 | [Maye Khaled](https://github.com/mayekhaled0)             |    2    |  40  |
-| [Marina Nasser](https://github.com/MariamWaell)           |    2    |  12  |
-| [Omnia Sayed](https://github.com/MariamWaell)             |    1    |  14  |
+| [Marina Nasser](https://github.com/MarinaNasser)          |    2    |  12  |
+| [Omnia Sayed](https://github.com/omniaSayed)              |    1    |  14  |
 
 
 ### Submitted to:
