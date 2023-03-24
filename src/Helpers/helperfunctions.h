@@ -14,6 +14,9 @@
 #include <QByteArray>
 #include <QPixmap>
 #include <QFileDialog>
+#include <QLabel>
+#include <QMessageBox>
+
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
@@ -25,11 +28,10 @@ class HelperFunctions
 public:
   HelperFunctions();
   ~HelperFunctions();
-  static QByteArray readImage_QByte();
   static Mat readImage_Mat();
-  static QPixmap convertQByteArrToPixmap(QByteArray arr);
   static QPixmap convertMatToPixmap(Mat imageMat);
-
+  static void viewImageOnLabel(Mat newImage, QLabel* label);
+  static void downloadImage(Mat image);
 };
 
 #endif // HELPERFUNCTIONS_H

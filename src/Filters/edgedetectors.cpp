@@ -17,6 +17,7 @@ EdgeDetectors::~EdgeDetectors()
 {
 
 }
+
 /*
 Apply a Gaussian Filter
 Apply sobel : method to compute the x and y gradient vector components.

@@ -9,6 +9,7 @@
  *******************************************************************************/
 
 #include "imagesmoothers.h"
+#include <iostream>
 
 using namespace cv;
 
@@ -65,6 +66,7 @@ Mat ImageSmoothers::applyAverageFilter(Mat inputImage, int kernelSize){
           outputImage.at<Vec3b>(i, j) = sum / count;
       }
   }
+
   return outputImage;
 }
 

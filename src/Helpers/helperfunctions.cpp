@@ -8,9 +8,9 @@
  *
  *******************************************************************************/
 
-
 #include "helperfunctions.h"
 #include <vector>
+
 using namespace std;
 
 HelperFunctions::HelperFunctions()
@@ -23,11 +23,6 @@ HelperFunctions::~HelperFunctions()
 
 }
 
-QPixmap HelperFunctions::convertQByteArrToPixmap(QByteArray arr){
-  QPixmap pixmap;
-  pixmap.loadFromData(arr);
-  return pixmap;
-}
 
 QPixmap HelperFunctions::convertMatToPixmap(Mat imageMat){
 
@@ -67,16 +62,6 @@ QPixmap HelperFunctions::convertMatToPixmap(Mat imageMat){
   return outputPixmap;
 }
 
-QByteArray HelperFunctions::readImage_QByte(){
-  QString filePath = QFileDialog::getOpenFileName(nullptr, "Open Image File", "", "Image Files (*.png *.jpg *.bmp *.jpeg)");
-
-  QFile file(filePath);
-  file.open(QIODevice::ReadOnly);
-  QByteArray imageData = file.readAll();
-
-  return imageData;
-}
-
 Mat HelperFunctions::readImage_Mat(){
   QString filePath = QFileDialog::getOpenFileName(nullptr, "Open Image File", "", "Image Files (*.png *.jpg *.bmp)");
   if (!filePath.isEmpty()){
@@ -86,4 +71,19 @@ Mat HelperFunctions::readImage_Mat(){
   return Mat::zeros(1,1,CV_32F);
 }
 
+void HelperFunctions::viewImageOnLabel(Mat newImage, QLabel* label){
+  QPixmap pixmap = convertMatToPixmap(newImage);
+  QPixmap scaledpixmap = pixmap.scaled(label->size(), Qt::IgnoreAspectRatio);
+  label->setPixmap(scaledpixmap);
+}
 
+void HelperFunctions::downloadImage(Mat image){
+  QString fileName = QFileDialog::getSaveFileName(nullptr, "Save Image", QDir::homePath(), "PNG Image (*.png);;JPEG Image (*.jpg)");
+
+  if (!fileName.isEmpty()) {
+      bool result = cv::imwrite(fileName.toStdString(), image);
+      if (!result) {
+          QMessageBox::warning(nullptr, "Error", "Failed to save image!");
+        }
+    }
+}

@@ -38,7 +38,7 @@ public:
   static Mat applyMedianFilter(Mat inputImage, int kernelSize);
 
   static vector<vector<double>> computeGuassianKernel(int kernelSize, float sigma);
-  static Mat cannyEdgeDetection(const cv::Mat& input, double threshold1, double threshold2);
+  static Mat cannyEdgeDetection(const Mat& input, double threshold1, double threshold2);
 };
 
 #endif // IMAGESMOOTHERS_H

@@ -3,6 +3,9 @@
 
 #include <cstdint>
 #include <iostream>
+#include <random>
+
+
 using namespace cv;
 using namespace std;
 NoiseAddatives::NoiseAddatives()
@@ -53,6 +56,7 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg, double Mean=0.0, double StdD
     }
   return DstImg;
 }
+
 Mat NoiseAddatives::SaltAndPepperNoise(Mat SrcImg)
 {
   Mat resultImg  = SrcImg.clone();
@@ -62,16 +66,19 @@ Mat NoiseAddatives::SaltAndPepperNoise(Mat SrcImg)
   for (int i = 0; i < resultImg.rows; i++) {
 
       for (int k = 0; k < resultImg.cols; k++) {
+
         random = rand() % r + 1;
 
         if (random == 1)
-          resultImg.at<float>(i, k) = 255;
+          resultImg.at<Vec3b>(i, k) = Vec3b(255,0,0);
 
-        else if (random == 2) {
-          resultImg.at<float>(i, k) = 0;
+        else if (random == 2)
+          resultImg.at<Vec3b>(i, k) = Vec3b(0,255,0);
+
+        else if (random == 3)
+          resultImg.at<Vec3b>(i, k) = Vec3b(0,0,255);
       }
     }
-  }
   return resultImg;
 }
 

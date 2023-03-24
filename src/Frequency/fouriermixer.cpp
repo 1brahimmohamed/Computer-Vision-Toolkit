@@ -100,7 +100,7 @@ void FourierMix::construct_H(Mat &scr, Mat &dst, String type, float D0)
 void FourierMix::filtering(Mat &scr, Mat &dst, Mat &H)
 {
   fftshift(H, H);
-  Mat planesH[] = { Mat_<float>(H.clone()), Mat_<float>(H.clone()) };
+  Mat planesH[] = { cv::Mat_<float>(H.clone()), cv::Mat_<float>(H.clone()) };
 
   Mat planes_dft[] = { scr, Mat::zeros(scr.size(), CV_32F) };
   split(scr, planes_dft);

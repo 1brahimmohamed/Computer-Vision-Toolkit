@@ -9,6 +9,8 @@
 #include <cmath>
 
 using namespace cv;
+using namespace std;
+
 
 class FourierMix
 {
