@@ -9,36 +9,31 @@
 #include <opencv2/core/core.hpp>
 #include <time.h>
 
+#define PI 3.14159265358979323846264338327950288
+
 
 using namespace cv;
 using namespace std;
-
-
-// Struct to store center points and pixel intensities
-struct cent
-{
-    int bright;
-    int Xbright;
-    int Ybright;
-};
-
-// Vector to print circles
-vector<Vec3f> circles;
-int Xc, Yc;
-
-// Maximum and minimum radius values
-int maxradius = 40;
-int minradius = 9;
-int radius = maxradius;
-// Array of structs to store center points
-cent accumul[40];
 
 class HoughCircle
 {
 public:
   HoughCircle();
-  static Mat HoughCircleCall(Mat HoughCircle);
-  static Mat Accumulate(Mat SrcImg);
+
+  static vector <Vec3f> circles;
+  static int Xc, Yc;
+  static int maxradius;
+  static int minradius;
+  static int radius;
+  struct cent
+  {
+    int bright;
+    int Xbright;
+    int Ybright;
+  };
+
+  static Mat Accumulate(Mat SrcImg, int maxradius, int minradius);
+  static Mat HoughCircleCall(Mat HoughCircle, int minRaduis, int maxRaduis);
 };
 
 #endif // HOUGHCIRCLE_H

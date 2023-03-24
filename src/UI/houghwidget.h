@@ -72,6 +72,7 @@ private:
   HoughImage houghImage;
 
   void lineDetectionOnImage();
+  void circleDetectionOnImage();
 };
 
 #endif // HOUGHWIDGET_H

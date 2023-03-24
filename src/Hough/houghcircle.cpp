@@ -1,9 +1,12 @@
 #include "houghcircle.h"
 
 
-#define PI 3.14159265358979323846264338327950288
+int HoughCircle::maxradius = 35;
+int HoughCircle::minradius = 9;
+int HoughCircle::radius = HoughCircle::maxradius;
 
-
+int HoughCircle::Xc, HoughCircle::Yc;
+vector <Vec3f> HoughCircle::circles;
 
 HoughCircle::HoughCircle()
 {
@@ -13,22 +16,22 @@ HoughCircle::HoughCircle()
 
 
 // Function to manipulate threshold parameters and perform Canny edge detection
-
-Mat HoughCircle::Accumulate(Mat SrcImg)
+Mat HoughCircle:: Accumulate(Mat SrcImg, int maxradius, int minradius)
 {
+  //    raduis = maxradius;
+  cent accumul[maxradius];
+  // Array of structs to store center points
   Mat SrcImgGray, Acc, Edges;
   cvtColor( SrcImg, SrcImgGray, COLOR_BGR2GRAY);
-  Acc.create(SrcImgGray.size(), SrcImgGray.type());									// Creating an accumulator
-  //Average filter to reduce noise
-  blur( SrcImgGray, Edges, Size(5,5));
-  //Canny edge detector
-  Canny( Edges, Edges, 50, 270, 3);
+  Acc.create(SrcImgGray.size(), SrcImgGray.type());
+  blur( SrcImgGray, Edges, Size(3,3));
+  Canny( Edges, Edges, 90, 270, 3);
   // looping over the canny adges to create the accumelator
   for(int i = 0;i < Acc.rows; i++)
     {
       for(int j = 0; j < Acc.cols; j++)
         {
-          if (Edges.at<uchar>(i,j) > 256/2)//if edge intensity is stronger than a certain value we add it to the accumaltor
+          if (Edges.at<uchar>(i,j) > 256/3)//if edge intensity is stronger than a certain value we add it to the accumaltor
             {
               for (int theta = 0; theta <= 360; theta++)			// Calculating center points for each edge point
                 {
@@ -48,8 +51,6 @@ Mat HoughCircle::Accumulate(Mat SrcImg)
   int Ybright = 0;					// Y-index of highest pixel intensity value
   int sum = 0;						// Sum of differences between candidate center point and its neighbors + candidate center point intensity value
   int bigsum = 0;						// Largest sum of differences between candidate center point and its neighbors + candidate center point intensity value
-  int brightdist = 4;					// Maximum pixel distance from candidate center point to neighbors
-
   for(int i = 0; i < Acc.rows; i++)
     {
       for(int j = 0; j < Acc.cols; j++)
@@ -68,8 +69,7 @@ Mat HoughCircle::Accumulate(Mat SrcImg)
           sum = 0;											// Resetting sum of differences
         }
     }
-
-  cout<<"Center: "<<"["<<Xbright<<","<<Ybright<<"]"<<"	Votes: "<<votes<<"		Radius:"<<radius<<endl;	// Printing accumulator center point for this radius
+  //    cout<<"Center: "<<"["<<Xbright<<","<<Ybright<<"]"<<"	Votes: "<<votes<<"		Radius:"<<radius<<endl;	// Printing accumulator center point for this radius
   double dist;											// Distance between two points
   double radco = 1;									// Radial coefficient (used to calculate minimum distance between centers)
   bool valid = true;										// Valid/Invalid center point
@@ -92,13 +92,15 @@ Mat HoughCircle::Accumulate(Mat SrcImg)
   return SrcImg;
 }
 
-
-Mat HoughCircle::HoughCircleCall(Mat HoughCircle)
+Mat HoughCircle::HoughCircleCall(Mat HoughCircle , int minRaduis = 10, int maxRaduis = 35)
 {
+  Mat imageCircles = HoughCircle.clone();
+
   for(radius = maxradius; radius > minradius; radius--)							// Varying radial values
     {
-      HoughCircle = Accumulate(HoughCircle);															// Creating an accumulator for every radial value
+      imageCircles = Accumulate(imageCircles, maxRaduis, minRaduis);															// Creating an accumulator for every radial value
       waitKey(1);																// Causing a delay to allow image in trackbar to render
     }
-  return HoughCircle;
+  return imageCircles;
 }
+

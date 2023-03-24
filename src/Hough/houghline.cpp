@@ -11,7 +11,7 @@
 #define TRESHOLD1 50
 #define RATIO 3
 
-double HoughLine::PI = 3.14159265358979323846;
+double HoughLine::LinePI = 3.14159265358979323846;
 int HoughLine::hough_threshold = 120;
 int HoughLine::numThetas       = 180;
 int HoughLine::numRadii        = 100;
@@ -106,7 +106,7 @@ Mat HoughLine::houghEllipse(Mat& edges, Mat& output) {
 
           if (edges.at<uchar>(y, x) == 255) {
               for (int c = 0; c < cMax; c++) {
-                  double angle = c * PI / 180.0;
+                  double angle = c * LinePI / 180.0;
                   double a = round(x * cos(angle) + y * sin(angle));
                   double b = round(-x * sin(angle) + y * cos(angle));
                   int aIndex = (int) a + aMax ;

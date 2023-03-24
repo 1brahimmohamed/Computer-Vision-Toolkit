@@ -22,7 +22,7 @@ class HoughLine
 public:
   HoughLine();
 
-  static double PI;
+  static double LinePI;
   static int numThetas;
   static int numRadii;
   static int hough_threshold;

@@ -4,7 +4,7 @@
 #include "houghwidget.h"
 #include "src/Helpers/helperfunctions.h"
 
-//#include "src/Hough/houghcircle.h"
+#include "src/Hough/houghcircle.h"
 #include "src/Hough/houghline.h"
 #include "src/Hough/houghellipse.h"
 
@@ -15,6 +15,8 @@ HoughWidget::HoughWidget(QWidget *parent) :
 {
   ui->setupUi(this);
   this->houghImage.threshold = 150;
+  this->houghImage.maxRaduis = 35;
+  this->houghImage.minRaduis = 10;
 }
 
 HoughWidget::~HoughWidget()
@@ -40,8 +42,7 @@ void HoughWidget::on_lineBtn_clicked()
 
 void HoughWidget::on_circleBtn_clicked()
 {
-  //  houghImage.shapeDetectedImage = HoughCircle::HoughCircleCall(houghImage.originalImage);
-  //  HelperFunctions::viewImageOnLabel(houghImage.shapeDetectedImage, ui->imageFiltered);
+  circleDetectionOnImage();
 }
 
 
@@ -54,6 +55,11 @@ void HoughWidget::on_ellipseBtn_clicked()
 void HoughWidget::lineDetectionOnImage(){
   this->houghImage.shapeDetectedImage = HoughLine::detectLines(this->houghImage.originalImage, this->houghImage.threshold);
   HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
+}
+
+void HoughWidget::circleDetectionOnImage(){
+  houghImage.shapeDetectedImage = HoughCircle::HoughCircleCall(houghImage.originalImage, houghImage.minRaduis, houghImage.maxRaduis);
+  HelperFunctions::viewImageOnLabel(houghImage.shapeDetectedImage, ui->imageFiltered);
 }
 
 
@@ -69,6 +75,7 @@ void HoughWidget::on_lineThreshSlider_sliderReleased()
 void HoughWidget::on_lineThreshSlider_valueChanged(int value)
 {
   ui->lineThreshSliderValue->setText(QString::number(value));
+
 }
 
 
@@ -77,7 +84,8 @@ void HoughWidget::on_minRaduisSlider_sliderReleased()
   int value = ui->minRaduisSlider->value();
   this->houghImage.minRaduis = value;
   ui->minRaduisSliderValue->setText(QString::number(value));
-  // @TODO: Some Function
+  circleDetectionOnImage();
+
 }
 
 
@@ -92,7 +100,7 @@ void HoughWidget::on_maxRaduisSlider_sliderReleased()
   int value = ui->maxRaduisSlider->value();
   this->houghImage.maxRaduis = value;
   ui->maxRaduisSliderValue->setText(QString::number(value));
-  // @TODO: Some Function
+  circleDetectionOnImage();
 }
 
 
