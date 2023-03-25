@@ -3,7 +3,7 @@
  * File Name: filterswidget.h
  * Description: Header file for Filters UI Widget
  * Author(s): Ibrahim Mohamed
- * Last Modified: 24 Mar 23 - 14:25
+ * Last Modified: 23 Mar 23 - 14:25
  *
  *******************************************************************************/
 

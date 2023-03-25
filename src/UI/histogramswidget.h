@@ -44,11 +44,8 @@ public:
 
 private slots:
   void on_histUploadBtn_clicked();
-
   void on_downloadEqualBtn_clicked();
-
   void on_downloadNormalBtn_clicked();
-
   void on_histGrayBtn_clicked();
 
 private:

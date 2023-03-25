@@ -7,6 +7,7 @@
 #include "src/Hough/houghcircle.h"
 #include "src/Hough/houghline.h"
 #include "src/Hough/houghellipse.h"
+#include "src/ActiveContour/active_contour.h"
 
 
 HoughWidget::HoughWidget(QWidget *parent) :
@@ -115,31 +116,32 @@ void HoughWidget::on_maxRaduisSlider_valueChanged(int value)
 
 void HoughWidget::on_betaSlider_sliderReleased()
 {
-  int value = ui->betaSlider->value();
+  float value = mapSliderValue(0, 10,0.1, ui->betaSlider);
   this->houghImage.beta = value;
   ui->betaValue->setText(QString::number(value));
-  // @TODO: Some Function
+  activeContourOnImage();
 }
 
 
 void HoughWidget::on_betaSlider_valueChanged(int value)
 {
-  ui->betaValue->setText(QString::number(value));
-}
+  float fvalue = mapSliderValue(0, 10,0.1, ui->betaSlider);
+  ui->betaValue->setText(QString::number(fvalue));}
 
 
 void HoughWidget::on_alphaSlider_sliderReleased()
 {
-  int value = ui->alphaSlider->value();
+  float value = mapSliderValue(0, 10,0.1, ui->alphaSlider);
   this->houghImage.alpha = value;
   ui->alphaValue->setText(QString::number(value));
-  // @TODO: Some Function
+  activeContourOnImage();
 }
 
 
 void HoughWidget::on_alphaSlider_valueChanged(int value)
 {
-  ui->alphaValue->setText(QString::number(value));
+  float fvalue = mapSliderValue(0, 10,0.1, ui->alphaSlider);
+  ui->alphaValue->setText(QString::number(fvalue));
 }
 
 
@@ -148,7 +150,7 @@ void HoughWidget::on_gammaSlider_sliderReleased()
   int value = ui->gammaSlider->value();
   this->houghImage.gamma = value;
   ui->gammaValue->setText(QString::number(value));
-  // @TODO: Some Function
+  activeContourOnImage();
 }
 
 
@@ -157,12 +159,28 @@ void HoughWidget::on_gammaSlider_valueChanged(int value)
   ui->gammaValue->setText(QString::number(value));
 }
 
-
 void HoughWidget::on_activeContBtn_clicked()
 {
-  // @TODO: Some Function
+  activeContourOnImage();
 }
 
+void HoughWidget::activeContourOnImage(){
+  Mat activeContouredImage = ACTIVE_CONTOUR::active_contour(this->houghImage.originalImage,
+                                                            20,
+                                                            this->houghImage.alpha,
+                                                            this->houghImage.beta,
+                                                            this->houghImage.gamma,
+                                                            80,
+                                                            100);
+  HelperFunctions::viewImageOnLabel(activeContouredImage, ui->imageFiltered);
+}
+
+float HoughWidget::mapSliderValue(float mappedLowerLimit, float mappedUpperLimit, float step, QSlider* slider) {
+  float range = mappedUpperLimit - mappedLowerLimit;
+  float factor = range / (slider->maximum() - slider->minimum());
+  float fvalue = floor(slider->value() * factor / step + 0.5) * step + mappedLowerLimit;
+  return fvalue;
+}
 
 void HoughWidget::on_downloadBtn_clicked()
 {

@@ -801,7 +801,7 @@ background-color: #1e2236;
             </layout>
            </item>
            <item>
-            <layout class="QGridLayout" name="edgeDectectorsContainer_4" rowstretch="5,0,0,0,0,0" columnstretch="80,0">
+            <layout class="QGridLayout" name="edgeDectectorsContainer_4" rowstretch="5,0,0,0,0,0" columnstretch="80,20">
              <property name="spacing">
               <number>15</number>
              </property>
@@ -832,8 +832,14 @@ QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
                </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
                <property name="maximum">
-                <number>10</number>
+                <number>1000</number>
+               </property>
+               <property name="value">
+                <number>25</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -863,7 +869,7 @@ color: #fff;
 }</string>
                </property>
                <property name="text">
-                <string>2</string>
+                <string>20</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -945,6 +951,15 @@ QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
                </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>50</number>
+               </property>
+               <property name="value">
+                <number>20</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -977,6 +992,15 @@ QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
 }</string>
                </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1005,7 +1029,7 @@ color: #fff;
 }</string>
                </property>
                <property name="text">
-                <string>2</string>
+                <string>2.5</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -1035,7 +1059,7 @@ color: #fff;
 }</string>
                </property>
                <property name="text">
-                <string>2</string>
+                <string>0.9</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

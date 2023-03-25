@@ -32,7 +32,6 @@ public:
 
 private slots:
   void on_btnPlus_clicked();
-
   void on_btnMinus_clicked();
 
 private:

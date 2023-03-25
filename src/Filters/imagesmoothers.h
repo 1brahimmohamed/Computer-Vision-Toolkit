@@ -1,10 +1,10 @@
 /******************************************************************************
  *
- * File Name: filters.h
+ * File Name: imagesmoothers.h
  * Description: Header file for Image Smoothers Class to remove noise
  * including removing  noise using Average, Guassian & Median Filters
  * Author: Ibrahim Mohamed
- * Last Modified: 3 Mar 23 - 01:36
+ * Last Modified: 25 Mar 23 - 01:36
  *
  *******************************************************************************/
 

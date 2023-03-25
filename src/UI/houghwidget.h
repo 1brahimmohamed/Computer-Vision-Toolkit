@@ -12,6 +12,8 @@
 #define HOUGHWIDGET_H
 
 #include <QWidget>
+#include <QSlider>
+
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/imgproc.hpp"
 
@@ -23,8 +25,8 @@ struct HoughImage{
   int threshold;
   int maxRaduis;
   int minRaduis;
-  int alpha;
-  int beta;
+  float alpha;
+  float beta;
   int gamma;
 };
 
@@ -66,6 +68,8 @@ private:
 
   void lineDetectionOnImage();
   void circleDetectionOnImage();
+  void activeContourOnImage();
+  float mapSliderValue(float mappedLowerLimit, float mappedUpperLimit, float step, QSlider* slider);
 };
 
 #endif // HOUGHWIDGET_H

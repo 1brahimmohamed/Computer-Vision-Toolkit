@@ -16,6 +16,7 @@
 #include "src/Filters/imagesmoothers.h"
 #include "src/Filters/noiseaddatives.h"
 #include "src/Filters/edgedetectors.h"
+#include "src/Filters/threshold.h"
 
 #include "src/Frequency/fouriermixer.h"
 
@@ -154,24 +155,30 @@ void FiltersWidget::on_lowPassBtn_clicked()
 
 void FiltersWidget::on_highPassBtn_clicked()
 {
-  Mat outputImage = FourierMix::apply_filter(filtersWidgetImage.currentImage, "Ideal High Pass", this->filtersWidgetImage.dNote);
+  Mat outputImage = FourierMix::apply_filter(this->filtersWidgetImage.currentImage, "Ideal High Pass", this->filtersWidgetImage.dNote);
   updateFilteredPicture(outputImage);
 }
 
 void FiltersWidget::on_freqGuassianBtn_clicked()
 {
-  Mat outputImage = FourierMix::apply_filter(filtersWidgetImage.currentImage, "Gaussian", this->filtersWidgetImage.dNote);
+  Mat outputImage = FourierMix::apply_filter(this->filtersWidgetImage.currentImage, "Gaussian", this->filtersWidgetImage.dNote);
   updateFilteredPicture(outputImage);
 }
 
 void FiltersWidget::on_lThresholdingBtn_clicked()
 {
 
+  // Apply local thresholding with a block size of 11 and a k value of 0.2
+  Mat localThresholdedImage = THRESHOLD_H::LocalThresholdImage(this->filtersWidgetImage.currentImage, 11, 0.2);
+  HelperFunctions::viewImageOnLabel(localThresholdedImage, ui->imageFiltered);
+
 }
 
 void FiltersWidget::on_gThresholdingBtn_clicked()
 {
-
+  // Apply global thresholding with a threshold value of 128
+  Mat globalThresholdedImage = THRESHOLD_H::GlobalthresholdImage(this->filtersWidgetImage.currentImage, 128);
+  HelperFunctions::viewImageOnLabel(globalThresholdedImage, ui->imageFiltered);
 }
 
 // Sliders Handelers
