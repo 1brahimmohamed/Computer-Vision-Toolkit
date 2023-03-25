@@ -354,7 +354,6 @@ std::vector<std::pair<int, int>> chain_code(std::vector<int> x, std::vector<int>
 cv::Mat active_contour(cv::Mat mat,int iterations, float alpha, float beta, float gamma, int points, int radius){
     // Create a new matrix with the same size as the source matrix
     cv::Mat dst(mat.size(), mat.type());
-    cv::cvtColor(mat, mat, cv::COLOR_BGR2GRAY);
     img::Image original_image = img::Image(mat);
     cv::Size sz = original_image.mat.size();
     int x_cooridinates[80];
