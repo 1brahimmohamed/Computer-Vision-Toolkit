@@ -1,3 +1,14 @@
+/******************************************************************************
+ *
+ * File Name: histogramswidget.h
+ * Description: Header file for Histogram UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 24 Mar 23 - 15:19
+ *
+ *******************************************************************************/
+
+
+
 #ifndef HISTOGRAMSWIDGET_H
 #define HISTOGRAMSWIDGET_H
 

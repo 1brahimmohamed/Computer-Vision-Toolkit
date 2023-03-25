@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: mixingwidget.h
+ * Description: Header file for Hybrid Image UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 23 Mar 23 - 19:43
+ *
+ *******************************************************************************/
+
+
 #ifndef MIXINGWIDGET_H
 #define MIXINGWIDGET_H
 
@@ -30,7 +40,6 @@ public:
 private slots:
   void on_mixImage1Btn_clicked();
   void on_mixImage2Btn_clicked();
-
   void on_mixBtn_clicked();
   void on_image1D0Slider_valueChanged(int value);
   void on_kernelSlider_4_valueChanged(int value);

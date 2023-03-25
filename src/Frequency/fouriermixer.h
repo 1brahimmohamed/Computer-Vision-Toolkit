@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: fouriermixer.h
+ * Description: Header file for Fourier Domain Mainpulation Class including fft shift,
+ * DFT calculations & filtering using frequncy domain
+ * Author(s): Mahmoud Yaser & Maye Khaled
+ * Last Modified: 3 Mar 23 - 20:26
+ *
+ *******************************************************************************/
+
 #ifndef FOURIERMIXER_H
 #define FOURIERMIXER_H
 

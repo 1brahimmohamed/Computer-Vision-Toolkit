@@ -1,3 +1,14 @@
+/******************************************************************************
+ *
+ * File Name: noiseaddivates.cpp
+ * Description: Source file for Noise Addatives Class including Unifrom,
+ * Guassian & Salt-Pepper noise
+ * Author(s): Omina Sayed
+ * Last Modified: 3 Mar 23 - 23:11
+ *
+ *******************************************************************************/
+
+
 #include "noiseaddatives.h"
 #include <QDebug>
 
@@ -16,14 +27,28 @@ NoiseAddatives::~NoiseAddatives()
 {
 
 }
+
+/**
+ * @brief Inline function for calculating Clamp
+ * @param n {int} - number
+ * @return {unsigned char}
+ */
 inline unsigned char NoiseAddatives::Clamp(int n)
 {
   n = n>255 ? 255 : n;
   return n<0 ? 0 : n;
 }
 
+/**
+ * @brief Function to add Gaussian Noise on Image
+ * @param SrcImg {cv::Mat}
+ * @param Mean {double} - mean of the guassian distribution
+ * @param StdDev {double} - standart devation of the guassian distribution
+ * @return DstImg {cv::Mat}
+ */
 Mat NoiseAddatives::GaussianNoise(const Mat SrcImg, double Mean=0.0, double StdDev=10.0)
-{   //check for the provided image
+{
+  //check for the provided image
   Mat DstImg = SrcImg.clone();
 
   if(SrcImg.empty())
@@ -57,6 +82,12 @@ Mat NoiseAddatives::GaussianNoise(const Mat SrcImg, double Mean=0.0, double StdD
   return DstImg;
 }
 
+
+/**
+ * @brief Function to add Salt & Pepper Noise on Image
+ * @param SrcImg {cv::Mat}
+ * @return resultImg {cv::Mat}
+ */
 Mat NoiseAddatives::SaltAndPepperNoise(Mat SrcImg)
 {
   Mat resultImg  = SrcImg.clone();

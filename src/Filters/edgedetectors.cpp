@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: edgedectectors.cpp
+ * Description: Source file for Edge Detectors Class including Sobel,
+ * Prewitte, Roberts & Canny
+ * Author(s): Omina Sayed & Ibrahim Mohamed
+ * Last Modified: 24 Mar 23 - 03:11
+ *
+ *******************************************************************************/
+
 #include <cstdint>
 #include <iostream>
 #include <QDebug>
@@ -18,11 +28,12 @@ EdgeDetectors::~EdgeDetectors()
 
 }
 
-/*
-Apply a Gaussian Filter
-Apply sobel : method to compute the x and y gradient vector components.
-Apply non-maximum suppression: edge thinning technique used to remove extraneous edge candidates.
-Apply thresholding: is used to categorize the remaining edge pixels into two categories using a low and high threshold value
+/**
+ * @brief Gaussian Filter is applied then sobel method is applied to compute the x and y gradient vector components.
+ * after that non-maximum suppression is aplied which make edge thinning technique used to remove extraneous edge candidates.
+   at the end thresholding is used to categorize the remaining edge pixels into two categories using a low and high threshold value
+ * @param SrcImg {cv::Mat}
+ * @return noisyImage {cv::Mat}
  */
 Mat EdgeDetectors::CannyEdgeDetector(Mat SrcImg)
 {
@@ -86,37 +97,22 @@ Mat EdgeDetectors::CannyEdgeDetector(Mat SrcImg)
         }
     }
 
-  //  //to categorize the remaining edge pixels into three categories using a low and high threshold value.
-  //  float magMax = 0.5, magMin = 0.1;
-  //  Mat strong = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
-  //  Mat strong = magnitude.clone();
-  //  inRange(magnitude, magMin, magMax, strong);
-
   float magMax = 0.2, magMin = 0.1;
   Mat strong = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
   Mat weak = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
   Mat suppress = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
   float gradientMagnitude;
-
-  //  for (int x = 0; x < magnitude.cols; x++) {
-  //      for (int y = 0; y < magnitude.rows; y++) {
-  //          gradientMagnitude = magnitude.at<float>(x, y);
-  //          if (gradientMagnitude > magMax)
-  //            strong.at<float>(x, y) = gradientMagnitude;
-  //          else if (gradientMagnitude <= magMax && gradientMagnitude > magMin)
-  //            weak.at<float>(x, y) = gradientMagnitude;
-  //          else
-  //            suppress.at<float>(x, y) = gradientMagnitude;
-  //        }
-  //    }
-
-  //  float magMax = 0.5, magMin = 0.1;
-  //      Mat strong = Mat::zeros(magnitude.rows, magnitude.cols, CV_32F);
   inRange(magnitude, magMin, magMax, strong);
 
   return strong ;
 }
 
+
+/**
+ * @brief Perwitt Edge Detector
+ * @param SrcImg {cv::Mat}
+ * @return PerwittImage {cv::Mat}
+ */
 Mat EdgeDetectors::PerwittEdgeDetector(Mat SrcImg)
 {
   Point anchor = Point(-1, -1);
@@ -136,6 +132,11 @@ Mat EdgeDetectors::PerwittEdgeDetector(Mat SrcImg)
 }
 
 
+/**
+ * @brief Sobal Edge Detector
+ * @param SrcImg {cv::Mat}
+ * @return SobelImage {cv::Mat}
+ */
 Mat EdgeDetectors::SobalEdgeDetector(Mat SrcImg)
 {
   Point anchor =Point(-1, -1);
@@ -147,11 +148,16 @@ Mat EdgeDetectors::SobalEdgeDetector(Mat SrcImg)
   Mat Perwitt_Y = (Mat_<double>(3,3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);
   filter2D(SrcImg, DstImg_X, ddepth , Perwitt_X, anchor, delta, BORDER_DEFAULT );
   filter2D(SrcImg, DstImg_Y, ddepth , Perwitt_Y, anchor, delta, BORDER_DEFAULT );
-  Mat PerwittImage = DstImg_X + DstImg_Y;
-  return PerwittImage;
+  Mat SobelImage = DstImg_X + DstImg_Y;
+  return SobelImage;
 }
 
 
+/**
+ * @brief Roberts Edge Detector
+ * @param SrcImg {cv::Mat}
+ * @return RobertImage {cv::Mat}
+ */
 Mat EdgeDetectors::RobertEdgeDetector(Mat SrcImg)
 {
   Point anchor =Point(-1, -1);
@@ -163,6 +169,6 @@ Mat EdgeDetectors::RobertEdgeDetector(Mat SrcImg)
   Mat Perwitt_Y = (Mat_<double>(2,2) << 0, 1, -1, 0);
   filter2D(SrcImg, DstImg_X, ddepth , Perwitt_X, anchor, delta, BORDER_DEFAULT );
   filter2D(SrcImg, DstImg_Y, ddepth , Perwitt_Y, anchor, delta, BORDER_DEFAULT );
-  Mat PerwittImage = DstImg_X + DstImg_Y;
-  return PerwittImage;
+  Mat RobertImage = DstImg_X + DstImg_Y;
+  return RobertImage;
 }

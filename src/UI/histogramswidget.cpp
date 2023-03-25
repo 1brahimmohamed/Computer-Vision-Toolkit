@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: histogramswidget.cpp
+ * Description: Source file for Histogram UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 24 Mar 23 - 15:19
+ *
+ *******************************************************************************/
+
+
 #include "histogramswidget.h"
 #include "ui_histogramswidget.h"
 
@@ -24,6 +34,7 @@ HistogramsWidget::~HistogramsWidget()
   delete ui;
 }
 
+// ------------------------------- GENERAL FUNCTIONS ------------------------------------- //
 
 void HistogramsWidget::plotHistogram(const vector<int>& data , QString ChartName, QChartView* widget){
   QChart *chart = new QChart();
@@ -65,6 +76,9 @@ void HistogramsWidget::normalizedImage(){
   this->HistImage.normalizedImage = matNormalized;
   HelperFunctions::viewImageOnLabel(this->HistImage.normalizedImage, ui->HistPictureNormalized);
 }
+
+
+// ------------------------------- EVENT LISENTERS FUNCTIONS ------------------------------------- //
 
 void HistogramsWidget::on_histUploadBtn_clicked()
 {

@@ -1,8 +1,8 @@
 /******************************************************************************
  *
  * File Name: helperfunctions.h
- * Description: Header file for helper functions like reading image & converting
- * the image into different represenation types.
+ * Description: Header file for helper functions like reading image, converting
+ * the image into different represenation types that are used all over the program
  * Author: Ibrahim Mohamed
  * Last Modified: 24 Mar 23 - 01:38
  *

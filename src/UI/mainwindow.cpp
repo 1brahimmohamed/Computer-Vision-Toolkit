@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: mainwindow.cpp
+ * Description: Source file for Main Window UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 24 Mar 23 - 14:01
+ *
+ *******************************************************************************/
+
+
 #include "mainwindow.h"
 #include "filterswidget.h"
 #include "mixingwidget.h"

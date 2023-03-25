@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: edgedectectors.h
+ * Description: Header file for Edge Detectors Class including Sobel,
+ * Prewitte, Roberts & Canny
+ * Author(s): Omina Sayed & Ibrahim Mohamed
+ * Last Modified: 24 Mar 23 - 03:11
+ *
+ *******************************************************************************/
+
 #ifndef EDGEDETECTORS_H
 #define EDGEDETECTORS_H
 

@@ -1,3 +1,14 @@
+/******************************************************************************
+ *
+ * File Name: fouriermixer.cpp
+ * Description: Source file for Fourier Domain Mainpulation Class including fft shift,
+ * DFT calculations & filtering using frequncy domain
+ * Author(s): Mahmoud Yaser & Maye Khaled
+ * Last Modified: 3 Mar 23 - 20:26
+ *
+ *******************************************************************************/
+
+
 #include "fouriermixer.h"
 #include <QDebug>
 #include <iostream>
@@ -12,8 +23,14 @@ FourierMix::~FourierMix()
 
 }
 
+// Standard Size of the image is 500 * 500 Pixel
 Size2i imageSize = Size(500,500);
 
+/**
+ * @brief function to apply Fast Fourier Transform Shift
+ * @param input_img
+ * @param output_img
+ */
 void FourierMix::fftshift(const Mat &input_img, Mat &output_img)
 {
   output_img = input_img.clone();
@@ -33,7 +50,11 @@ void FourierMix::fftshift(const Mat &input_img, Mat &output_img)
   temp.copyTo(q3);
 }
 
-
+/**
+ * @brief function to calculate Discrete Fourier Transform
+ * @param scr {cv::Mat &} - source image
+ * @param dst {cv::Mat &} - distnation image
+ */
 void FourierMix::calculateDFT(Mat &scr, Mat &dst)
 {
   // define mat consists of two mat, one for real values and the other for complex values
@@ -45,7 +66,13 @@ void FourierMix::calculateDFT(Mat &scr, Mat &dst)
   dst = complexImg;
 }
 
-
+/**
+ * @brief function to construct the ####
+ * @param scr {cv::Mat &} - source image
+ * @param dst {cv::Mat &} - distnation image
+ * @param type {String} - type of the filter
+ * @param D0 {float} - diameter of the circle
+ */
 void FourierMix::construct_H(Mat &scr, Mat &dst, String type, float D0)
 {
   Mat H(scr.size(), CV_32F, Scalar(1));
@@ -96,7 +123,12 @@ void FourierMix::construct_H(Mat &scr, Mat &dst, String type, float D0)
     }
 }
 
-
+/**
+ * @brief FourierMix::filtering
+ * @param scr {cv::Mat &} - source image
+ * @param dst {cv::Mat &} - distnation image
+ * @param H   {cv::Mat &} - ###
+ */
 void FourierMix::filtering(Mat &scr, Mat &dst, Mat &H)
 {
   fftshift(H, H);
@@ -113,6 +145,13 @@ void FourierMix::filtering(Mat &scr, Mat &dst, Mat &H)
 
 }
 
+/**
+ * @brief function to apply frequency domain filter
+ * @param imgIn {cv::Mat}
+ * @param filter_type {String} - type of the filter
+ * @param D0 {float} - diameter of the circle
+ * @return imgOut {cv::Mat}
+ */
 Mat FourierMix::apply_filter(Mat imgIn, String filter_type, float D0){
   Mat imgOut;
 
@@ -137,13 +176,19 @@ Mat FourierMix::apply_filter(Mat imgIn, String filter_type, float D0){
   // IDFT
   dft(complexIH, imgOut, DFT_INVERSE | DFT_REAL_OUTPUT);
 
-    normalize(imgOut, imgOut, 0, 1, NORM_MINMAX);
+  normalize(imgOut, imgOut, 0, 1, NORM_MINMAX);
 
 
   return imgOut;
 }
 
 
+/**
+ * @brief function to add 2 images intensities
+ * @param imgLow  {cv::Mat} - Low Pass Image
+ * @param imgHigh {cv::Mat} - High Pass Image
+ * @return imgHybrid {cv::Mat} - Mixed Image
+ */
 Mat FourierMix::mix_images(Mat imgLow, Mat imgHigh){
   Mat imgHybrid;
   imgHybrid = imgLow + imgHigh;

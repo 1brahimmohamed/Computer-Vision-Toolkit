@@ -1,3 +1,14 @@
+/******************************************************************************
+ *
+ * File Name: mainwindow.h
+ * Description: Header file for Main Window UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 24 Mar 23 - 14:01
+ *
+ *******************************************************************************/
+
+
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

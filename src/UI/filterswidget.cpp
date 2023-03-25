@@ -1,3 +1,14 @@
+/******************************************************************************
+ *
+ * File Name: filterswidget.cpp
+ * Description: Source file for Filters UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 23 Mar 23 - 14:25
+ *
+ *******************************************************************************/
+
+
+
 #include "filterswidget.h"
 #include "ui_filterswidget.h"
 #include "src/Helpers/helperfunctions.h"
@@ -132,8 +143,9 @@ void FiltersWidget::on_cannyBtn_clicked()
   updateFilteredPicture(outputImage);
 }
 
-// Frequency Filters
 
+
+// Frequency Filters
 void FiltersWidget::on_lowPassBtn_clicked()
 {
   Mat outputImage = FourierMix::apply_filter(filtersWidgetImage.currentImage, "Ideal Low Pass", this->filtersWidgetImage.dNote);
@@ -209,7 +221,6 @@ void FiltersWidget::on_meanSlider_valueChanged(int value)
   this->filtersWidgetImage.mean = value;
   ui->meanSliderValue->setText(QString::number(value));
 }
-
 
 
 // Apply & Reset

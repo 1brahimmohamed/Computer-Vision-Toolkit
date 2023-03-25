@@ -1,3 +1,4 @@
+
 #include "houghwidget.h"
 #include "ui_houghwidget.h"
 
@@ -24,6 +25,10 @@ HoughWidget::~HoughWidget()
   delete ui;
 }
 
+// ------------------------------- EVENT LISENTERS FUNCTIONS ------------------------------------- //
+
+
+// Upload & Download
 void HoughWidget::on_uploadBtn_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
@@ -32,37 +37,21 @@ void HoughWidget::on_uploadBtn_clicked()
       HelperFunctions::viewImageOnLabel(this->houghImage.originalImage, ui->imageOriginal);
     }
 }
+void HoughWidget::on_downloadBtn_clicked()
+{
+  HelperFunctions::downloadImage(houghImage.shapeDetectedImage);
+}
 
 
+// Line Detetcion
 void HoughWidget::on_lineBtn_clicked()
 {
   lineDetectionOnImage();
 }
-
-
-void HoughWidget::on_circleBtn_clicked()
-{
-  circleDetectionOnImage();
-}
-
-
-void HoughWidget::on_ellipseBtn_clicked()
-{
-  this->houghImage.shapeDetectedImage = HoughEllipse::houghEllipseDetection(this->houghImage.originalImage, 10, 10, 10, 10);
-  HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
-}
-
 void HoughWidget::lineDetectionOnImage(){
   this->houghImage.shapeDetectedImage = HoughLine::detectLines(this->houghImage.originalImage, this->houghImage.threshold);
   HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
 }
-
-void HoughWidget::circleDetectionOnImage(){
-  houghImage.shapeDetectedImage = HoughCircle::HoughCircleCall(houghImage.originalImage, houghImage.minRaduis, houghImage.maxRaduis);
-  HelperFunctions::viewImageOnLabel(houghImage.shapeDetectedImage, ui->imageFiltered);
-}
-
-
 void HoughWidget::on_lineThreshSlider_sliderReleased()
 {
   int value = ui->lineThreshSlider->value();
@@ -70,15 +59,21 @@ void HoughWidget::on_lineThreshSlider_sliderReleased()
   ui->lineThreshSliderValue->setText(QString::number(value));
   lineDetectionOnImage();
 }
-
-
 void HoughWidget::on_lineThreshSlider_valueChanged(int value)
 {
   ui->lineThreshSliderValue->setText(QString::number(value));
 
 }
 
-
+// Circle Detetcion
+void HoughWidget::on_circleBtn_clicked()
+{
+  circleDetectionOnImage();
+}
+void HoughWidget::circleDetectionOnImage(){
+  houghImage.shapeDetectedImage = HoughCircle::HoughCircleCall(houghImage.originalImage, houghImage.minRaduis, houghImage.maxRaduis);
+  HelperFunctions::viewImageOnLabel(houghImage.shapeDetectedImage, ui->imageFiltered);
+}
 void HoughWidget::on_minRaduisSlider_sliderReleased()
 {
   int value = ui->minRaduisSlider->value();
@@ -87,14 +82,10 @@ void HoughWidget::on_minRaduisSlider_sliderReleased()
   circleDetectionOnImage();
 
 }
-
-
 void HoughWidget::on_minRaduisSlider_valueChanged(int value)
 {
   ui->minRaduisSliderValue->setText(QString::number(value));
 }
-
-
 void HoughWidget::on_maxRaduisSlider_sliderReleased()
 {
   int value = ui->maxRaduisSlider->value();
@@ -102,14 +93,23 @@ void HoughWidget::on_maxRaduisSlider_sliderReleased()
   ui->maxRaduisSliderValue->setText(QString::number(value));
   circleDetectionOnImage();
 }
-
-
 void HoughWidget::on_maxRaduisSlider_valueChanged(int value)
 {
   ui->maxRaduisSliderValue->setText(QString::number(value));
 }
 
+// Ellipse Detetcion
+void HoughWidget::on_ellipseBtn_clicked()
+{
+  this->houghImage.shapeDetectedImage = HoughEllipse::houghEllipseDetection(this->houghImage.originalImage, 10, 10, 10, 10);
+  HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
+}
 
+// Active Contour
+void HoughWidget::on_activeContBtn_clicked()
+{
+  // @TODO: Some Function
+}
 void HoughWidget::on_betaSlider_sliderReleased()
 {
   int value = ui->betaSlider->value();
@@ -117,14 +117,10 @@ void HoughWidget::on_betaSlider_sliderReleased()
   ui->betaValue->setText(QString::number(value));
   // @TODO: Some Function
 }
-
-
 void HoughWidget::on_betaSlider_valueChanged(int value)
 {
   ui->betaValue->setText(QString::number(value));
 }
-
-
 void HoughWidget::on_alphaSlider_sliderReleased()
 {
   int value = ui->alphaSlider->value();
@@ -132,14 +128,10 @@ void HoughWidget::on_alphaSlider_sliderReleased()
   ui->alphaValue->setText(QString::number(value));
   // @TODO: Some Function
 }
-
-
 void HoughWidget::on_alphaSlider_valueChanged(int value)
 {
   ui->alphaValue->setText(QString::number(value));
 }
-
-
 void HoughWidget::on_gammaSlider_sliderReleased()
 {
   int value = ui->gammaSlider->value();
@@ -147,22 +139,10 @@ void HoughWidget::on_gammaSlider_sliderReleased()
   ui->gammaValue->setText(QString::number(value));
   // @TODO: Some Function
 }
-
-
 void HoughWidget::on_gammaSlider_valueChanged(int value)
 {
   ui->gammaValue->setText(QString::number(value));
 }
 
 
-void HoughWidget::on_activeContBtn_clicked()
-{
-  // @TODO: Some Function
-}
-
-
-void HoughWidget::on_downloadBtn_clicked()
-{
-  HelperFunctions::downloadImage(houghImage.shapeDetectedImage);
-}
 

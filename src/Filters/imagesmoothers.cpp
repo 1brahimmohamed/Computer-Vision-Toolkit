@@ -1,10 +1,10 @@
 /******************************************************************************
  *
- * File Name: filters.cpp
- * Description: Source file for Filters Class including Adding noise and removing
- * noise using Average, Guassian & Median Filters
+ * File Name: imagesmoothers.cpp
+ * Description: Source file for Image Smoothers Class to remove noise
+ * including removing  noise using Average, Guassian & Median Filters
  * Author: Ibrahim Mohamed
- * Last Modified: 3 Mar 23 - 01:36
+ * Last Modified: 25 Mar 23 - 01:36
  *
  *******************************************************************************/
 
@@ -22,6 +22,8 @@ ImageSmoothers::~ImageSmoothers()
 {
 
 }
+
+// ------------------------------------ IMPLEMENTED FUNCTIONS  -----------------------------------------//
 
 
 /**
@@ -201,7 +203,7 @@ Mat ImageSmoothers::applyMedianFilter(Mat inputImage, int kernelSize){
 }
 
 
-// ------------------------------------ OpenCV Functions  -----------------------------------------//
+// ------------------------------------ OPEN CV FUNCTIONS  -----------------------------------------//
 
 Mat ImageSmoothers::OpenCVAvgFilter(Mat inputImage, int kernelSize){
    Mat outputImage;

@@ -21,24 +21,22 @@ using namespace std;
 class Histograms
 {
 public:
-    Histograms();
-    ~Histograms();
+  Histograms();
+  ~Histograms();
 
-    static vector<int> Histo(Mat image);
+  static vector<int> Histo(Mat image);
+  static vector<int> cumHist(vector<int> histogram);
+  static vector<int> calcuateScale(Mat image,vector<int> cumhistogram);
+  static vector<int> equalizedHistogram(Mat image, vector<int> histogram, vector<int> sk);
 
-    static vector<int> cumHist(vector<int> histogram);
-    static void histDisplay(int histogram[], const char* name);
-    static int  calculateImageSize(Mat image);
-    static vector<int> calcuateScale(Mat image,vector<int> cumhistogram);
+  static Mat  equilization(Mat image, vector<int> Sk);
+  static int  calculateImageSize(Mat image);
 
-    static Mat  equilization(Mat image, vector<int> Sk);
-    static vector<int> equalizedHistogram(Mat image, vector<int> histogram, vector<int> sk);
+  static Mat NormalizeImage(Mat inputImage);
+  static Mat normalizeMat(Mat inputMat, double minVal, double maxVal);
 
-    static Mat NormalizeImage(Mat inputImage);
-    static Mat normalizeMat(Mat inputMat, double minVal, double maxVal);
-
-    static Mat plotRGBHistogramPDF(Mat img);
-    static Mat plotRGBHistogramCDF(Mat img);
+  static Mat plotRGBHistogramPDF(Mat img);
+  static Mat plotRGBHistogramCDF(Mat img);
 };
 
 #endif // HISTOGRAM_H
