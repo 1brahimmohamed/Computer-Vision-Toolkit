@@ -4,7 +4,7 @@
 
 #include <opencv2/opencv.hpp>
 #include "src/Filters/threshold.h"
-//#include "src/ActiveContour/active_contour.h"
+#include "src/ActiveContour/active_contour.h"
 
 
 
@@ -23,12 +23,13 @@ int main(int argc, char *argv[])
  * Radius (1-500) int 1
  * Points (50-300) int 10
  * Iterations (1-100) int 1
-
-cv::Mat src_act = cv::imread("C:\\Users\\mahmo\\OneDrive\\Desktop\\img3.jpg", cv::IMREAD_GRAYSCALE);
-cv::Mat dst_act = ACTIVE_CONTOUR::active_contour(src_act, 20, 2.5, 0.9, 20, 80, 100);
-cv::imshow("Hello World", dst_act);
-cv::waitKey();
 */
+
+//cv::Mat src_act = cv::imread("C:\\Users\\mahmo\\OneDrive\\Desktop\\img3.jpg", cv::IMREAD_GRAYSCALE);
+//cv::Mat dst_act = ACTIVE_CONTOUR::active_contour(src_act, 20, 2.5, 0.9, 20, 80, 100);
+//cv::imshow("Hello World", dst_act);
+//cv::waitKey();
+
 
 /* Code to run threshold
 *
@@ -38,10 +39,7 @@ cv::waitKey();
 * Local threshold Parameters:
 * block_size (1-3-5-7-9-11-13-15-17-19-21-23-25-27-28-30)
 * k_value (0.01-1) float 0.01
-*
-*
 */
-
 
 cv::Mat inputImage = cv::imread("C:\\Users\\mahmo\\OneDrive\\Desktop\\img3.jpg", cv::IMREAD_GRAYSCALE);
 
@@ -56,8 +54,6 @@ cv::imshow("Input Image", inputImage);
 cv::imshow("Global Thresholded Image", globalThresholdedImage);
 cv::imshow("Local Thresholded Image", localThresholdedImage);
 cv::waitKey(0);
-
-
 
 
   return a.exec();

@@ -26,11 +26,7 @@ namespace img
         cv::Mat mat;
         cvector<uchar> pixels;
         Image(){};
-        Image(std::string path);
         Image(cv::Mat mat);
-        Image(cvector<uchar> pixels, size_t rows, size_t cols, int type);
-        void display(std::string title) const;
-        void vectorize();
     };
     cvector<double> filter(const Image &img, cvector<cvector<double>> mask);
     Image merge(const cvector<Image> &imgs);

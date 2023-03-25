@@ -21,20 +21,6 @@ double points_distance(int x1, int y1, int x2, int y2)
     return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
 }
 
-int count_edges(cv::Mat img,cv::Mat test)
-{
-  int count =0;
-    for (int i = 0; i < img.rows; i++)
-      {
-        for (int j = 0; j < img.cols; j++)
-          {
-            test.at<uchar>(i, j) =0;
-            if((int)img.at<uchar>(i, j)!=0)
-            count = count +1;
-          }
-      }
-return count;
-}
 
 void draw_circle(cv::Mat img,int x,int y, int r)
 {
@@ -58,7 +44,6 @@ cvector<cvector<double>> gaussian_kernel(int size, double std)
     for (int col = -size / 2; col <= size / 2; col++)
     {
       gaussian_value = (1 / (2 * (22 / 7) * pow(std, 2))) * exp(-(pow(row, 2) + pow(col, 2)) / (2 * pow(std, 2)));
-//      normalization_sum += gaussian_value;
       row_vector.push_back(gaussian_value);
     }
     filter.push_back(row_vector);

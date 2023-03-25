@@ -10,40 +10,12 @@ using namespace cv;
 
 namespace img
 {
-    Image::Image(cvector<uchar> pixels, size_t rows, size_t cols, int type)
-    {
-        this->mat = cv::Mat(rows, cols, type);
-        memcpy(this->mat.data, pixels.data(), pixels.size() * sizeof(unsigned char));
-        this->pixels = pixels;
-    }
-
     Image::Image(cv::Mat mat)
     {
         this->mat = mat;
-        this->vectorize();
     }
 
-    void Image::display(std::string title) const
-    {
-        cv::namedWindow(title, cv::WINDOW_AUTOSIZE);
-        cv::imshow(title, this->mat);
-        cv::waitKey(0);
-    }
 
-    void Image::vectorize()
-    {
-        if (this->mat.isContinuous())
-        {
-            this->pixels.assign((unsigned char *)this->mat.datastart, (unsigned char *)this->mat.dataend);
-        }
-        else
-        {
-            for (int i = 0; i < this->mat.rows; ++i)
-            {
-                this->pixels.insert(this->pixels.end(), this->mat.ptr<unsigned char>(i), this->mat.ptr<unsigned char>(i) + this->mat.cols);
-            }
-        }
-    }
 
     Image noise_filter(Image &source, int size, std::string type, double std)
     {
@@ -118,13 +90,6 @@ namespace img
                 }
             }
             dest = Image(grayscaled_image);
-            /*
-            std::cout<<cp.mat.type()<<std::endl;
-
-           cv::Mat cpy = img.mat.clone();
-            cvtColor(img.mat,cpy,cv::COLOR_BGR2GRAY);
-                dest  = Image(cpy);
-                */
         }
         else if (from == "bgr" && to == "hsv")
         {
@@ -258,7 +223,5 @@ namespace img
         }
         return fltr;
     }
-
-
 
 }
