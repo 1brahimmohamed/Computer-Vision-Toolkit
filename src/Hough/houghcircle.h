@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: houghcircle.h
+ * Description: Header file for Circle Detection using Hough Transfrom Class
+ * Author(s): Omina Sayed
+ * Last Modified: 25 Mar 23 - 02:09
+ *
+ *******************************************************************************/
+
+
 #ifndef HOUGHCIRCLE_H
 #define HOUGHCIRCLE_H
 

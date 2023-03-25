@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * File Name: houghcircle.cpp
+ * Description: Source file for Circle Detection using Hough Transfrom Class
+ * Author(s): Omina Sayed
+ * Last Modified: 25 Mar 23 - 02:09
+ *
+ *******************************************************************************/
+
 #include "houghcircle.h"
 
 
@@ -12,8 +21,6 @@ HoughCircle::HoughCircle()
 {
 
 }
-
-
 
 // Function to manipulate threshold parameters and perform Canny edge detection
 Mat HoughCircle:: Accumulate(Mat SrcImg, int maxradius, int minradius)
