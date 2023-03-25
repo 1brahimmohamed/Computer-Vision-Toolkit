@@ -1,3 +1,15 @@
+
+/******************************************************************************
+ *
+ * File Name: houghline.h
+ * Description: Header file for Line Detection using Hough Transfrom Class
+ * Author(s): Marina Nasser & Ibrahim Mohamed
+ * Last Modified: 23 Mar 23 - 16:09
+ *
+ *******************************************************************************/
+
+
+
 #ifndef HOUGHLINE_H
 #define HOUGHLINE_H
 

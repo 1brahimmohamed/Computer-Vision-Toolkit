@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: houghline.cpp
+ * Description: Source file for Line Detection using Hough Transfrom Class
+ * Author(s): Marina Nasser & Ibrahim Mohamed
+ * Last Modified: 23 Mar 23 - 16:09
+ *
+ *******************************************************************************/
+
+
 #include "houghline.h"
 #include <opencv2/opencv.hpp>
 #include <QDebug>
