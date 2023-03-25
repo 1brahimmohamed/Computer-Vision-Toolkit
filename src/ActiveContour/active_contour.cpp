@@ -215,14 +215,14 @@ std::vector<std::pair<int, int>> chain_code(std::vector<int> x, std::vector<int>
 }
 
 
-cv::Mat active_contour(cv::Mat mat,int iterations, float alpha, float beta, float gamma, int points, int radius){
+cv::Mat active_contour(cv::Mat mat,int iterations, float alpha, float beta, float gamma, int points, int radius, int centerX, int centerY){
     // Create a new matrix with the same size as the source matrix
     cv::Mat dst(mat.size(), mat.type());
     img::Image original_image = img::Image(mat);
     cv::Size sz = original_image.mat.size();
-    int x_cooridinates[80];
-    int y_cooridinates[80];
-    circle_contour(cv::Point(sz.width / 2, sz.height / 2), radius, points, x_cooridinates, y_cooridinates);
+    int x_cooridinates[points];
+    int y_cooridinates[points];
+    circle_contour(cv::Point(sz.width/2 - centerX, sz.height/2 - centerY), radius, points, x_cooridinates, y_cooridinates);
     dst = greedy_contour(original_image, iterations, alpha, beta, gamma, x_cooridinates, y_cooridinates, points, 11, true);
     cv::resize(dst, dst, cv::Size(360, round(360*dst.rows/dst.cols)));
     return dst;

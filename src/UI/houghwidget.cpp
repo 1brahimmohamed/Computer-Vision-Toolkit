@@ -18,9 +18,9 @@ HoughWidget::HoughWidget(QWidget *parent) :
   this->houghImage.threshold = 150;
   this->houghImage.maxRaduis = 35;
   this->houghImage.minRaduis = 10;
-  this->houghImage.alpha = 2.5;
-  this->houghImage.beta = 0.9;
-  this->houghImage.gamma = 20;
+  this->houghImage.alpha = 1;
+  this->houghImage.beta = 2;
+  this->houghImage.gamma = 5;
 }
 
 HoughWidget::~HoughWidget()
@@ -116,7 +116,7 @@ void HoughWidget::on_maxRaduisSlider_valueChanged(int value)
 
 void HoughWidget::on_betaSlider_sliderReleased()
 {
-  float value = mapSliderValue(0, 10,0.1, ui->betaSlider);
+  float value = mapSliderValue(0, 10, 0.1, ui->betaSlider);
   this->houghImage.beta = value;
   ui->betaValue->setText(QString::number(value));
   activeContourOnImage();
@@ -125,13 +125,13 @@ void HoughWidget::on_betaSlider_sliderReleased()
 
 void HoughWidget::on_betaSlider_valueChanged(int value)
 {
-  float fvalue = mapSliderValue(0, 10,0.1, ui->betaSlider);
+  float fvalue = mapSliderValue(0, 10, 0.1, ui->betaSlider);
   ui->betaValue->setText(QString::number(fvalue));}
 
 
 void HoughWidget::on_alphaSlider_sliderReleased()
 {
-  float value = mapSliderValue(0, 10,0.1, ui->alphaSlider);
+  float value = mapSliderValue(0, 10, 0.1, ui->alphaSlider);
   this->houghImage.alpha = value;
   ui->alphaValue->setText(QString::number(value));
   activeContourOnImage();
@@ -140,7 +140,7 @@ void HoughWidget::on_alphaSlider_sliderReleased()
 
 void HoughWidget::on_alphaSlider_valueChanged(int value)
 {
-  float fvalue = mapSliderValue(0, 10,0.1, ui->alphaSlider);
+  float fvalue = mapSliderValue(0, 10 ,0.1, ui->alphaSlider);
   ui->alphaValue->setText(QString::number(fvalue));
 }
 
@@ -166,12 +166,14 @@ void HoughWidget::on_activeContBtn_clicked()
 
 void HoughWidget::activeContourOnImage(){
   Mat activeContouredImage = ACTIVE_CONTOUR::active_contour(this->houghImage.originalImage,
-                                                            20,
-                                                            this->houghImage.alpha,
-                                                            this->houghImage.beta,
-                                                            this->houghImage.gamma,
-                                                            80,
-                                                            100);
+                                                            50, // # of iterations
+                                                            1, // Alpha
+                                                            2, // Beta
+                                                            5, // Gamma
+                                                            80, // # of points
+                                                            100, // init snake radius
+                                                            150, // init snake CenterX Bias
+                                                            50); // init snake CenterY Bias
   HelperFunctions::viewImageOnLabel(activeContouredImage, ui->imageFiltered);
 }
 
