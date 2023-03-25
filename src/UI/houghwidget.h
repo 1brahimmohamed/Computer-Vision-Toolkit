@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: houghwidget.cpp
+ * Description: Source file for Hough UI Widget
+ * Author(s): Ibrahim Mohamed
+ * Last Modified: 25 Mar 23 - 02:02
+ *
+ *******************************************************************************/
+
+
 #ifndef HOUGHWIDGET_H
 #define HOUGHWIDGET_H
 
@@ -32,39 +42,22 @@ public:
 
 private slots:
   void on_uploadBtn_clicked();
-
   void on_lineBtn_clicked();
-
   void on_circleBtn_clicked();
-
   void on_ellipseBtn_clicked();
-
   void on_lineThreshSlider_sliderReleased();
-
   void on_lineThreshSlider_valueChanged(int value);
-
   void on_minRaduisSlider_sliderReleased();
-
   void on_minRaduisSlider_valueChanged(int value);
-
   void on_maxRaduisSlider_sliderReleased();
-
   void on_maxRaduisSlider_valueChanged(int value);
-
   void on_betaSlider_sliderReleased();
-
   void on_betaSlider_valueChanged(int value);
-
   void on_alphaSlider_sliderReleased();
-
   void on_alphaSlider_valueChanged(int value);
-
   void on_gammaSlider_sliderReleased();
-
   void on_gammaSlider_valueChanged(int value);
-
   void on_activeContBtn_clicked();
-
   void on_downloadBtn_clicked();
 
 private:

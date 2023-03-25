@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name: houghellipse.cpp
+ * Description: Souce file for Ellipse Detection using Hough Transfrom Class
+ * Author(s): Omina Sayed
+ * Last Modified: 25 Mar 23 - 02:09
+ *
+ *******************************************************************************/
+
+
 #include "houghellipse.h"
 
 HoughEllipse::HoughEllipse()
