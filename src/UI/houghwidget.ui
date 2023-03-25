@@ -801,12 +801,77 @@ background-color: #1e2236;
             </layout>
            </item>
            <item>
-            <layout class="QGridLayout" name="edgeDectectorsContainer_4" rowstretch="5,0,0,0,0,0" columnstretch="80,20">
+            <layout class="QGridLayout" name="edgeDectectorsContainer_4" rowstretch="5,0,0,0,0,0" columnstretch="80,0">
              <property name="spacing">
               <number>15</number>
              </property>
+             <item row="1" column="0">
+              <widget class="QSlider" name="alphaSlider">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QSlider:horizontal {
+    min-height: 35%;
+}
+QSlider::groove:horizontal {
+    height: 1px;
+    background: white; 
+}
+QSlider::handle:horizontal {
+    width: 30px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 15px;
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
+}
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+}</string>
+               </property>
+               <property name="maximum">
+                <number>10</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="gammaValue">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft Sans Serif</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+color: #fff;
+}</string>
+               </property>
+               <property name="text">
+                <string>2</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
-              <widget class="QLabel" name="label_10">
+              <widget class="QLabel" name="alphaLabel">
                <property name="font">
                 <font>
                  <family>Microsoft Sans Serif</family>
@@ -818,6 +883,38 @@ background-color: #1e2236;
                </property>
                <property name="text">
                 <string>Alpha</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="gammaLabel">
+               <property name="font">
+                <font>
+                 <family>Microsoft Sans Serif</family>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255)</string>
+               </property>
+               <property name="text">
+                <string>Gamma</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="betaLabel">
+               <property name="font">
+                <font>
+                 <family>Microsoft Sans Serif</family>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255)</string>
+               </property>
+               <property name="text">
+                <string>Beta</string>
                </property>
               </widget>
              </item>
@@ -853,10 +950,10 @@ QSlider::handle:horizontal:hover {
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QSlider" name="alphaSlider">
+             <item row="3" column="0">
+              <widget class="QSlider" name="betaSlider">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -882,98 +979,6 @@ QSlider::handle:horizontal:hover {
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="font">
-                <font>
-                 <family>Microsoft Sans Serif</family>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255)</string>
-               </property>
-               <property name="text">
-                <string>Beta</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="betaValue">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Microsoft Sans Serif</family>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {
-background-color: #252a41;
-border: 0;
-border-radius: 10px;
-color: #fff;
-}</string>
-               </property>
-               <property name="text">
-                <string>2</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QLineEdit" name="gammaValue">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Microsoft Sans Serif</family>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {
-background-color: #252a41;
-border: 0;
-border-radius: 10px;
-color: #fff;
-}</string>
-               </property>
-               <property name="text">
-                <string>2</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="font">
-                <font>
-                 <family>Microsoft Sans Serif</family>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255)</string>
-               </property>
-               <property name="text">
-                <string>Gamma</string>
                </property>
               </widget>
              </item>
@@ -1007,35 +1012,33 @@ color: #fff;
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QSlider" name="betaSlider">
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="betaValue">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft Sans Serif</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true">QSlider:horizontal {
-    min-height: 35%;
-}
-QSlider::groove:horizontal {
-    height: 1px;
-    background: white; 
-}
-QSlider::handle:horizontal {
-    width: 30px;
-    margin-top: -15px;
-    margin-bottom: -15px;
-    border-radius: 15px;
-    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(210, 210, 210, 255), stop:0.7 rgba(210, 210, 210, 100));
-}
-QSlider::handle:horizontal:hover {
-    background: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 rgba(255, 255, 255, 255), stop:0.7 rgba(255, 255, 255, 100));
+                <string notr="true">QLineEdit {
+background-color: #252a41;
+border: 0;
+border-radius: 10px;
+color: #fff;
 }</string>
                </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+               <property name="text">
+                <string>2</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
