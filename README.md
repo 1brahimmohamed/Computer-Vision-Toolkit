@@ -1,19 +1,110 @@
-# CV-A02
-## Objectives
-* Apply Hough transform for detecting parametric shapes like circles and lines
-* Apply Harris operator for detecting corners.
-* Apply Active Contour Model for semi-supervised shape delineation.
+# CV-Toolbox: Filters, Histograms, Gradients, Frequency, Contours
 
-## Requirements
-* Detect edges using Canny edge detector, detect lines and circles located in these images (if any) using Hough transform. Superimpose the detected shapes on the images.
-* Initialize the contour for a given object and evolve the Active Contour Model (snake) using the greedy algorithm. Represent the output as chain code and compute the perimeter and the area inside these contours.
+## Table of contents:
+- [Objectives](#Features)
+- [Project Features](#deliverables-folders)
+- [Dependinces](#dependenices)
+- [How to Run The Project](#how-to-run-the-project)
+- [Project Overview](#project-overview)
+- [Team](#team)
 
-### Create two python files to organize your implementation
-* **Hough.py**: this will include your implementation for Hough transform for lines and circles (requirement 1).
-* **ActiveContour.py**: this will include your implementation for Harris operator for corners detection (requirement 2)
+## Features
+- Add various noise types to images such as uniform, guassian & salt-pepper noise.
+- Filtration of noisy images using low pass filters such as: average, Gaussian, median filters.
+- Edge detection using variety of masks such as: Sobel, Prewitt, Roberts and canny edge detectors.
+- Change RGB images to grayscale
+- View histograms of images and show equalization & normalization of image.
+- Add frequency domain filters such as low-pass, high-pass, local & global thresholding & Gaussian filters.
+- Mix images in frequency domain to get Hybrid images.
+- Apply Hough transform for detecting parametric shapes like circles, ellipses and lines
+- Apply Active Contour Model for semi-supervised shape delineation.
 
-## Important notes:
-* You should implement these tasks without depending on OpenCV library or alike. However you can use the OpenCV Canny Edge Detector as preprocessing to Hough Transform.
-* Plagiarizing lines will not be tolerated.
-* You can start from the source code you delivered from the previous task so that you give your program a new version with new features so that by the end of the semester you will have your own application with multiple computer vision algorithms up and running. (optional)
-* Don't forget to upload the report via github.
+
+## Deliverables Folders
+- Filters : this includes implementation for filtration functions (requirements 1-3)
+    - edgedetectors.cpp/.h
+    - noiseaddiatves.cpp/.h
+    - imagesmoothers.cpp/ .h
+    - threshold.cpp/ .h
+
+- Frequency : this includes implementation for frequency domain related tasks 
+    - fouriermixer.cpp/ .h
+
+- Histograms : this includes implementation for histogram related tasks.
+    - histograms.cpp /.h
+
+- Helpers : this includes the helper functions used all over program like converting images to view them.
+    - helperfunctions.cpp/ .h
+
+- UI files: has the ui files
+    - mainwindow.cpp/ .h/ .ui
+    - filterwidget.cpp/ .h/ .ui
+    - histogramswidget.cpp/ .h/ .ui
+    - houghwidget.cpp/ .h/ .ui
+    - mixingwidget.cpp/ .h/ .ui
+
+- Assets : folder contains program assets like ui svgs & images to test implementation.
+
+## Dependenices
+    - Qt Version 6.4.2
+    - OpenCV 4.7.0
+
+## How to run the project
+- Download and Install Qt from the online installer using minGW 64 architecture.
+```
+https://www.qt.io/download-qt-installer?hsCtaTracking=99d9dd4f-5681-48d2-b096-470725510d34%7C074ddad0-fdef-4e53-8aa8-5e8a876d6ab4 
+```
+make sure that QtCharts is enabled
+
+- Download and build openCV 4.7.0 from their website
+```
+https://opencv.org/releases/
+```
+- if you don't know how to build openCV on your PC please refer to the installCV.md
+
+- Go to the project.pro file and make sure that openCV libraries are refered to in your pc like that.
+``` 
+INCLUDEPATH += <yourCV build folder path>\install\include
+
+LIBS += -L<yourCV build folder path>\release\lib \
+    -lopencv_calib3d470 \
+    -lopencv_core470 \
+    -lopencv_features2d470 \
+    -lopencv_flann470 \
+    -lopencv_highgui470 \
+    -lopencv_imgproc470 \
+    -lopencv_imgcodecs470 \
+    -lopencv_photo470 \
+    -lopencv_stitching470 \
+    -lopencv_ts470 \
+    -lopencv_video470 \
+    -lopencv_videoio470 \
+```
+
+- Build the project
+- Run the project
+
+
+### Project Overview
+![Filters Tab](./images/gifs/1.gif)
+![GrayScale Tab](./images/gifs/2.gif)
+![Histogram Tab](./images/gifs/3.gif)
+![Histogram Tab](./images/gifs/4.gif)
+
+
+### Team
+
+Second Semester - Computer Vision (SBE3230) class project created by:
+
+| Team Members' Names                                       | Section | B.N. |
+|---------------------------------------------------------- |:-------:|:----:|
+| [Ibrahim Mohamed](https://github.com/1brahimmohamed)      |    1    |  2   |
+| [Mahmoud Yaser](https://github.com/mahmoud1yaser)         |    2    |  30  |
+| [Maye Khaled](https://github.com/mayekhaled0)             |    2    |  40  |
+| [Marina Nasser](https://github.com/MarinaNasser)          |    2    |  12  |
+| [Omnia Sayed](https://github.com/omniaSayed)              |    1    |  14  |
+
+
+### Submitted to:
+- Eng. Peter Emad & Eng. Laila Abbas
+All rights reserved © 2022 to Team 5 - Systems & Biomedical Engineering, Cairo University (Class 2024)
