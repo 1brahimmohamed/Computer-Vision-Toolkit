@@ -13,6 +13,7 @@
 #include "mixingwidget.h"
 #include "histogramswidget.h"
 #include "houghwidget.h"
+#include "matchingwidget.h"
 
 #include "ui_mainwindow.h"
 
@@ -27,13 +28,15 @@ MainWindow::MainWindow(QWidget *parent)
   FiltersWidget *myFilterWidget = new FiltersWidget();
   MixingWidget *myMixingWidget = new MixingWidget();
   HistogramsWidget *myHistogramWidget = new HistogramsWidget();
-  HoughWidget * muHoughWidget = new HoughWidget();
+  HoughWidget * myHoughWidget = new HoughWidget();
+  MatchingWidget * myMatchingWidget = new MatchingWidget();
 
 
   ui->stackedWidget->addWidget(myFilterWidget);
   ui->stackedWidget->addWidget(myMixingWidget);
   ui->stackedWidget->addWidget(myHistogramWidget);
-  ui->stackedWidget->addWidget(muHoughWidget);
+  ui->stackedWidget->addWidget(myHoughWidget);
+  ui->stackedWidget->addWidget(myMatchingWidget);
 
   ui->stackedWidget->setCurrentIndex(index);
 }

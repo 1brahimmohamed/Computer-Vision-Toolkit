@@ -1,12 +1,5 @@
 #include "harrisoperator.h"
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgcodecs.hpp>
-#include <opencv2/core/core.hpp>
-#include<cmath>
-#include<cstdint>
-#include <random>
-#include <iostream>
+
 using namespace cv;
 using namespace std;
 double HarrisOperator::threshold_level = 0.02;
