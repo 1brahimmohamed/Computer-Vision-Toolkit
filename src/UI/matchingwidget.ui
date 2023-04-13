@@ -15,9 +15,12 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="77,23">
    <item>
-    <layout class="QVBoxLayout" name="mixPicsSlidersWidgetLayput" stretch="74">
+    <layout class="QVBoxLayout" name="matchPicsWidgetLayout" stretch="0">
      <item>
       <widget class="QWidget" name="picturesWidget_2" native="true">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: #141725;
 border-radius: 10%;
@@ -120,22 +123,19 @@ border-radius: 10%;
          </layout>
         </item>
         <item>
-         <layout class="QGridLayout" name="gridLayout_4" rowstretch="5,90,5" columnstretch="25,35,25">
-          <item row="2" column="1">
-           <spacer name="verticalSpacer_10">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+         <layout class="QGridLayout" name="gridLayout_4" rowstretch="5,90,0" columnstretch="10,40,40,10">
+          <item row="1" column="2">
+           <widget class="QLabel" name="matchingPicture">
+            <property name="text">
+             <string/>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
+            <property name="scaledContents">
+             <bool>true</bool>
             </property>
-           </spacer>
+           </widget>
           </item>
-          <item row="1" column="0">
-           <spacer name="horizontalSpacer_7">
+          <item row="1" column="3">
+           <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -147,8 +147,8 @@ border-radius: 10%;
             </property>
            </spacer>
           </item>
-          <item row="1" column="2">
-           <spacer name="horizontalSpacer_8">
+          <item row="1" column="0">
+           <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -161,7 +161,7 @@ border-radius: 10%;
            </spacer>
           </item>
           <item row="0" column="1">
-           <spacer name="verticalSpacer_9">
+           <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -174,20 +174,27 @@ border-radius: 10%;
            </spacer>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="pictureMixed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QLabel" name="resultPicture">
+            <property name="enabled">
+             <bool>true</bool>
             </property>
             <property name="text">
              <string/>
             </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
            </widget>
+          </item>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -197,9 +204,9 @@ border-radius: 10%;
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="mixControlWidgetLayout" stretch="45,55">
+    <layout class="QVBoxLayout" name="matchControlWidgetLayout" stretch="45,55">
      <item>
-      <widget class="QWidget" name="MixcontrolUpperWidget" native="true">
+      <widget class="QWidget" name="matchControlUpperWidget" native="true">
        <property name="styleSheet">
         <string notr="true">background-color: #181b2b;
 border-radius: 10%;
@@ -239,7 +246,7 @@ border-radius: 10%;
          </widget>
         </item>
         <item>
-         <widget class="QWidget" name="mixControlsContainer" native="true">
+         <widget class="QWidget" name="matchControlsContainer" native="true">
           <property name="styleSheet">
            <string notr="true">background-color: #141725;
 </string>
@@ -263,7 +270,7 @@ border-radius: 10%;
               <number>13</number>
              </property>
              <item row="3" column="0" colspan="2">
-              <widget class="QPushButton" name="mixImage1Btn_2">
+              <widget class="QPushButton" name="matchApplyBtn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -294,7 +301,7 @@ background-color: #1d408d;
               </widget>
              </item>
              <item row="2" column="0" colspan="2">
-              <widget class="QPushButton" name="mixImage1Btn_3">
+              <widget class="QPushButton" name="siftApllyBtn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -325,7 +332,7 @@ background-color: #1d408d;
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QPushButton" name="mixImage2Btn">
+              <widget class="QPushButton" name="matchImage2Btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -356,7 +363,7 @@ background-color: #1d408d;
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QPushButton" name="mixImage1Btn">
+              <widget class="QPushButton" name="matchImage1Btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -387,7 +394,7 @@ background-color: #1d408d;
               </widget>
              </item>
              <item row="1" column="0" colspan="2">
-              <widget class="QPushButton" name="mixImage1Btn_4">
+              <widget class="QPushButton" name="harrisApplyBtn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -421,58 +428,8 @@ background-color: #1d408d;
            </item>
            <item>
             <widget class="QCheckBox" name="checkBox">
-             <property name="styleSheet">
-              <string notr="true">QCheckBox {
-    background-color: #ddd;
-    border-radius: 15px;
-    padding: 3px;
-    padding-left: 45px;
-    position: relative;
-}
-
-QCheckBox::indicator {
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    width: 24px;
-    height: 24px;
-    border-radius: 12px;
-    background-color: white;
-    border: 1px solid #ccc;
-}
-
-QCheckBox::indicator:checked {
-    background-color: #2196f3;
-    border-color: #2196f3;
-}
-
-QCheckBox::indicator:checked:after {
-    content: &quot;&quot;;
-    display: block;
-    position: absolute;
-    left: 29px;
-    top: 2px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: white;
-}
-
-QCheckBox::indicator:unchecked:after {
-    content: &quot;&quot;;
-    display: block;
-    position: absolute;
-    left: 4px;
-    top: 2px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: #ccc;
-}
-</string>
-             </property>
              <property name="text">
-              <string>CheckBox</string>
+              <string>Operate in Image 2</string>
              </property>
             </widget>
            </item>
