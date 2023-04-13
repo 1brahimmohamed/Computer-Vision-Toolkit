@@ -1,11 +1,13 @@
 #include "ssd_ncc.h"
 
-using namespace std;
-using namespace cv;
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <QElapsedTimer>
+#include <QDebug>
 
+using namespace std;
+using namespace cv;
 
 SSD_NCC::SSD_NCC()
 {
@@ -192,7 +194,14 @@ Mat SSD_NCC::matchImagesDriver(Mat Image1, Mat Image2){
     }
 
   // Call matchFeatures with SSD
+  QElapsedTimer timerSSD;
+  timerSSD.start();
+
   vector<int> matches_ssd = matchFeatures(features1, features2, true);
+
+  qint64 elapsedSSD = timerSSD.elapsed();
+  qDebug() << "SSD Elapsed time:" << elapsedSSD << "ms";
+
   vector<DMatch> matches1to2_ssd;
   for (int i = 0; i < matches_ssd.size(); i++)
     {
@@ -201,7 +210,14 @@ Mat SSD_NCC::matchImagesDriver(Mat Image1, Mat Image2){
 
 
   // Call matchFeatures with NCC
+  QElapsedTimer timerNCC;
+  timerNCC.start();
+
   vector<int> matches_ncc = matchFeatures(features1, features2, false);
+
+  qint64 elapsedNCC = timerNCC.elapsed();
+  qDebug() << "NCC Elapsed time:" << elapsedNCC << "ms";
+
   vector<DMatch> matches1to2_ncc;
   for (int i = 0; i < matches_ncc.size(); i++)
     {

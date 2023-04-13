@@ -55,7 +55,7 @@ void MatchingWidget::on_harrisApplyBtn_clicked()
 {
   Mat operatingImg = operatingImage();
 
-  Mat output = HarrisOperator::HarrisDrivingFunction(operatingImg, 50.0);
+  Mat output = HarrisOperator::HarrisDrivingFunction(operatingImg, 0.02);
   updateLabel(output, ui->resultPicture);
 }
 
