@@ -2,6 +2,7 @@
 #include "ui_matchingwidget.h"
 #include "src/Helpers/helperfunctions.h"
 #include "src/Harris/harrisoperator.h"
+#include "src/SSD_NCC/ssd_ncc.h"
 
 
 MatchingWidget::MatchingWidget(QWidget *parent) :
@@ -21,6 +22,14 @@ void MatchingWidget::updateLabel(Mat updatedImage, QLabel *pictureLable){
   HelperFunctions::viewImageOnLabel(updatedImage, pictureLable);
 }
 
+Mat MatchingWidget::operatingImage(){
+  switch (this->whatPic) {
+    case 2:
+      return this->matchImage2;
+    default:
+      return this->matchImage1;
+    }
+}
 
 void MatchingWidget::on_matchImage1Btn_clicked()
 {
@@ -44,16 +53,8 @@ void MatchingWidget::on_matchImage2Btn_clicked()
 
 void MatchingWidget::on_harrisApplyBtn_clicked()
 {
-  Mat operatingImg;
+  Mat operatingImg = operatingImage();
 
-  switch (this->whatPic) {
-    case 2:
-      operatingImg = this->matchImage2;
-      break;
-    default:
-      operatingImg = this->matchImage1;
-      break;
-    }
   Mat output = HarrisOperator::HarrisDrivingFunction(operatingImg, 50.0);
   updateLabel(output, ui->resultPicture);
 }
@@ -67,7 +68,8 @@ void MatchingWidget::on_siftApllyBtn_clicked()
 
 void MatchingWidget::on_matchApplyBtn_clicked()
 {
-
+  Mat output = SSD_NCC::matchImagesDriver(this->matchImage1, this->matchImage2);
+  updateLabel(output, ui->matchingPicture);
 }
 
 

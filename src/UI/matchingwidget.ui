@@ -428,8 +428,11 @@ background-color: #1d408d;
            </item>
            <item>
             <widget class="QCheckBox" name="checkBox">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255)</string>
+             </property>
              <property name="text">
-              <string>Operate in Image 2</string>
+              <string>Operate on Image 2</string>
              </property>
             </widget>
            </item>

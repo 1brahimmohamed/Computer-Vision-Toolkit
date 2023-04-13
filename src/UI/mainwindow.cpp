@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->stackedWidget->addWidget(myHoughWidget);
   ui->stackedWidget->addWidget(myMatchingWidget);
 
-  ui->stackedWidget->setCurrentIndex(4);
+  ui->stackedWidget->setCurrentIndex(index);
 }
 
 MainWindow::~MainWindow()

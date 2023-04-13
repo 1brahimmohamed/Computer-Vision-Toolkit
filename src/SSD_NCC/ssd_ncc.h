@@ -11,6 +11,7 @@ public:
     static double ssd (vector<double> v1, vector<double> v2);
     static double ncc(vector<double> v1, vector<double> v2);
     static vector<int> matchFeatures(vector<vector<double>> features1, vector<vector<double>> features2, bool useNCC);
+    static cv::Mat matchImagesDriver(cv::Mat Image1, cv::Mat Image2);
 };
 
 

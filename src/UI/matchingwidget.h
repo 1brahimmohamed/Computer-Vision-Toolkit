@@ -40,6 +40,7 @@ private slots:
 private:
   Ui::MatchingWidget *ui;
   void updateLabel(Mat updatedImage , QLabel *pictureLable);
+  Mat operatingImage();
 };
 
 #endif // MATCHINGWIDGET_H
