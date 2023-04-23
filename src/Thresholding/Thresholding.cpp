@@ -1,4 +1,4 @@
-#include "optimalthresholding.h"
+#include "thresholding.h"
 
 #include <iostream>
 #include <vector>
@@ -8,13 +8,50 @@
 using namespace std;
 using namespace cv;
 
-OptimalThresholding::OptimalThresholding()
+Thresholding::Thresholding()
 {
 
 }
 
+Mat Thresholding::getOptimalThreshold(Mat InputImage, int max_iterations = 100, double threshold = 0.5){
+      int threshold_value = 128;
+      int delta = 1;
+      int iterations = 0;
+      int total_pixels = InputImage.rows * InputImage.cols;
 
-Mat OptimalThresholding::getOptimalThreshold(Mat InputImage)
+      while (delta > threshold && iterations < max_iterations) {
+          iterations++;
+          int sum1 = 0, sum2 = 0, count1 = 0, count2 = 0;
+
+          for (int i = 0; i < InputImage.rows; i++) {
+              for (int j = 0; j < InputImage.cols; j++) {
+                  if (InputImage.at<uchar>(i, j) <= threshold_value) {
+                      sum1 += InputImage.at<uchar>(i, j);
+                      count1++;
+                  }
+                  else {
+                      sum2 += InputImage.at<uchar>(i, j);
+                      count2++;
+                  }
+              }
+          }
+
+          int mean1 = sum1 / count1;
+          int mean2 = sum2 / count2;
+
+          int new_threshold_value = (mean1 + mean2) / 2;
+
+          delta = abs(threshold_value - new_threshold_value);
+          threshold_value = new_threshold_value;
+      }
+      cv::Mat output_image;
+      cvtColor(InputImage, output_image, COLOR_BGR2GRAY);
+      cv::threshold(output_image, output_image, threshold, 255, THRESH_BINARY);
+
+      return output_image;
+}
+
+Mat Thresholding::Otsu(Mat InputImage)
 {
     // Calculate the histogram of the image
     vector<int> hist(256, 0);
