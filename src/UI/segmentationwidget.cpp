@@ -19,9 +19,9 @@ segmentationWidget::segmentationWidget(QWidget *parent) :
   this->segmentationWidgetImage.colorBandWidth = 16;
   this->segmentationWidgetImage.maxItrs = 50;
   this->segmentationWidgetImage.optimalThreshold = 100;
-  this->segmentationWidgetImage.regionGrowThreshold = 10;
-  this->segmentationWidgetImage.seedX = 80;
-  this->segmentationWidgetImage.seedY = 80;
+  this->segmentationWidgetImage.regionGrowThreshold = 15;
+  this->segmentationWidgetImage.seedX = 200;
+  this->segmentationWidgetImage.seedY = 400;
   this->segmentationWidgetImage.imageSize = cv::Size(800,800);
  }
 
@@ -79,7 +79,7 @@ void segmentationWidget::on_localThresBtn_clicked()
 void segmentationWidget::on_globalThresBtn_clicked()
 {
   // Apply global thresholding with a threshold value of 128
-  Mat globalThresholdedImage = THRESHOLD_H::GlobalthresholdImage(this->segmentationWidgetImage.currentImage, 128);
+  Mat globalThresholdedImage = THRESHOLD_H::GlobalthresholdImage(this->segmentationWidgetImage.currentImage, 50);
   HelperFunctions::viewImageOnLabel(globalThresholdedImage, ui->imageSegmented);
 }
 
