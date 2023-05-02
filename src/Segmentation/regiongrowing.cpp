@@ -21,8 +21,12 @@ cv::Mat RegionGrowing::growRegion(cv::Mat& inputImage, int seedRow, int seedCol,
     // Initialize output image
     cv::Mat outputImage = cv::Mat::zeros(m_imageSize, CV_8UC1);
 
+    // Convert input image to LUV colorspace
+    cv::Mat luvImage;
+    cv::cvtColor(inputImage, luvImage, cv::COLOR_BGR2Luv);
+
     // Resize the input image to m_imageSize
-    cv::resize(inputImage, inputImage, m_imageSize);
+    cv::resize(luvImage, luvImage, m_imageSize);
 
     // Create a queue to store the pixels to be processed
     std::queue<Pixel> pixelQueue;
@@ -46,9 +50,9 @@ cv::Mat RegionGrowing::growRegion(cv::Mat& inputImage, int seedRow, int seedCol,
             neighborCol = currentPixel.col + neighborhood[i][1];
 
             // Check if the neighbor is within the image bounds
-            if (isPixelInBounds(inputImage, neighborRow, neighborCol)) {
+            if (isPixelInBounds(luvImage, neighborRow, neighborCol)) {
                 // Check if the neighbor pixel is within the threshold value
-                diff = abs(inputImage.at<uchar>(currentPixel.row, currentPixel.col) - inputImage.at<uchar>(neighborRow, neighborCol));
+                diff = cv::norm(luvImage.at<cv::Vec3b>(currentPixel.row, currentPixel.col), luvImage.at<cv::Vec3b>(neighborRow, neighborCol), cv::NORM_L2);
                 if (diff <= threshold && outputImage.at<uchar>(neighborRow, neighborCol) == 0) {
                     // Add the neighbor pixel to the queue and mark it as processed
                     pixelQueue.push({neighborRow, neighborCol});
@@ -59,41 +63,3 @@ cv::Mat RegionGrowing::growRegion(cv::Mat& inputImage, int seedRow, int seedCol,
     }
     return outputImage;
 }
-
-
-
-/* main.cpp implementation
- *
- *
-#include "regiongrowing.h"
-
-int main() {
-    // Load the input image
-    cv::Mat inputImage = imread("C:\\Users\\mahmo\\OneDrive\\Pictures\\Screenshots\\Screenshot 2023-03-22 013002.png", cv::IMREAD_GRAYSCALE);
-
-    // Control Points in QT GUI
-    int seedX = 400;  // Bounds are 0-800
-    int seedY = 400; // Bounds are 0-800
-    int threshold = 10; // Bounds are 0-255
-    cv::Size ImageSize = cv::Size(800,800); // Set the numbers in your program
-
-    // Create an instance of the RegionGrowing class
-    RegionGrowing rg(ImageSize);
-
-    // Call the growRegion function to perform region growing
-    cv::Mat outputImage = rg.growRegion(inputImage, seedX, seedY, threshold);
-
-    // Show the input and output images
-    cv::namedWindow("Input Image", cv::WINDOW_NORMAL);
-    cv::imshow("Input Image", inputImage);
-
-    cv::namedWindow("Output Image", cv::WINDOW_NORMAL);
-    cv::imshow("Output Image", outputImage);
-
-    cv::waitKey(0);
-
-    return 0;
-}
-*
-*
-*/

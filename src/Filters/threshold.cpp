@@ -6,6 +6,8 @@ using namespace std;
 
 Mat GlobalthresholdImage(Mat inputImage, int thresholdValue)
 {
+    cvtColor(inputImage, inputImage, COLOR_BGR2GRAY);
+
     // Create a new output image with the same size as the input image
     Mat outputImage(inputImage.rows, inputImage.cols, CV_8UC1, Scalar(0));
 
@@ -28,6 +30,8 @@ Mat GlobalthresholdImage(Mat inputImage, int thresholdValue)
 
 Mat LocalThresholdImage(Mat inputImage, int blockSize, double k)
 {
+    cvtColor(inputImage, inputImage, COLOR_BGR2GRAY);
+
     // Create a new output image with the same size as the input image
     Mat outputImage(inputImage.rows, inputImage.cols, CV_8UC1, Scalar(0));
 
