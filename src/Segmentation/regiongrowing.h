@@ -1,7 +1,7 @@
 #ifndef REGIONGROWING_H
 #define REGIONGROWING_H
 
-#include <opencv2/opencv.h>
+#include <opencv2/opencv.hpp>
 
 class RegionGrowing {
 public:
