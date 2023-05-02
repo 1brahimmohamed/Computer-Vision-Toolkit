@@ -62,7 +62,7 @@ void MeanShift::copyPixel(PixelDataContainer* pixelCopyingTo, PixelDataContainer
 Mat MeanShift::MeanShiftSegmentation(Mat Img, float distanceBandwidth, float colorBandwidth){
 
   Mat ImgOut = Img.clone();
-  cvtColor(ImgOut, ImgOut, COLOR_BGR2Lab);
+  cvtColor(ImgOut, ImgOut, COLOR_BGR2Luv);
 
   int ROWS = Img.rows;
   int COLS = Img.cols;
@@ -78,7 +78,7 @@ Mat MeanShift::MeanShiftSegmentation(Mat Img, float distanceBandwidth, float col
   int Right;
   int Top;
   int Bottom;
-  int NumPts;					// number of points in a hypersphere
+  int NumPts;
   int step;
 
   for(int i = 0; i < ROWS; i++){
@@ -115,10 +115,10 @@ Mat MeanShift::MeanShiftSegmentation(Mat Img, float distanceBandwidth, float col
           ImgOut.at<Vec3b>(i, j) = Vec3b(PtCur.l, PtCur.u, PtCur.v);
         }
     }
-  //--------------------------------------------------------------------
 
   //----------------------- Segmentation ------------------------------
-  int label = -1;					// Label number
+
+  int label = -1;                                                       // Label number
   vector<float> Mode(ROWS * COLS * 3);					// Store the Lab color of each region
   vector<int> MemberModeCount(ROWS * COLS, 0);				// Store the number of each region
   split(ImgOut, IMGChannels);
@@ -196,6 +196,6 @@ Mat MeanShift::MeanShiftSegmentation(Mat Img, float distanceBandwidth, float col
           ImgOut.at<Vec3b>(i, j) = Vec3b(Pixel.l, Pixel.u, Pixel.v);
         }
     }
-  cvtColor(ImgOut, ImgOut, COLOR_Lab2BGR);
+  cvtColor(ImgOut, ImgOut, COLOR_Luv2BGR);
   return ImgOut;
 }

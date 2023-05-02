@@ -5,23 +5,22 @@
 
 class RegionGrowing {
 public:
-    // Constructor
-    RegionGrowing(cv::Size imageSize);
+  // Constructor
+  RegionGrowing();
 
-    // Define a struct to represent a pixel
-    struct Pixel {
-        int row;
-        int col;
-    };
+  // Define a struct to represent a pixel
+  struct Pixel {
+    int row;
+    int col;
+  };
 
-    // Define a function to check if a pixel is within the image bounds
-    bool isPixelInBounds(const cv::Mat& image, int row, int col);
-
-    // Define the region growing function
-    cv::Mat growRegion(cv::Mat& inputImage, int seedRow, int seedCol, int threshold);
+  // Define the region growing function
+  static cv::Mat growRegion(cv::Mat& inputImage, int seedRow, int seedCol, int threshold, cv::Size m_imageSize);
 
 private:
-    cv::Size m_imageSize;
+
+  // Define a function to check if a pixel is within the image bounds
+  static bool isPixelInBounds(const cv::Mat& image, int row, int col);
 };
 
 #endif // REGIONGROWING_H

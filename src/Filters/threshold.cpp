@@ -26,7 +26,6 @@ Mat GlobalthresholdImage(Mat inputImage, int thresholdValue)
     return outputImage;
 }
 
-
 Mat LocalThresholdImage(Mat inputImage, int blockSize, double k)
 {
     // Create a new output image with the same size as the input image
