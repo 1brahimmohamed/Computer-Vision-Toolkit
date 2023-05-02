@@ -1,7 +1,9 @@
 #include "regiongrowing.h"
 
 // Constructor
-RegionGrowing::RegionGrowing(cv::Size imageSize) : m_imageSize(imageSize) {}
+RegionGrowing::RegionGrowing(){
+
+}
 
 // Define the function to check if a pixel is within the image bounds
 bool RegionGrowing::isPixelInBounds(const cv::Mat& image, int row, int col) {
@@ -9,7 +11,7 @@ bool RegionGrowing::isPixelInBounds(const cv::Mat& image, int row, int col) {
 }
 
 // Define the region growing function
-cv::Mat RegionGrowing::growRegion(cv::Mat& inputImage, int seedRow, int seedCol, int threshold) {
+cv::Mat RegionGrowing::growRegion(cv::Mat& inputImage, int seedRow, int seedCol, int threshold, cv::Size m_imageSize) {
 
     // Define key variables
     Pixel currentPixel;
