@@ -15,7 +15,7 @@ public:
   };
 
   // Define the region growing function
-  static cv::Mat growRegion(cv::Mat& inputImage, int seedRow, int seedCol, int threshold, cv::Size m_imageSize);
+  static cv::Mat growRegion(cv::Mat inputImage, int seedRow, int seedCol, int threshold, cv::Size m_imageSize);
 
 private:
 

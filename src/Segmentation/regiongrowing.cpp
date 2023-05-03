@@ -11,7 +11,7 @@ bool RegionGrowing::isPixelInBounds(const cv::Mat& image, int row, int col) {
 }
 
 // Define the region growing function
-cv::Mat RegionGrowing::growRegion(cv::Mat& inputImage, int seedRow, int seedCol, int threshold, cv::Size m_imageSize) {
+cv::Mat RegionGrowing::growRegion(cv::Mat inputImage, int seedRow, int seedCol, int threshold, cv::Size m_imageSize) {
 
     // Define key variables
     Pixel currentPixel;
