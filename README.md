@@ -14,27 +14,66 @@
 - Edge detection using variety of masks such as: Sobel, Prewitt, Roberts and canny edge detectors.
 - Change RGB images to grayscale
 - View histograms of images and show equalization & normalization of image.
-- Add frequency domain filters such as low-pass, high-pass, local & global thresholding & Gaussian filters.
+- Add frequency domain filters such as low-pass, high-pass & Gaussian filters.
 - Mix images in frequency domain to get Hybrid images.
 - Apply Hough transform for detecting parametric shapes like circles, ellipses and lines
 - Apply Active Contour Model for semi-supervised shape delineation.
+- Extract the unique features in all images using Harris
+operator
+- Generate feature descriptors using scale invariant features
+(SIFT).
+- Match the image set features using sum of squared differences (SSD) and normalized cross correlations (NCC).
+- Apply thresholding using optimal thresholding, Otsu, spectral thresholding (more than 2 modes), local & global thresholding.
+- Do unspervised segmentation using k-means, region growing, agglomerative and mean shift methods.
+- Detect faces (color or grayscale)
+- Recognize faces based on PCA/Eigen analysis
 
 
-## Deliverables Folders
-- Filters : this includes implementation for filtration functions (requirements 1-3)
+
+## Toolkit Folders
+
+- ActiveContours: Includes active contours class related codes
+    - active_contour.cpp /.h
+    - image.cpp /.h
+    - utils.cpp/.h
+
+- FaceRegonsition: Includes face detection and recognistion code including pca and eigen analysis
+    - detectFaces.cpp /.h
+
+- Filters : Includes implementation for filtration functions (requirements 1-3)
     - edgedetectors.cpp/.h
     - noiseaddiatves.cpp/.h
     - imagesmoothers.cpp/ .h
     - threshold.cpp/ .h
 
-- Frequency : this includes implementation for frequency domain related tasks 
+- Frequency : Includes implementation for frequency domain related tasks 
     - fouriermixer.cpp/ .h
 
-- Histograms : this includes implementation for histogram related tasks.
-    - histograms.cpp /.h
+- Harris: Includes Harris Corner Operator Class
+    - harrisoperator.cpp/ .h
 
-- Helpers : this includes the helper functions used all over program like converting images to view them.
+- Helpers : Includes the helper functions used all over program like converting images to view them.
     - helperfunctions.cpp/ .h
+
+- Histograms : Includes implementation for histogram related tasks.
+    - histograms.cpp/ .h
+
+- Hough: Includes implementation classes of hough transform of Lines, Circles & Ellipses
+    - houghcircle.cpp/ .h
+    - houghellipse.cpp/ .h
+    - houghline.cpp/ .h
+
+- Segementation: Includes segementation classes
+    - kmeanssegmentation.cpp/ .h
+    - meanshift.cpp/ .h
+    - agglomerative.cpp/.h
+    - regiongrowing.cpp/ .h
+
+- SSD_NCC: Includes SIFT & image matching classes
+    - ssd_ncc.cpp/ .h
+
+- Thresholding: Includes Thresholding related tasks
+    - Thresholding.cpp/ .h
 
 - UI files: has the ui files
     - mainwindow.cpp/ .h/ .ui
@@ -42,23 +81,27 @@
     - histogramswidget.cpp/ .h/ .ui
     - houghwidget.cpp/ .h/ .ui
     - mixingwidget.cpp/ .h/ .ui
+    - facerecognitionwidget.cpp/ .h/ .ui
+    - matchingWidget.cpp/ .h/ .ui
+    - segementationWidget.cpp/ .h/ .ui
 
-- Assets : folder contains program assets like ui svgs & images to test implementation.
+- Assets : folder contains program assets like UI SVGs, images to test implementation & Cascading Face Classifer xml file.
 
 ## Dependenices
     - Qt Version 6.4.2
+    - Qt Charts
     - OpenCV 4.7.0
 
 ## How to run the project
 - Download and Install Qt from the online installer using minGW 64 architecture.
 ```
-https://www.qt.io/download-qt-installer?hsCtaTracking=99d9dd4f-5681-48d2-b096-470725510d34%7C074ddad0-fdef-4e53-8aa8-5e8a876d6ab4 
+www.qt.io
 ```
 make sure that QtCharts is enabled
 
 - Download and build openCV 4.7.0 from their website
 ```
-https://opencv.org/releases/
+www.opencv.org/releases/
 ```
 - if you don't know how to build openCV on your PC please refer to the installCV.md
 
@@ -67,18 +110,19 @@ https://opencv.org/releases/
 INCLUDEPATH += <yourCV build folder path>\install\include
 
 LIBS += -L<yourCV build folder path>\release\lib \
-    -lopencv_calib3d470 \
-    -lopencv_core470 \
-    -lopencv_features2d470 \
-    -lopencv_flann470 \
-    -lopencv_highgui470 \
-    -lopencv_imgproc470 \
-    -lopencv_imgcodecs470 \
-    -lopencv_photo470 \
-    -lopencv_stitching470 \
-    -lopencv_ts470 \
-    -lopencv_video470 \
-    -lopencv_videoio470 \
+    -lopencv_calib3d470                 \
+    -lopencv_core470                    \
+    -lopencv_features2d470              \
+    -lopencv_flann470                   \
+    -lopencv_highgui470                 \
+    -lopencv_imgproc470                 \
+    -lopencv_imgcodecs470               \
+    -lopencv_photo470                   \
+    -lopencv_stitching470               \
+    -lopencv_ts470                      \
+    -lopencv_video470                   \
+    -lopencv_videoio470                 \
+    -lopencv_objdetect470               \
 ```
 
 - Build the project
@@ -86,10 +130,20 @@ LIBS += -L<yourCV build folder path>\release\lib \
 
 
 ### Project Overview
-![Filters Tab](./images/gifs/1.gif)
-![GrayScale Tab](./images/gifs/2.gif)
-![Histogram Tab](./images/gifs/3.gif)
-![Histogram Tab](./images/gifs/4.gif)
+- Filters Tab
+![Filters Tab](./images/newgifs/1.gif)
+- Hybrid Image Tab
+![GrayScale Tab](./images/newgifs/2.gif)
+- Histograms Tab
+![Histogram Tab](./images/newgifs/3.gif)
+- Hough Trasform & Active Contours Tab
+![Hough Tab](./images/newgifs/4.gif)
+- Harris & SIFT Tab
+![Harris & SIFT Tab](./images/newgifs/5.gif)
+- Segementation Tab
+![Segementation Tab](./images/newgifs/6.gif)
+Face Detection & Recognistion Tab
+![Face Detection Tab](./images/newgifs/7.gif)
 
 
 ### Team

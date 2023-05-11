@@ -185,7 +185,8 @@ void segmentationWidget::on_agglomerativeBtn_clicked()
 void segmentationWidget::on_kmeanBtn_clicked()
 {
   ui->optionsWidget->setCurrentIndex(3);
-  //  applyKMeans();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyKMeans();
 }
 
 // Optimal Thrshold
