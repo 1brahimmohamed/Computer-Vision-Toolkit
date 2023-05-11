@@ -15,5 +15,4 @@ int detectFaces(cv::CascadeClassifier cascade, cv::Mat inputImage, std::vector<c
 
 #endif // DETECTFACES_H
 
-
 //DON'T FORGET TO ADD THIS LIBRARY "-lopencv_objdetect470 \" IN .PRO FILE

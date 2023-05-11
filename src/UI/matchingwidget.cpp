@@ -34,7 +34,7 @@ Mat MatchingWidget::operatingImage(){
 void MatchingWidget::on_matchImage1Btn_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
-    if (Image.cols > 1 && Image.rows >1){
+  if (Image.cols > 1 && Image.rows >1){
       this->matchImage1 = Image;
       updateLabel(Image, ui->picture1);
     }
@@ -44,8 +44,8 @@ void MatchingWidget::on_matchImage1Btn_clicked()
 void MatchingWidget::on_matchImage2Btn_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
-    if (Image.cols > 1 && Image.rows >1){
-     this->matchImage2 = Image;
+  if (Image.cols > 1 && Image.rows >1){
+      this->matchImage2 = Image;
       updateLabel(Image, ui->picture2);
     }
 }
@@ -53,10 +53,12 @@ void MatchingWidget::on_matchImage2Btn_clicked()
 
 void MatchingWidget::on_harrisApplyBtn_clicked()
 {
-  Mat operatingImg = operatingImage();
 
-  Mat output = HarrisOperator::HarrisDrivingFunction(operatingImg, 0.02);
-  updateLabel(output, ui->resultPicture);
+  Mat operatingImg = operatingImage();
+  if(!operatingImg.empty()){
+      Mat output = HarrisOperator::HarrisDrivingFunction(operatingImg, 0.02);
+      updateLabel(output, ui->resultPicture);
+    }
 }
 
 
@@ -68,8 +70,10 @@ void MatchingWidget::on_siftApllyBtn_clicked()
 
 void MatchingWidget::on_matchApplyBtn_clicked()
 {
-  Mat output = SSD_NCC::matchImagesDriver(this->matchImage1, this->matchImage2);
-  updateLabel(output, ui->matchingPicture);
+  if(!matchImage1.empty() && !matchImage2.empty()){
+    Mat output = SSD_NCC::matchImagesDriver(this->matchImage1, this->matchImage2);
+    updateLabel(output, ui->matchingPicture);
+  }
 }
 
 

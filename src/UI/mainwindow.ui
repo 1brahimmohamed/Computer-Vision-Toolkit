@@ -10,8 +10,17 @@
     <height>950</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>6</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Computer Vision Toolkit</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>C:/Users/I1bra/Downloads/1828899-200.ico</normaloff>C:/Users/I1bra/Downloads/1828899-200.ico</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #141725;
@@ -93,6 +102,11 @@ border-top-right-radius: 10%;
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
              </property>
              <property name="text">
               <string/>

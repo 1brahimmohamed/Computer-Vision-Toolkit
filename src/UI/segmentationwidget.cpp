@@ -59,88 +59,127 @@ void segmentationWidget::on_segUploadBtn_clicked()
 
 void segmentationWidget::on_segDownloadBtn_clicked()
 {
-  HelperFunctions::downloadImage(this->segmentationWidgetImage.segmentedImage);
+
+  if(!segmentationWidgetImage.currentImage.empty())
+    HelperFunctions::downloadImage(this->segmentationWidgetImage.segmentedImage);
+
 }
 
 
 // Thresholding
 void segmentationWidget::applyOptimalThreshold(){
-  Mat segementedImage = Thresholding::getOptimalThreshold(segmentationWidgetImage.currentImage,
-                                                          segmentationWidgetImage.maxItrs,
-                                                          segmentationWidgetImage.optimalThreshold);
-  updateSegmentedPicture(segementedImage);
+
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      Mat segementedImage = Thresholding::getOptimalThreshold(segmentationWidgetImage.currentImage,
+                                                              segmentationWidgetImage.maxItrs,
+                                                              segmentationWidgetImage.optimalThreshold);
+      updateSegmentedPicture(segementedImage);
+    }
 }
 
 void segmentationWidget::on_optimalThresBtn_clicked()
 {
   ui->optionsWidget->setCurrentIndex(0);
-  applyOptimalThreshold();
+
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      applyOptimalThreshold();
+    }
 }
 
 void segmentationWidget::on_otsuBtn_clicked()
 {
-  Mat segementedImage = Thresholding::Otsu(segmentationWidgetImage.currentImage);
-  updateSegmentedPicture(segementedImage);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      Mat segementedImage = Thresholding::Otsu(segmentationWidgetImage.currentImage);
+      updateSegmentedPicture(segementedImage);
+    }
 }
 
 void segmentationWidget::on_localThresBtn_clicked()
 {
-  // Apply local thresholding with a block size of 11 and a k value of 0.2
-  Mat localThresholdedImage = THRESHOLD_H::LocalThresholdImage(this->segmentationWidgetImage.currentImage, 11, 0.2);
-  HelperFunctions::viewImageOnLabel(localThresholdedImage, ui->imageSegmented);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      // Apply local thresholding with a block size of 11 and a k value of 0.2
+      Mat localThresholdedImage = THRESHOLD_H::LocalThresholdImage(this->segmentationWidgetImage.currentImage, 11, 0.2);
+      HelperFunctions::viewImageOnLabel(localThresholdedImage, ui->imageSegmented);
+    }
 
 }
 
 void segmentationWidget::on_globalThresBtn_clicked()
 {
-  // Apply global thresholding with a threshold value of 128
-  Mat globalThresholdedImage = THRESHOLD_H::GlobalthresholdImage(this->segmentationWidgetImage.currentImage, 50);
-  HelperFunctions::viewImageOnLabel(globalThresholdedImage, ui->imageSegmented);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      // Apply global thresholding with a threshold value of 128
+      Mat globalThresholdedImage = THRESHOLD_H::GlobalthresholdImage(this->segmentationWidgetImage.currentImage, 50);
+      HelperFunctions::viewImageOnLabel(globalThresholdedImage, ui->imageSegmented);
+    }
 }
 
 // Segmentation
 void segmentationWidget::applyMeanShift(){
-  Mat segementedImage = MeanShift::MeanShiftSegmentation(segmentationWidgetImage.currentImage,
-                                                         segmentationWidgetImage.distanceBandWidth,
-                                                         segmentationWidgetImage.colorBandWidth);
-  updateSegmentedPicture(segementedImage);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      Mat segementedImage = MeanShift::MeanShiftSegmentation(segmentationWidgetImage.currentImage,
+                                                             segmentationWidgetImage.distanceBandWidth,
+                                                             segmentationWidgetImage.colorBandWidth);
+      updateSegmentedPicture(segementedImage);
+    }
 }
 void segmentationWidget::applyRegionGrowing(){
-  Mat segementedImage = RegionGrowing::growRegion(segmentationWidgetImage.currentImage,
-                                                  segmentationWidgetImage.seedX,
-                                                  segmentationWidgetImage.seedY,
-                                                  segmentationWidgetImage.regionGrowThreshold,
-                                                  segmentationWidgetImage.imageSize);
-  updateSegmentedPicture(segementedImage);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      Mat segementedImage = RegionGrowing::growRegion(segmentationWidgetImage.currentImage,
+                                                      segmentationWidgetImage.seedX,
+                                                      segmentationWidgetImage.seedY,
+                                                      segmentationWidgetImage.regionGrowThreshold,
+                                                      segmentationWidgetImage.imageSize);
+      updateSegmentedPicture(segementedImage);
+    }
 }
 void segmentationWidget::applyAgglomerative(){
-  Mat segementedImage = Agglomerative::agglomarativeSegmentation(segmentationWidgetImage.currentImage,
-                                                                 segmentationWidgetImage.numberOfClusters);
-  updateSegmentedPicture(segementedImage);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      Mat segementedImage = Agglomerative::agglomarativeSegmentation(segmentationWidgetImage.currentImage,
+                                                                     segmentationWidgetImage.numberOfClusters);
+      updateSegmentedPicture(segementedImage);
+    }
 }
 void segmentationWidget::applyKMeans(){
-  Mat segementedImage = KmeansSegmentation::KmeansDrivingFunction(segmentationWidgetImage.currentImage,
-                                                                  segmentationWidgetImage.numberOfClusters);
-  updateSegmentedPicture(segementedImage);
+  if(!segmentationWidgetImage.currentImage.empty())
+    {
+      Mat segementedImage = KmeansSegmentation::KmeansDrivingFunction(segmentationWidgetImage.currentImage,
+                                                                      segmentationWidgetImage.numberOfClusters);
+      updateSegmentedPicture(segementedImage);
+    }
 }
 
 
 void segmentationWidget::on_meanshiftBtn_clicked()
 {
   ui->optionsWidget->setCurrentIndex(1);
-  applyMeanShift();
+
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyMeanShift();
+
 }
 
 void segmentationWidget::on_regionGrowingBtn_clicked()
 {
   ui->optionsWidget->setCurrentIndex(2);
-  applyRegionGrowing();
+
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyRegionGrowing();
 }
 
 void segmentationWidget::on_agglomerativeBtn_clicked()
 {
   ui->optionsWidget->setCurrentIndex(3);
-  applyAgglomerative();
+
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyAgglomerative();
 }
 
 void segmentationWidget::on_kmeanBtn_clicked()
@@ -152,7 +191,8 @@ void segmentationWidget::on_kmeanBtn_clicked()
 // Optimal Thrshold
 void segmentationWidget::on_maxItrSlider_sliderReleased()
 {
-  applyOptimalThreshold();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyOptimalThreshold();
 }
 
 void segmentationWidget::on_maxItrSlider_valueChanged(int value)
@@ -163,7 +203,8 @@ void segmentationWidget::on_maxItrSlider_valueChanged(int value)
 
 void segmentationWidget::on_optThresSlider_sliderReleased()
 {
-  applyOptimalThreshold();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyOptimalThreshold();
 }
 
 void segmentationWidget::on_optThresSlider_valueChanged(int value)
@@ -177,7 +218,8 @@ void segmentationWidget::on_optThresSlider_valueChanged(int value)
 // Mean Shift
 void segmentationWidget::on_colorBandSlider_sliderReleased()
 {
-  applyMeanShift();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyMeanShift();
 }
 
 void segmentationWidget::on_colorBandSlider_valueChanged(int value)
@@ -188,7 +230,8 @@ void segmentationWidget::on_colorBandSlider_valueChanged(int value)
 
 void segmentationWidget::on_distanceBandSlider_sliderReleased()
 {
-  applyMeanShift();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyMeanShift();
 }
 
 void segmentationWidget::on_distanceBandSlider_valueChanged(int value)
@@ -201,7 +244,8 @@ void segmentationWidget::on_distanceBandSlider_valueChanged(int value)
 // Kmeans & Agglomerative
 void segmentationWidget::on_nClustersSlider_sliderReleased()
 {
-  applyAgglomerative();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyAgglomerative();
 }
 
 
@@ -214,6 +258,7 @@ void segmentationWidget::on_nClustersSlider_valueChanged(int value)
 
 void segmentationWidget::on_seedXSlider_sliderReleased()
 {
+  if(!segmentationWidgetImage.currentImage.empty())
     applyRegionGrowing();
 }
 
@@ -227,7 +272,8 @@ void segmentationWidget::on_seedXSlider_valueChanged(int value)
 
 void segmentationWidget::on_seedYSlider_sliderReleased()
 {
-  applyRegionGrowing();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyRegionGrowing();
 }
 
 
@@ -240,7 +286,8 @@ void segmentationWidget::on_seedYSlider_valueChanged(int value)
 
 void segmentationWidget::on_rGrowThresholdSlider_sliderReleased()
 {
-  applyRegionGrowing();
+  if(!segmentationWidgetImage.currentImage.empty())
+    applyRegionGrowing();
 
 }
 
@@ -254,6 +301,7 @@ void segmentationWidget::on_rGrowThresholdSlider_valueChanged(int value)
 
 void segmentationWidget::on_kClustersSlider_sliderReleased()
 {
+  if(!segmentationWidgetImage.currentImage.empty())
     applyKMeans();
 }
 

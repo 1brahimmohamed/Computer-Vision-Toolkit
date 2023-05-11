@@ -58,18 +58,21 @@ void MixingWidget::mixImages(){
 }
 void MixingWidget::on_mixBtn_clicked()
 {
-  mixImages();
+  if(!image1.Image.empty() && !image2.Image.empty())
+    mixImages();
 }
 void MixingWidget::on_image1D0Slider_valueChanged(int value)
 {
   image1.dNote = value;
   ui->image1D0SliderValue->setText(QString::number(value));
-  mixImages();
+  if(!image1.Image.empty() && !image2.Image.empty())
+    mixImages();
 }
 void MixingWidget::on_kernelSlider_4_valueChanged(int value)
 {
   image2.dNote = value;
   ui->image2D0SliderValue->setText(QString::number(value));
-  mixImages();
+  if(!image1.Image.empty() && !image2.Image.empty())
+    mixImages();
 }
 
