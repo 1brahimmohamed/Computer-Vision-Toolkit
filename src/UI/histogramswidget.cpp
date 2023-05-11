@@ -110,17 +110,19 @@ void HistogramsWidget::on_histUploadBtn_clicked()
 
 void HistogramsWidget::on_downloadEqualBtn_clicked()
 {
-    HelperFunctions::downloadImage(this->HistImage.equalizedImage);
+    if(!HistImage.originalImage.empty())
+      HelperFunctions::downloadImage(this->HistImage.equalizedImage);
 }
 
 void HistogramsWidget::on_downloadNormalBtn_clicked()
 {
-  HelperFunctions::downloadImage(this->HistImage.normalizedImage);
+  if(!HistImage.originalImage.empty())
+    HelperFunctions::downloadImage(this->HistImage.normalizedImage);
 }
 
 void HistogramsWidget::on_histGrayBtn_clicked()
 {
-  HelperFunctions::downloadImage(this->HistImage.grayScaleImage);
-
+  if(!HistImage.originalImage.empty())
+    HelperFunctions::downloadImage(this->HistImage.grayScaleImage);
 }
 
