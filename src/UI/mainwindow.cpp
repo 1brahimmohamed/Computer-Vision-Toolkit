@@ -15,6 +15,7 @@
 #include "houghwidget.h"
 #include "matchingwidget.h"
 #include "segmentationwidget.h"
+#include "facerecognitionwidget.h"
 
 #include "ui_mainwindow.h"
 
@@ -32,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
   HoughWidget *myHoughWidget = new HoughWidget();
   MatchingWidget *myMatchingWidget = new MatchingWidget();
   segmentationWidget *mySegmentationWidget = new segmentationWidget();
+  FaceRecognitionWidget *myFaceRecognitionWidget = new FaceRecognitionWidget();
 
   ui->stackedWidget->addWidget(myFilterWidget);
   ui->stackedWidget->addWidget(myMixingWidget);
@@ -39,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->stackedWidget->addWidget(myHoughWidget);
   ui->stackedWidget->addWidget(myMatchingWidget);
   ui->stackedWidget->addWidget(mySegmentationWidget);
+  ui->stackedWidget->addWidget(myFaceRecognitionWidget);
 
   ui->stackedWidget->setCurrentIndex(index);
 }
