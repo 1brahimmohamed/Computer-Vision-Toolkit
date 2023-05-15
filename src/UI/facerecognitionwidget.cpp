@@ -17,6 +17,9 @@ FaceRecognitionWidget::FaceRecognitionWidget(QWidget *parent) :
   QString filePath = currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/cascadeFaceClassifier.xml");
   qDebug() << filePath;
   cascade.load(filePath.toStdString());
+
+  QString noFaceImagePath = currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/UA.jpg");
+  noFaceImage = imread(noFaceImagePath.toStdString());
 }
 
 FaceRecognitionWidget::~FaceRecognitionWidget()
@@ -78,6 +81,9 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
       cv::vconcat(rows, combined);
 
       this->updateFilteredPicture(combined);
+    }
+  else{
+      this->updateFilteredPicture(this->noFaceImage);
     }
 
 }
