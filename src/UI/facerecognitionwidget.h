@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QString>
+#include <QDir>
 
 #include <opencv2/core.hpp>
 #include <opencv2/objdetect.hpp>
@@ -48,6 +49,10 @@ private:
 
   // Create a QPixmap from the image path
   Mat noFaceImage;
+
+  QDir currentDir;
+  QString classiferFilePath;
+  QString noFaceImagePath;
 
   void updateFilteredPicture(Mat updatedImage);
   void updateCurrentPicture(Mat updatedImage);

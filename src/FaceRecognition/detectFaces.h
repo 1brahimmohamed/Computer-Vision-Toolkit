@@ -4,15 +4,29 @@
 #include <opencv2/objdetect.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
-#include <iostream>
+#include <vector>
+#include <QDir>
 
-// Function to crop faces from the input image
-std::vector<cv::Mat> croppedFaces(cv::Mat inputImage, cv::CascadeClassifier cascade);
+using namespace std;
+using namespace cv;
 
-// Function to detect faces in the input image and store the cropped images
-int detectFaces(cv::CascadeClassifier cascade, cv::Mat inputImage, std::vector<cv::Mat>& matObjects);
+class DetectFaces
+{
+public:
+  DetectFaces();
 
+  // Function to detect faces in the input image and store the cropped images
+  static int detectFaces(CascadeClassifier cascade, Mat inputImage, std::vector<cv::Mat>& matObjects);
+
+private:
+
+  QDir currentDir;
+  QString classiferFilePath;
+  CascadeClassifier cascade;
+
+  // Function to crop faces from the input image
+  static vector<Mat> croppedFaces(Mat inputImage, CascadeClassifier cascade);
+
+};
 
 #endif // DETECTFACES_H
-
-//DON'T FORGET TO ADD THIS LIBRARY "-lopencv_objdetect470 \" IN .PRO FILE
