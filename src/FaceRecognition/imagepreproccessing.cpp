@@ -28,7 +28,6 @@ void ImagePreproccessing::DetectFacesInFolder(){
   }
 
   unsigned int counter = 0;
-  unsigned int countrArr[] = {11, 10, 13, 15};
 
   // Loop through all files in the input folder
   QDir inputDir(this->inputFolderPath);
@@ -50,7 +49,6 @@ void ImagePreproccessing::DetectFacesInFolder(){
 
               for(auto& face: outFaces){
                   // Save the detected face as a new image
-
                   outputFilename = this->outputFolderPath + "/" + "Marina" + "_detected" + QString::number(count) + QString::number(counter)+".jpg";
                   cv::imwrite(outputFilename.toStdString(), face);
                   count++;
