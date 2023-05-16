@@ -5,6 +5,7 @@
 #include "src/FaceRecognition/detectFaces.h"
 
 
+#include<QDebug>
 
 FaceRecognitionWidget::FaceRecognitionWidget(QWidget *parent) :
   QWidget(parent),
@@ -12,11 +13,18 @@ FaceRecognitionWidget::FaceRecognitionWidget(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QDir currentDir = QDir::current();
-  currentDir.cdUp();
-  QString filePath = currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/cascadeFaceClassifier.xml");
-  qDebug() << filePath;
-  cascade.load(filePath.toStdString());
+  // Get Current Dir Path
+  this->currentDir = QDir::current();
+  // go to the parent dir of the current dir
+  this->currentDir.cdUp();
+
+  // Load Cascade Classifer
+  this->classiferFilePath = this->currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/cascadeFaceClassifier.xml");
+  this->cascade.load(this->classiferFilePath.toStdString());
+
+  // Load the no face image
+  this->noFaceImagePath = this->currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/UA.jpg");
+  noFaceImage = imread(this->noFaceImagePath.toStdString());
 }
 
 FaceRecognitionWidget::~FaceRecognitionWidget()
@@ -44,10 +52,13 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
 {
   std::vector<cv::Mat> faces;
 
-  bool isPerson = detectFaces(cascade,
-                              recognitionWidgetImage.originalImage,
-                              faces);
+  // detect faces
+  bool isPerson = DetectFaces::detectFaces(this->cascade,
+                                           this->recognitionWidgetImage.originalImage,
+                                           faces);
 
+
+  // if we found a face
   if (isPerson){
       // Resize input Mats to the same size if necessary
       const cv::Size size(200, 200); // Example size
@@ -78,6 +89,10 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
       cv::vconcat(rows, combined);
 
       this->updateFilteredPicture(combined);
+    }
+  // if we didn't found any faces view the no face image
+  else{
+      this->updateFilteredPicture(this->noFaceImage);
     }
 
 }
