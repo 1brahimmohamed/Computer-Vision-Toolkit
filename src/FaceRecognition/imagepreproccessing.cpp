@@ -23,18 +23,18 @@ void ImagePreproccessing::DetectFacesInFolder(){
   // Create the output folder if it doesn't exist
   QDir outputDir(this->outputFolderPath);
   if (!outputDir.exists())
-  {
+    {
       outputDir.mkpath(".");
-  }
+    }
 
   unsigned int counter = 0;
 
   // Loop through all files in the input folder
   QDir inputDir(this->inputFolderPath);
   for (const auto& fileInfo : inputDir.entryInfoList())
-  {
+    {
       if (fileInfo.isFile() && fileInfo.suffix().toLower() == "jpg")
-      {
+        {
           // Load the input image,
           Mat inputImage = cv::imread(fileInfo.filePath().toStdString());
 
@@ -56,6 +56,175 @@ void ImagePreproccessing::DetectFacesInFolder(){
             }
           counter++;
 
-      }
-  }
+        }
+    }
+}
+
+QString ImagePreproccessing::getLabelFromImagePath(QString imagePath){
+
+  QString label = imagePath;
+  QString fileName = QFileInfo(imagePath).fileName();
+
+  if (fileName.contains("Ibrahim"))
+    label = "Ibrahim";
+  else if (fileName.contains("Marina"))
+    label = "Marina";
+  else if (fileName.contains("Mahmoud"))
+    label = "Mahmoud";
+  else if (fileName.contains("Maye"))
+    label = "Maye";
+  else if (fileName.contains("Omnia"))
+    label = "Omnia";
+  else
+    label = "Unknown";
+  
+  return label;
+}
+
+vector<QString> ImagePreproccessing::readImagesPath(QString inputFolder, vector<QString> &labels){
+  vector<QString> imagesPaths;
+  vector<QString> imgsLabels;
+
+  QDir inputDir(inputFolder);
+  QString path;
+  for (const auto& fileInfo : inputDir.entryInfoList())
+    {
+      if (fileInfo.isFile() && fileInfo.suffix().toLower() == "jpg")
+        {
+          path = fileInfo.filePath();
+          imagesPaths.push_back(path);
+          imgsLabels.push_back(getLabelFromImagePath(path));
+        }
+    }
+  labels = imgsLabels;
+  return imagesPaths;
+}
+
+Mat ImagePreproccessing::FlattenImages(vector<Mat> images){
+  // initialize the flatten images matrix and the vector of flatten images
+  Mat flattenImages;
+  vector<Mat> vectorOfFlatMats;
+
+  // loop through all images and flatten them
+  for(auto& image: images){
+      Mat grayImage;
+      cvtColor(image, grayImage, COLOR_BGR2GRAY);       // convert the image to gray scale
+      Mat flattenGrayImage = grayImage.reshape(1, 1);   // flatten the image
+      vectorOfFlatMats.push_back(flattenGrayImage);     // add the flatten image to the vector of flatten images
+    }
+
+  // concatenate all flatten images into one matrix
+  vconcat(vectorOfFlatMats, flattenImages);
+
+  // transpose the flatten images matrix
+  return flattenImages.t();
+}
+
+Mat ImagePreproccessing::normalizeImages(Mat flattenImages, Mat &sentMean){
+  // initialize the normalized images matrix
+  vector<Mat> normalizedImages;
+
+  // calculate the mean column vector of the flatten images matrix
+  Mat mean;
+
+  // get the mean of each row to form a vector col mean (1 is the col direction and 0 is row)
+  cv::reduce(flattenImages, mean, 1, REDUCE_AVG);
+  sentMean = mean;
+
+  Mat result;
+  sentMean = mean;
+  // subtract the mean from each column
+  for (int i = 0; i < flattenImages.cols; i++)
+    {
+      normalizedImages.push_back(flattenImages.col(i) - mean);
+    }
+
+  // concatenate all normalized cols into one matrix
+  hconcat(normalizedImages, result);
+
+  return result;
+}
+
+Mat ImagePreproccessing::imageNormalization(Mat image, Mat mean){
+  Mat normalizedImage;
+  cvtColor(image, image, COLOR_BGR2GRAY);
+  Mat flattenGrayImage = image.reshape(1, 1);   // flatten the image
+  cv::subtract(flattenGrayImage.t(), mean, normalizedImage);
+
+  return normalizedImage;
+}
+
+
+void ImagePreproccessing::saveMatricesToJson(const cv::Mat weights, const cv::Mat mean, const QString filePath) {
+  // Create a JSON object
+  QJsonObject jsonObject;
+
+  // Convert weights matrix to JSON array
+  QJsonArray weightsArray;
+  for (int i = 0; i < weights.rows; ++i) {
+      weightsArray.append(weights.at<double>(i, 0));
+    }
+  jsonObject["weights"] = weightsArray;
+
+  // Convert mean matrix to JSON array
+  QJsonArray meanArray;
+  for (int i = 0; i < mean.rows; ++i) {
+      meanArray.append(mean.at<double>(i, 0));
+    }
+  jsonObject["mean"] = meanArray;
+
+  // Create a JSON document from the JSON object
+  QJsonDocument jsonDoc(jsonObject);
+
+  // Save the JSON document to a file
+  QFile file(filePath);
+  if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+      file.write(jsonDoc.toJson());
+      file.close();
+      qDebug() << "Matrices saved to JSON file: " << filePath;
+    } else {
+      qDebug() << "Failed to save matrices to JSON file: " << filePath;
+    }
+}
+
+
+void ImagePreproccessing::loadMatricesFromJson(cv::Mat& weights, cv::Mat &mean, const QString filePath) {
+    // Load the JSON file
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open JSON file: " << filePath;
+        return;
+    }
+
+    // Read the JSON data from the file
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    // Parse the JSON document
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+    if (jsonDoc.isNull()) {
+        qDebug() << "Failed to parse JSON data";
+        return;
+    }
+
+    // Get the JSON object from the document
+    QJsonObject jsonObject = jsonDoc.object();
+
+    // Read the weights from the JSON array
+    QJsonArray weightsArray = jsonObject["weights"].toArray();
+    int weightsSize = weightsArray.size();
+    weights = cv::Mat(weightsSize, 1, CV_64F);
+    for (int i = 0; i < weightsSize; ++i) {
+        weights.at<double>(i, 0) = weightsArray[i].toDouble();
+    }
+
+    // Read the mean from the JSON array
+    QJsonArray meanArray = jsonObject["mean"].toArray();
+    int meanSize = meanArray.size();
+    mean = cv::Mat(meanSize, 1, CV_64F);
+    for (int i = 0; i < meanSize; ++i) {
+        mean.at<double>(i, 0) = meanArray[i].toDouble();
+    }
+
+    qDebug() << "Matrices loaded from JSON file: " << filePath;
 }
