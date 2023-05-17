@@ -26,8 +26,8 @@ public:
   Mat normalizeImages(Mat flattenImages, Mat &sentMean);
   QString getLabelFromImagePath(QString imagePath);
   Mat imageNormalization(Mat image, Mat mean);
-  void saveMatricesToJson(const cv::Mat weights, const cv::Mat mean, const QString filePath);
-  void loadMatricesFromJson(cv::Mat& weights, cv::Mat& mean, const QString filePath);
+  void saveMatricesToJson(const cv::Mat eigenFaces, const cv::Mat weights, const cv::Mat mean, const QString filePath);
+  void loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& weights, cv::Mat& mean, const QString filePath);
 
 private:
   QDir currentDir;
