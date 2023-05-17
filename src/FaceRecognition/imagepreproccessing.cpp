@@ -155,7 +155,7 @@ Mat ImagePreproccessing::imageNormalization(Mat image, Mat mean){
 }
 
 
-void ImagePreproccessing::saveMatricesToJson(const cv::Mat weights, const cv::Mat mean, const QString filePath) {
+void ImagePreproccessing::saveMatricesToJson(const cv::Mat eigenFaces, const cv::Mat weights, const cv::Mat mean, const QString filePath) {
   // Create a JSON object
   QJsonObject jsonObject;
 
@@ -173,6 +173,19 @@ void ImagePreproccessing::saveMatricesToJson(const cv::Mat weights, const cv::Ma
     }
   jsonObject["mean"] = meanArray;
 
+
+  // Convert eigenFaces matrix to JSON array
+  QJsonArray eigenFacesArray;
+  for (int i = 0; i < eigenFaces.rows; ++i) {
+      QJsonArray rowArray;
+      for (int j = 0; j < eigenFaces.cols; ++j) {
+          rowArray.append(eigenFaces.at<double>(i, j));
+        }
+      eigenFacesArray.append(rowArray);
+    }
+
+  jsonObject["eigenFaces"] = eigenFacesArray;
+
   // Create a JSON document from the JSON object
   QJsonDocument jsonDoc(jsonObject);
 
@@ -188,43 +201,55 @@ void ImagePreproccessing::saveMatricesToJson(const cv::Mat weights, const cv::Ma
 }
 
 
-void ImagePreproccessing::loadMatricesFromJson(cv::Mat& weights, cv::Mat &mean, const QString filePath) {
-    // Load the JSON file
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Failed to open JSON file: " << filePath;
-        return;
+void ImagePreproccessing::loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& weights, cv::Mat &mean, const QString filePath) {
+  // Load the JSON file
+  QFile file(filePath);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+      qDebug() << "Failed to open JSON file: " << filePath;
+      return;
     }
 
-    // Read the JSON data from the file
-    QByteArray jsonData = file.readAll();
-    file.close();
+  // Read the JSON data from the file
+  QByteArray jsonData = file.readAll();
+  file.close();
 
-    // Parse the JSON document
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
-    if (jsonDoc.isNull()) {
-        qDebug() << "Failed to parse JSON data";
-        return;
+  // Parse the JSON document
+  QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+  if (jsonDoc.isNull()) {
+      qDebug() << "Failed to parse JSON data";
+      return;
     }
 
-    // Get the JSON object from the document
-    QJsonObject jsonObject = jsonDoc.object();
+  // Get the JSON object from the document
+  QJsonObject jsonObject = jsonDoc.object();
 
-    // Read the weights from the JSON array
-    QJsonArray weightsArray = jsonObject["weights"].toArray();
-    int weightsSize = weightsArray.size();
-    weights = cv::Mat(weightsSize, 1, CV_64F);
-    for (int i = 0; i < weightsSize; ++i) {
-        weights.at<double>(i, 0) = weightsArray[i].toDouble();
+  // Read the weights from the JSON array
+  QJsonArray weightsArray = jsonObject["weights"].toArray();
+  int weightsSize = weightsArray.size();
+  weights = cv::Mat(weightsSize, 1, CV_8UC1);
+  for (int i = 0; i < weightsSize; ++i) {
+      weights.at<double>(i, 0) = weightsArray[i].toDouble();
     }
 
-    // Read the mean from the JSON array
-    QJsonArray meanArray = jsonObject["mean"].toArray();
-    int meanSize = meanArray.size();
-    mean = cv::Mat(meanSize, 1, CV_64F);
-    for (int i = 0; i < meanSize; ++i) {
-        mean.at<double>(i, 0) = meanArray[i].toDouble();
+  // Read the mean from the JSON array
+  QJsonArray meanArray = jsonObject["mean"].toArray();
+  int meanSize = meanArray.size();
+  mean = cv::Mat(meanSize, 1, CV_8UC1);
+  for (int i = 0; i < meanSize; ++i) {
+      mean.at<double>(i, 0) = meanArray[i].toDouble();
     }
 
-    qDebug() << "Matrices loaded from JSON file: " << filePath;
+  // Read the eigenFaces from the JSON array
+  QJsonArray eigenFacesArray = jsonObject["eigenFaces"].toArray();
+  int eigenFacesRows = eigenFacesArray.size();
+  int eigenFacesCols = eigenFacesArray[0].toArray().size();
+  eigenFaces = cv::Mat(eigenFacesRows, eigenFacesCols, CV_8UC1);
+  for (int i = 0; i < eigenFacesRows; ++i) {
+      QJsonArray rowArray = eigenFacesArray[i].toArray();
+      for (int j = 0; j < eigenFacesCols; ++j) {
+          eigenFaces.at<double>(i, j) = rowArray[j].toDouble();
+        }
+    }
+
+  qDebug() << "Matrices loaded from JSON file: " << filePath;
 }
