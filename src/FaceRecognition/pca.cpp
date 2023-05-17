@@ -28,10 +28,3 @@ Mat Pca::CalculateCovarianceMatrix(Mat normalizedImages){
   return covarianceMatrix;
 }
 
-Mat Pca::computeEign(Mat covarianceMatrix, Mat& eigenVals){
-//  Mat eigenVectors;
-
-//  eigen(covarianceMatrix,eigenVals ,eigenVectors);
-
-//  return oneMatSortedEigenVectors;
-}

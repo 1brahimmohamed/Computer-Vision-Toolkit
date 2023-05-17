@@ -60,9 +60,32 @@ void ImagePreproccessing::DetectFacesInFolder(){
     }
 }
 
-vector<QString> ImagePreproccessing::readImagesPath(){
+QString ImagePreproccessing::getLabelFromImagePath(QString imagePath){
+
+  QString label = imagePath;
+  QString fileName = QFileInfo(imagePath).fileName();
+
+  if (fileName.contains("Ibrahim"))
+    label = "Ibrahim";
+  else if (fileName.contains("Marina"))
+    label = "Marina";
+  else if (fileName.contains("Mahmoud"))
+    label = "Mahmoud";
+  else if (fileName.contains("Maye"))
+    label = "Maye";
+  else if (fileName.contains("Omnia"))
+    label = "Omnia";
+  else
+    label = "Unknown";
+  
+  return label;
+}
+
+vector<QString> ImagePreproccessing::readImagesPath(QString inputFolder, vector<QString> &labels){
   vector<QString> imagesPaths;
-  QDir inputDir(this->inputFolderPath);
+  vector<QString> imgsLabels;
+
+  QDir inputDir(inputFolder);
   QString path;
   for (const auto& fileInfo : inputDir.entryInfoList())
     {
@@ -70,8 +93,10 @@ vector<QString> ImagePreproccessing::readImagesPath(){
         {
           path = fileInfo.filePath();
           imagesPaths.push_back(path);
+          imgsLabels.push_back(getLabelFromImagePath(path));
         }
     }
+  labels = imgsLabels;
   return imagesPaths;
 }
 
@@ -120,34 +145,86 @@ Mat ImagePreproccessing::normalizeImages(Mat flattenImages, Mat &sentMean){
   return result;
 }
 
-Mat ImagePreproccessing::CalculateCovarianceMatrix(Mat normalizedImages){
-  // initialize the covariance matrix
+Mat ImagePreproccessing::imageNormalization(Mat image, Mat mean){
+  Mat normalizedImage;
+  cvtColor(image, image, COLOR_BGR2GRAY);
+  Mat flattenGrayImage = image.reshape(1, 1);   // flatten the image
+  cv::subtract(flattenGrayImage.t(), mean, normalizedImage);
 
-  // get the transpose of the normalized images matrix
-  Mat normalizedImagesT;
-  transpose(normalizedImages, normalizedImagesT);
-
-  qDebug() << normalizedImages.rows << normalizedImages.cols;
-  qDebug() << normalizedImagesT.rows << normalizedImagesT.cols;
-
-
-  Mat covarianceMatrix, mu;
-
-  // calculate the covariance matrix
-  cv::calcCovarMatrix(normalizedImages, covarianceMatrix, mu, COVAR_NORMAL | cv::COVAR_ROWS);
-
-  covarianceMatrix /= static_cast<double>(normalizedImages.cols - 1);
-
-  qDebug() << "Covariance Matrix Shape: " << covarianceMatrix.rows <<  covarianceMatrix.cols;
-
-  return covarianceMatrix;
+  return normalizedImage;
 }
 
-Mat ImagePreproccessing::computeEign(Mat covarianceMatrix, Mat& eigenVals){
-//  Mat eigenVectors;
 
-//  eigen(covarianceMatrix,eigenVals ,eigenVectors);
+void ImagePreproccessing::saveMatricesToJson(const cv::Mat weights, const cv::Mat mean, const QString filePath) {
+  // Create a JSON object
+  QJsonObject jsonObject;
 
-//  return oneMatSortedEigenVectors;
+  // Convert weights matrix to JSON array
+  QJsonArray weightsArray;
+  for (int i = 0; i < weights.rows; ++i) {
+      weightsArray.append(weights.at<double>(i, 0));
+    }
+  jsonObject["weights"] = weightsArray;
+
+  // Convert mean matrix to JSON array
+  QJsonArray meanArray;
+  for (int i = 0; i < mean.rows; ++i) {
+      meanArray.append(mean.at<double>(i, 0));
+    }
+  jsonObject["mean"] = meanArray;
+
+  // Create a JSON document from the JSON object
+  QJsonDocument jsonDoc(jsonObject);
+
+  // Save the JSON document to a file
+  QFile file(filePath);
+  if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+      file.write(jsonDoc.toJson());
+      file.close();
+      qDebug() << "Matrices saved to JSON file: " << filePath;
+    } else {
+      qDebug() << "Failed to save matrices to JSON file: " << filePath;
+    }
 }
 
+
+void ImagePreproccessing::loadMatricesFromJson(cv::Mat& weights, cv::Mat &mean, const QString filePath) {
+    // Load the JSON file
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open JSON file: " << filePath;
+        return;
+    }
+
+    // Read the JSON data from the file
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    // Parse the JSON document
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+    if (jsonDoc.isNull()) {
+        qDebug() << "Failed to parse JSON data";
+        return;
+    }
+
+    // Get the JSON object from the document
+    QJsonObject jsonObject = jsonDoc.object();
+
+    // Read the weights from the JSON array
+    QJsonArray weightsArray = jsonObject["weights"].toArray();
+    int weightsSize = weightsArray.size();
+    weights = cv::Mat(weightsSize, 1, CV_64F);
+    for (int i = 0; i < weightsSize; ++i) {
+        weights.at<double>(i, 0) = weightsArray[i].toDouble();
+    }
+
+    // Read the mean from the JSON array
+    QJsonArray meanArray = jsonObject["mean"].toArray();
+    int meanSize = meanArray.size();
+    mean = cv::Mat(meanSize, 1, CV_64F);
+    for (int i = 0; i < meanSize; ++i) {
+        mean.at<double>(i, 0) = meanArray[i].toDouble();
+    }
+
+    qDebug() << "Matrices loaded from JSON file: " << filePath;
+}
