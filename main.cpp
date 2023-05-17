@@ -10,19 +10,19 @@
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
-  //    MainWindow w;
-  //    w.show();
+      MainWindow w;
+      w.show();
 
-  ImagePreproccessing *obj = new ImagePreproccessing();
+//  ImagePreproccessing *obj = new ImagePreproccessing();
 
-    Mat img1 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected00.jpg");
-    Mat img12 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected01.jpg");
-    Mat img13 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected02.jpg");
-    Mat img14 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected03.jpg");
+//    Mat img1 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected00.jpg");
+//    Mat img12 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected01.jpg");
+//    Mat img13 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected02.jpg");
+//    Mat img14 = imread("D:\\My PC\\Projects\\Computer-Vision-Toolkit\\images\\TeamPhotos\\faces\\Ibrahim_detected03.jpg");
 
-    vector<Mat> tag = {img1, img12,img13, img14};
+//    vector<Mat> tag = {img1, img12,img13, img14};
 
-    Mat flat = obj->FlattenImages(tag);
+//    Mat flat = obj->FlattenImages(tag);
   //  imshow("before mean", flat);
 
   // ------------------------------------------------------------------------
@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
 //    }
   // ------------------------------------------------------------------------
 
-    Mat mean;
-    Mat norma = obj->normalizeImages(flat, mean);
+//    Mat mean;
+//    Mat norma = obj->normalizeImages(flat, mean);
 //    imshow("after mean minus", norma);
 
   //  Mat cov = obj->CalculateCovarianceMatrix(norma);
@@ -48,12 +48,12 @@ int main(int argc, char *argv[])
 
 //    imshow("after mean minus one image", normalized);
 
-    QString filePath = "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/hima.json";
+//    QString filePath = "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/hima.json";
 
-    obj->saveMatricesToJson(mean, mean, filePath);
+//    obj->saveMatricesToJson(mean, mean, filePath);
 
-    Mat newWei, newMean;
-    obj->loadMatricesFromJson(newWei, newMean, "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/hima.json");
+//    Mat newWei, newMean;
+//    obj->loadMatricesFromJson(newWei, newMean, "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/hima.json");
 
   return a.exec();
 }
