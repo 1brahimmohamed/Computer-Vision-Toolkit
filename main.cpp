@@ -11,6 +11,7 @@
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
+
 //      MainWindow w;
 //      w.show();
 
@@ -63,7 +64,6 @@ int main(int argc, char *argv[])
   auto [true_positive, false_positive, true_negative, false_negative] = Testing::computeMetrics(eigenWeights, trainingLabels, flatTestImages, testingLabels, meanVector, eigenFaces);
 
   qDebug()<<true_positive<< false_positive<< true_negative<< false_negative;
-
 
   return a.exec();
 }

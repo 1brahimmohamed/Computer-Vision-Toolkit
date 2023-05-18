@@ -21,8 +21,6 @@ class ImagePreproccessing
 public:
   ImagePreproccessing();
 
-//  static Mat eigenFaces, meanVector;
-
   void DetectFacesInFolder();
 
   static vector<QString> readImagesPath(QString inputFolder, vector<QString> &labels);

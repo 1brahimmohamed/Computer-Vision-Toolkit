@@ -39,6 +39,8 @@ private slots:
 
   void on_detectFacesBtn_clicked();
 
+  void on_recognitionBtn_clicked();
+
 private:
   Ui::FaceRecognitionWidget *ui;
 
@@ -50,9 +52,18 @@ private:
   // Create a QPixmap from the image path
   Mat noFaceImage;
 
+  Mat detectedFace;
+
   QDir currentDir;
   QString classiferFilePath;
   QString noFaceImagePath;
+
+  Mat meanVector;
+  Mat eigenFaces;
+  Mat weights;
+
+  QString modelPath;
+  vector<QString>trainingLabels;
 
   void updateFilteredPicture(Mat updatedImage);
   void updateCurrentPicture(Mat updatedImage);
