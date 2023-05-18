@@ -1,4 +1,7 @@
+#include "QDebug"
 #include "pca.h"
+#include <src/FaceRecognition/imagepreproccessing.h>
+
 using namespace cv;
 using namespace std;
 Pca::Pca()
@@ -6,7 +9,7 @@ Pca::Pca()
 
 }
 
-Mat Pca::CalculateCovarianceMatrix(Mat normalizedImages)
+Mat Pca::calculateCovarianceMatrix(Mat normalizedImages)
 {
   // initialize the covariance matrix
   // get the transpose of the normalized images matrix
@@ -24,23 +27,45 @@ Mat Pca::CalculateCovarianceMatrix(Mat normalizedImages)
 
 Mat Pca::computePca(Mat covariance_matrix, Mat NormalizedDataMat)
 {
-    int num_components = 50;
+    int num_components = 20;
     // Compute the eigenvectors of the covariance matrix
     Mat eigenvalues, eigenvectors;
     eigen(covariance_matrix, eigenvalues, eigenvectors);
-    Mat eigenfaces_mat = eigenvectors.t() * NormalizedDataMat.t();
+
+    Mat eigenfaces_mat;
+    cv::Mat eigenvectors_transpose = eigenvectors.t();
+    cv::Mat normalized_data_transpose = NormalizedDataMat.t();
+
+    // Convert the matrix types if necessary
+    eigenvectors_transpose.convertTo(eigenvectors_transpose, CV_64FC1);
+    normalized_data_transpose.convertTo(normalized_data_transpose, CV_64FC1);
+    eigenfaces_mat = eigenvectors_transpose * normalized_data_transpose;
+
+
     // Normalize the eigenfaces
     for (int i = 0; i < eigenfaces_mat.rows; i++)
     {
         normalize(eigenfaces_mat.row(i), eigenfaces_mat.row(i), 0, 255, NORM_MINMAX);
     }
+
     // Select the top num_components eigenfaces
     Mat eigenfaces = eigenfaces_mat.rowRange(0, num_components);
+
     return eigenfaces;
 }
-Mat Pca::ComputeWeights(Mat EigenFacesMat, Mat NormalizedImag)
+
+
+Mat Pca::computeWeights(Mat EigenFacesMat, Mat NormalizedImag)
 {
 
-    Mat weights = EigenFacesMat.t() * NormalizedImag.t();
+    Mat weights;
+    cv::Mat eigenfaces_transpose = EigenFacesMat.t();
+    cv::Mat normalized_transpose = NormalizedImag.t();
+
+    // Convert the matrix types if necessary
+    eigenfaces_transpose.convertTo(eigenfaces_transpose, CV_64FC1);
+    normalized_transpose.convertTo(normalized_transpose, CV_64FC1);
+
+    weights = normalized_transpose*eigenfaces_transpose;
     return weights;
 }
