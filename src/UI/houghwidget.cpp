@@ -18,9 +18,10 @@ HoughWidget::HoughWidget(QWidget *parent) :
   this->houghImage.threshold = 150;
   this->houghImage.maxRaduis = 35;
   this->houghImage.minRaduis = 10;
-  this->houghImage.alpha = 1;
-  this->houghImage.beta = 2;
-  this->houghImage.gamma = 5;
+  this->houghImage.numberOfPoints = 80;
+  this->houghImage.initRaduis = 100;
+  this->houghImage.xBais = 150;
+  this->houghImage.yBais = 50;
 }
 
 HoughWidget::~HoughWidget()
@@ -28,6 +29,8 @@ HoughWidget::~HoughWidget()
   delete ui;
 }
 
+
+// -------------------------- Download & Upload -------------------------- //
 void HoughWidget::on_uploadBtn_clicked()
 {
   Mat Image = HelperFunctions::readImage_Mat();
@@ -37,6 +40,12 @@ void HoughWidget::on_uploadBtn_clicked()
     }
 }
 
+void HoughWidget::on_downloadBtn_clicked()
+{
+  HelperFunctions::downloadImage(houghImage.shapeDetectedImage);
+}
+
+// -------------------------- Hough Transform Events -------------------------- //
 
 void HoughWidget::on_lineBtn_clicked()
 {
@@ -44,35 +53,39 @@ void HoughWidget::on_lineBtn_clicked()
     lineDetectionOnImage();
 }
 
-
 void HoughWidget::on_circleBtn_clicked()
 {
   if(!houghImage.originalImage.empty())
     circleDetectionOnImage();
 }
 
-
 void HoughWidget::on_ellipseBtn_clicked()
 {
   if(!houghImage.originalImage.empty()){
-    this->houghImage.shapeDetectedImage = HoughEllipse::houghEllipseDetection(this->houghImage.originalImage, 10, 10, 10, 10);
-    HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
-  }
+      this->houghImage.shapeDetectedImage = HoughEllipse::houghEllipseDetection(this->houghImage.originalImage, 10, 10, 10, 10);
+      HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
+    }
 }
+
+
+// -------------------------- Action Handlers -------------------------- //
 
 void HoughWidget::lineDetectionOnImage(){
   if(!houghImage.originalImage.empty()){
-    this->houghImage.shapeDetectedImage = HoughLine::detectLines(this->houghImage.originalImage, this->houghImage.threshold);
-    HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
-  }
+      this->houghImage.shapeDetectedImage = HoughLine::detectLines(this->houghImage.originalImage, this->houghImage.threshold);
+      HelperFunctions::viewImageOnLabel(this->houghImage.shapeDetectedImage, ui->imageFiltered);
+    }
 }
 
 void HoughWidget::circleDetectionOnImage(){
   if(!houghImage.originalImage.empty()){
-    houghImage.shapeDetectedImage = HoughCircle::HoughCircleCall(houghImage.originalImage, houghImage.minRaduis, houghImage.maxRaduis);
-    HelperFunctions::viewImageOnLabel(houghImage.shapeDetectedImage, ui->imageFiltered);
-  }
+      houghImage.shapeDetectedImage = HoughCircle::HoughCircleCall(houghImage.originalImage, houghImage.minRaduis, houghImage.maxRaduis);
+      HelperFunctions::viewImageOnLabel(houghImage.shapeDetectedImage, ui->imageFiltered);
+    }
 }
+
+
+// -------------------------- Hough Sliders Event listeners -------------------------- //
 
 
 void HoughWidget::on_lineThreshSlider_sliderReleased()
@@ -126,26 +139,36 @@ void HoughWidget::on_maxRaduisSlider_valueChanged(int value)
 }
 
 
-void HoughWidget::on_betaSlider_sliderReleased()
-{
-  float value = mapSliderValue(0, 10, 0.1, ui->betaSlider);
-  this->houghImage.beta = value;
-  ui->betaValue->setText(QString::number(value));
-  if(!houghImage.originalImage.empty())
-    activeContourOnImage();
+// -------------------------- Active Contour -------------------------- //
+
+void HoughWidget::activeContourOnImage(){
+
+  if(!houghImage.originalImage.empty()){
+      Mat activeContouredImage = ACTIVE_CONTOUR::active_contour(this->houghImage.originalImage,
+                                                                50, // # of iterations
+                                                                1, // Alpha
+                                                                2, // Beta
+                                                                5, // Gamma
+                                                                this->houghImage.numberOfPoints, // # of points
+                                                                this->houghImage.initRaduis, // init snake radius
+                                                                this->houghImage.xBais, // init snake CenterX Bias
+                                                                this->houghImage.yBais); // init snake CenterY Bias
+      HelperFunctions::viewImageOnLabel(activeContouredImage, ui->imageFiltered);
+    }
 }
 
-
-void HoughWidget::on_betaSlider_valueChanged(int value)
+void HoughWidget::on_activeContBtn_clicked()
 {
-  float fvalue = mapSliderValue(0, 10, 0.1, ui->betaSlider);
-  ui->betaValue->setText(QString::number(fvalue));}
+  activeContourOnImage();
+}
+
+// -------------------------- Active Contours Sliders Event listeners -------------------------- //
 
 
 void HoughWidget::on_alphaSlider_sliderReleased()
 {
-  float value = mapSliderValue(0, 10, 0.1, ui->alphaSlider);
-  this->houghImage.alpha = value;
+  float value = mapSliderValue(0, 500 ,10, ui->alphaSlider);
+  this->houghImage.numberOfPoints = value;
   ui->alphaValue->setText(QString::number(value));
 
   if(!houghImage.originalImage.empty())
@@ -155,15 +178,31 @@ void HoughWidget::on_alphaSlider_sliderReleased()
 
 void HoughWidget::on_alphaSlider_valueChanged(int value)
 {
-  float fvalue = mapSliderValue(0, 10 ,0.1, ui->alphaSlider);
+  float fvalue = mapSliderValue(0, 500 ,10, ui->alphaSlider);
   ui->alphaValue->setText(QString::number(fvalue));
 }
 
 
+void HoughWidget::on_betaSlider_sliderReleased()
+{
+  float value = mapSliderValue(0, 500, 10, ui->betaSlider);
+  this->houghImage.initRaduis = value;
+  ui->betaValue->setText(QString::number(value));
+  if(!houghImage.originalImage.empty())
+    activeContourOnImage();
+}
+
+
+void HoughWidget::on_betaSlider_valueChanged(int value)
+{
+  float fvalue = mapSliderValue(0, 500 ,10, ui->betaSlider);
+  ui->betaValue->setText(QString::number(fvalue));}
+
+
 void HoughWidget::on_gammaSlider_sliderReleased()
 {
-  int value = ui->gammaSlider->value();
-  this->houghImage.gamma = value;
+  float value = mapSliderValue(0, 500, 10, ui->gammaSlider);
+  this->houghImage.xBais = value;
   ui->gammaValue->setText(QString::number(value));
 
   if(!houghImage.originalImage.empty())
@@ -173,37 +212,33 @@ void HoughWidget::on_gammaSlider_sliderReleased()
 
 void HoughWidget::on_gammaSlider_valueChanged(int value)
 {
-  ui->gammaValue->setText(QString::number(value));
+  float fvalue = mapSliderValue(0, 500 ,10, ui->gammaSlider);
+  ui->gammaValue->setText(QString::number(fvalue));
 }
 
-void HoughWidget::on_activeContBtn_clicked()
+void HoughWidget::on_thetaSlider_sliderReleased()
 {
+  float value = mapSliderValue(0, 500, 10, ui->thetaSlider);
+  this->houghImage.yBais = value;
+  ui->thetaValue->setText(QString::number(value));
+
   if(!houghImage.originalImage.empty())
     activeContourOnImage();
 }
 
-void HoughWidget::activeContourOnImage(){
-  Mat activeContouredImage = ACTIVE_CONTOUR::active_contour(this->houghImage.originalImage,
-                                                            50, // # of iterations
-                                                            1, // Alpha
-                                                            2, // Beta
-                                                            5, // Gamma
-                                                            80, // # of points
-                                                            100, // init snake radius
-                                                            150, // init snake CenterX Bias
-                                                            50); // init snake CenterY Bias
-  HelperFunctions::viewImageOnLabel(activeContouredImage, ui->imageFiltered);
+void HoughWidget::on_thetaSlider_valueChanged(int value)
+{
+  float fvalue = mapSliderValue(0, 500 ,10, ui->thetaSlider);
+  ui->thetaValue->setText(QString::number(fvalue));
 }
+
+
+// -------------------------- Helpers -------------------------- //
 
 float HoughWidget::mapSliderValue(float mappedLowerLimit, float mappedUpperLimit, float step, QSlider* slider) {
   float range = mappedUpperLimit - mappedLowerLimit;
   float factor = range / (slider->maximum() - slider->minimum());
   float fvalue = floor(slider->value() * factor / step + 0.5) * step + mappedLowerLimit;
   return fvalue;
-}
-
-void HoughWidget::on_downloadBtn_clicked()
-{
-  HelperFunctions::downloadImage(houghImage.shapeDetectedImage);
 }
 

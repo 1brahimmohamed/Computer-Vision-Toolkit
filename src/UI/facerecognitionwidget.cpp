@@ -28,15 +28,23 @@ FaceRecognitionWidget::FaceRecognitionWidget(QWidget *parent) :
   noFaceImage = imread(this->noFaceImagePath.toStdString());
 
 
+
+  QString modelPath = "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/model.json";
+  QFile file(modelPath);
+
+
+  if (!file.exists())
+    ImagePreproccessing::training(modelPath);
+
+
   ImagePreproccessing::loadMatricesFromJson(this->eigenFaces,
                                             this->weights,
                                             this->meanVector,
-                                            "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/model.json");
+                                            modelPath);
 
   ImagePreproccessing::readImagesPath("D:/My PC/Projects/Computer-Vision-Toolkit/images/TeamPhotos/faces/Training",
                                       this->trainingLabels);
 
-  qDebug() << "yarb";
 }
 
 FaceRecognitionWidget::~FaceRecognitionWidget()
@@ -119,14 +127,14 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
 
 void FaceRecognitionWidget::on_recognitionBtn_clicked()
 {
-    Mat normalizedImage = ImagePreproccessing::imageNormalization(detectedFace,this->meanVector);
+  Mat normalizedImage = ImagePreproccessing::imageNormalization(detectedFace,this->meanVector);
 
-    auto [person, threshold] = Testing::predict(this->weights,
-                     this->trainingLabels,
-                     normalizedImage,
-                     this->meanVector,
-                     this->eigenFaces, 2e8);
+  auto [person, threshold] = Testing::predict(this->weights,
+                                              this->trainingLabels,
+                                              normalizedImage,
+                                              this->meanVector,
+                                              this->eigenFaces, 2e8);
 
-    ui->personLabel->setText("I Recognized: " + person);
+  ui->personLabel->setText("I Recognized: " + person);
 }
 

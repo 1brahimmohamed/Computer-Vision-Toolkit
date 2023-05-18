@@ -7,10 +7,12 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
+#include <vector>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
 #include <opencv2/objdetect.hpp>
 
 using namespace std;
@@ -30,6 +32,7 @@ public:
   static Mat imageNormalization(Mat image, Mat mean);
   static void saveMatricesToJson(const cv::Mat eigenFaces, const cv::Mat weights, const cv::Mat mean, const QString filePath);
   static void loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& weights, cv::Mat& mean, const QString filePath);
+  static void training(QString modelPath);
 
 private:
   QDir currentDir;

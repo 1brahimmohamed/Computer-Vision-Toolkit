@@ -1,7 +1,10 @@
 #include "imagepreproccessing.h"
 #include "src/FaceRecognition/detectFaces.h"
+#include "src/FaceRecognition/pca.h"
+#include "src/Testing/testing.h"
 
 #include <QDir>
+
 #define NUM_EIGEN_FACES 30
 
 ImagePreproccessing::ImagePreproccessing()
@@ -125,47 +128,19 @@ Mat ImagePreproccessing::normalizeImages(Mat flattenImages, Mat &sentMean){
   // initialize the normalized images matrix
   vector<Mat> normalizedImages;
 
+  // calculate the mean column vector of the flatten images matrix
+  Mat mean;
 
-  PCA pca(normalizedImages, Mat(), PCA::DATA_AS_ROW, NUM_EIGEN_FACES);
+  // get the mean of each row to form a vector col mean (1 is the col direction and 0 is row)
+  cv::reduce(flattenImages, mean, 1, REDUCE_AVG);
 
-  Size sz(200,200);
-
-  // Extract mean vector and reshape it to obtain average face
-  Mat averageFace = pca.mean.reshape(3,sz.height);
-
-//  // calculate the mean column vector of the flatten images matrix
-//  Mat mean;
-
-//  // get the mean of each row to form a vector col mean (1 is the col direction and 0 is row)
-//  cv::reduce(flattenImages, mean, 1, REDUCE_AVG);
-
-//  sentMean = mean;
-
-  // Find eigen vectors.
-  Mat eigenVectors = pca.eigenvectors;
-
-  Mat eigenFaces;
-
-  // Reshape Eigenvectors to obtain EigenFaces
-  for(int i = 0; i < NUM_EIGEN_FACES; i++)
-  {
-      Mat eigenFace = eigenVectors.row(i).reshape(3,sz.height);
-      eigenFaces.push_back(eigenFace);
-  }
-
-
-  // Show mean face image at 2x the original size
-  Mat output;
-  resize(averageFace, output, Size(), 2, 2);
-  imshow("Result", output);
-
-
+  sentMean = mean;
 
   Mat result;
   // subtract the mean from each column
   for (int i = 0; i < flattenImages.cols; i++)
     {
-      normalizedImages.push_back(flattenImages.col(i) - averageFace);
+      normalizedImages.push_back(flattenImages.col(i) - mean);
     }
 
   // concatenate all normalized cols into one matrix
@@ -295,4 +270,62 @@ void ImagePreproccessing::loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& wei
     }
 
   qDebug() << "Matrices loaded from JSON file: " << filePath;
+}
+
+
+
+void ImagePreproccessing::training(QString modelPath){
+
+  qDebug() << "Starting Training Process ...";
+
+
+  vector<QString> trainingLabels;
+  vector<QString> testingLabels;
+
+
+  qDebug() << "Reading Images ...";
+
+  vector<QString> trainingPaths = readImagesPath("D:/My PC/Projects/Computer-Vision-Toolkit/images/TeamPhotos/faces/Training",
+                      trainingLabels);
+
+  vector<QString> testingPaths = readImagesPath("D:/My PC/Projects/Computer-Vision-Toolkit/images/TeamPhotos/faces/Testing",
+                      testingLabels);
+
+  vector<Mat> trainingImages;
+  vector<Mat> testImages;
+
+  for(auto path : trainingPaths){
+      trainingImages.push_back(cv::imread(path.toStdString()));
+  }
+
+  for(auto path : testingPaths){
+      testImages.push_back(cv::imread(path.toStdString()));
+  }
+
+  Mat flatTrainingImages = FlattenImages(trainingImages);
+
+  Mat flatTestImages = FlattenImages(testImages);
+
+  Mat meanVector;
+
+  Mat NormalizedImages = normalizeImages(flatTrainingImages, meanVector);
+
+  qDebug() << "Calculating Covariance ...";
+
+  Mat covMatrix = Pca::calculateCovarianceMatrix(NormalizedImages);
+
+  qDebug() << "Computing PCA ...";
+
+
+  Mat eigenFaces = Pca::computePca(covMatrix, NormalizedImages);
+
+  qDebug() << "Computing Weights ...";
+
+  Mat eigenWeights = Pca::computeWeights(eigenFaces, NormalizedImages);
+
+  saveMatricesToJson(eigenFaces, eigenWeights, meanVector, modelPath);
+
+//  auto [true_positive, false_positive, true_negative, false_negative] = Testing::computeMetrics(eigenWeights, trainingLabels, flatTestImages, testingLabels, meanVector, eigenFaces);
+
+//  qDebug()<<true_positive<< false_positive<< true_negative<< false_negative;
 }
