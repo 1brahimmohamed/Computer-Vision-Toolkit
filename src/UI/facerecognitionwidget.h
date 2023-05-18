@@ -39,6 +39,8 @@ private slots:
 
   void on_detectFacesBtn_clicked();
 
+  void on_recognitionBtn_clicked();
+
 private:
   Ui::FaceRecognitionWidget *ui;
 

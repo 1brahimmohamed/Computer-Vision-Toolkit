@@ -97,3 +97,11 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
 
 }
 
+
+void FaceRecognitionWidget::on_recognitionBtn_clicked()
+{
+    // @TODO:
+    QString person = "Hima";
+    ui->personLabel->setText("I Recognized: " + person);
+}
+
