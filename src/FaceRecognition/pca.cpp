@@ -27,7 +27,7 @@ Mat Pca::calculateCovarianceMatrix(Mat normalizedImages)
 
 Mat Pca::computePca(Mat covariance_matrix, Mat NormalizedDataMat)
 {
-    int num_components = 20;
+    int num_components = 10;
     // Compute the eigenvectors of the covariance matrix
     Mat eigenvalues, eigenvectors;
     eigen(covariance_matrix, eigenvalues, eigenvectors);

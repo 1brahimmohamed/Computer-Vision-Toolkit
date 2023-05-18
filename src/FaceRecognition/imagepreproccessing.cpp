@@ -146,10 +146,15 @@ Mat ImagePreproccessing::normalizeImages(Mat flattenImages, Mat &sentMean){
 }
 
 Mat ImagePreproccessing::imageNormalization(Mat image, Mat mean){
+
   Mat normalizedImage;
   cvtColor(image, image, COLOR_BGR2GRAY);
   Mat flattenGrayImage = image.reshape(1, 1);   // flatten the image
-  cv::subtract(flattenGrayImage.t(), mean, normalizedImage);
+
+  qDebug() << flattenGrayImage.type();
+  qDebug() << mean.type();
+
+  cv::subtract(flattenGrayImage.t(), mean, normalizedImage,noArray(), 0);
 
   return normalizedImage;
 }
@@ -162,7 +167,11 @@ void ImagePreproccessing::saveMatricesToJson(const cv::Mat eigenFaces, const cv:
   // Convert weights matrix to JSON array
   QJsonArray weightsArray;
   for (int i = 0; i < weights.rows; ++i) {
-      weightsArray.append(weights.at<double>(i, 0));
+      QJsonArray rowArray;
+      for (int j = 0; j < weights.cols; ++j) {
+          rowArray.append(weights.at<double>(i,j));
+        }
+      weightsArray.append(rowArray);
     }
   jsonObject["weights"] = weightsArray;
 
@@ -173,7 +182,6 @@ void ImagePreproccessing::saveMatricesToJson(const cv::Mat eigenFaces, const cv:
     }
   jsonObject["mean"] = meanArray;
 
-
   // Convert eigenFaces matrix to JSON array
   QJsonArray eigenFacesArray;
   for (int i = 0; i < eigenFaces.rows; ++i) {
@@ -183,7 +191,6 @@ void ImagePreproccessing::saveMatricesToJson(const cv::Mat eigenFaces, const cv:
         }
       eigenFacesArray.append(rowArray);
     }
-
   jsonObject["eigenFaces"] = eigenFacesArray;
 
   // Create a JSON document from the JSON object
@@ -209,6 +216,7 @@ void ImagePreproccessing::loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& wei
       return;
     }
 
+
   // Read the JSON data from the file
   QByteArray jsonData = file.readAll();
   file.close();
@@ -225,16 +233,22 @@ void ImagePreproccessing::loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& wei
 
   // Read the weights from the JSON array
   QJsonArray weightsArray = jsonObject["weights"].toArray();
-  int weightsSize = weightsArray.size();
-  weights = cv::Mat(weightsSize, 1, CV_8UC1);
-  for (int i = 0; i < weightsSize; ++i) {
-      weights.at<double>(i, 0) = weightsArray[i].toDouble();
+  int weightsRows = weightsArray.size();
+  int weightsCols = weightsArray[0].toArray().size();
+
+  weights = cv::Mat(weightsRows, weightsCols, CV_64F);
+
+  for (int i = 0; i < weightsRows; ++i) {
+      QJsonArray rowArray = weightsArray[i].toArray();
+      for (int j = 0; j < weightsCols; ++j) {
+          weights.at<double>(i, j) = rowArray[j].toDouble();
+        }
     }
 
   // Read the mean from the JSON array
   QJsonArray meanArray = jsonObject["mean"].toArray();
   int meanSize = meanArray.size();
-  mean = cv::Mat(meanSize, 1, CV_8UC1);
+  mean = cv::Mat(meanSize, 1, CV_64F);
   for (int i = 0; i < meanSize; ++i) {
       mean.at<double>(i, 0) = meanArray[i].toDouble();
     }
@@ -243,13 +257,13 @@ void ImagePreproccessing::loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& wei
   QJsonArray eigenFacesArray = jsonObject["eigenFaces"].toArray();
   int eigenFacesRows = eigenFacesArray.size();
   int eigenFacesCols = eigenFacesArray[0].toArray().size();
-  eigenFaces = cv::Mat(eigenFacesRows, eigenFacesCols, CV_8UC1);
+  eigenFaces = cv::Mat(eigenFacesRows, eigenFacesCols, CV_64F);
   for (int i = 0; i < eigenFacesRows; ++i) {
       QJsonArray rowArray = eigenFacesArray[i].toArray();
       for (int j = 0; j < eigenFacesCols; ++j) {
           eigenFaces.at<double>(i, j) = rowArray[j].toDouble();
-        }
-    }
+      }
+  }
 
   qDebug() << "Matrices loaded from JSON file: " << filePath;
 }

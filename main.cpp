@@ -12,58 +12,62 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
 
-//      MainWindow w;
-//      w.show();
+  MainWindow w;
+  w.show();
 
+//    vector<QString> trainingLabels;
+//    vector<QString> testingLabels;
 
+//    vector<QString> trainingPaths = ImagePreproccessing::readImagesPath("D:/My PC/Projects/Computer-Vision-Toolkit/images/TeamPhotos/faces/Training",
+//                        trainingLabels);
 
-  vector<QString> trainingLabels;
-  vector<QString> testingLabels;
+//    vector<QString> testingPaths = ImagePreproccessing::readImagesPath("D:/My PC/Projects/Computer-Vision-Toolkit/images/TeamPhotos/faces/Testing",
+//                        testingLabels);
 
-  vector<QString> trainingPaths = ImagePreproccessing::readImagesPath("C:/Users/mahmo/OneDrive/Desktop/Computer-Vision-Toolkit/images/TeamPhotos/faces/Training",
-                      trainingLabels);
+//    vector<Mat> trainingImages;
+//    vector<Mat> testImages;
 
-  vector<QString> testingPaths = ImagePreproccessing::readImagesPath("C:/Users/mahmo/OneDrive/Desktop/Computer-Vision-Toolkit/images/TeamPhotos/faces/Testing",
-                      testingLabels);
+//    for(auto path : trainingPaths){
+//        trainingImages.push_back(cv::imread(path.toStdString()));
+//    }
 
-  vector<Mat> trainingImages;
-  vector<Mat> testImages;
+//    for(auto path : testingPaths){
+//        testImages.push_back(cv::imread(path.toStdString()));
+//    }
 
-  for(auto path : trainingPaths){
-      trainingImages.push_back(cv::imread(path.toStdString()));
-  }
+//    Mat flatTrainingImages = ImagePreproccessing::FlattenImages(trainingImages);
 
-  for(auto path : testingPaths){
-      testImages.push_back(cv::imread(path.toStdString()));
-  }
+//    Mat flatTestImages = ImagePreproccessing::FlattenImages(testImages);
 
-  Mat flatTrainingImages = ImagePreproccessing::FlattenImages(trainingImages);
+//    Mat meanVector;
 
-  Mat flatTestImages = ImagePreproccessing::FlattenImages(testImages);
+//    Mat NormalizedImages = ImagePreproccessing::normalizeImages(flatTrainingImages, meanVector);
 
-  Mat meanVector;
+//    Mat covMatrix = Pca::calculateCovarianceMatrix(NormalizedImages);
 
-  Mat NormalizedImages = ImagePreproccessing::normalizeImages(flatTrainingImages, meanVector);
+//    qDebug()<<"covMat";
 
-  Mat covMatrix = Pca::calculateCovarianceMatrix(NormalizedImages);
+//    Mat eigenFaces = Pca::computePca(covMatrix, NormalizedImages);
 
-  qDebug()<<"covMat";
+//    qDebug()<<"faces";
 
-  Mat eigenFaces = Pca::computePca(covMatrix, NormalizedImages);
+//    Mat eigenWeights = Pca::computeWeights(eigenFaces, NormalizedImages);
 
-  qDebug()<<"faces";
+//    qDebug()<<"Weights";
 
-  Mat eigenWeights = Pca::computeWeights(eigenFaces, NormalizedImages);
+//    ImagePreproccessing::saveMatricesToJson(eigenFaces, eigenWeights, meanVector, "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/model.json");
 
-  qDebug()<<"Weights";
+//    Mat newEign, newWei, newMeanVec;
+//    ImagePreproccessing::loadMatricesFromJson(newEign,
+//                                              newWei,
+//                                              newMeanVec,
+//                                              "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/model.json");
 
-  ImagePreproccessing::saveMatricesToJson(eigenFaces, eigenWeights, meanVector, "C:/Users/mahmo/OneDrive/Desktop/Computer-Vision-Toolkit/src/Assets/model.json");
+//    qDebug()<<"save";
 
-  qDebug()<<"save";
+//    auto [true_positive, false_positive, true_negative, false_negative] = Testing::computeMetrics(eigenWeights, trainingLabels, flatTestImages, testingLabels, meanVector, eigenFaces);
 
-  auto [true_positive, false_positive, true_negative, false_negative] = Testing::computeMetrics(eigenWeights, trainingLabels, flatTestImages, testingLabels, meanVector, eigenFaces);
-
-  qDebug()<<true_positive<< false_positive<< true_negative<< false_negative;
+//    qDebug()<<true_positive<< false_positive<< true_negative<< false_negative;
 
   return a.exec();
 }

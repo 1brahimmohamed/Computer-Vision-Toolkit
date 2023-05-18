@@ -27,11 +27,16 @@ FaceRecognitionWidget::FaceRecognitionWidget(QWidget *parent) :
   this->noFaceImagePath = this->currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/UA.jpg");
   noFaceImage = imread(this->noFaceImagePath.toStdString());
 
-  this->modelPath = this->currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/model.json");
 
-  ImagePreproccessing::loadMatricesFromJson(this->eigenFaces, this->weights, this->meanVector, this->modelPath);
+  ImagePreproccessing::loadMatricesFromJson(this->eigenFaces,
+                                            this->weights,
+                                            this->meanVector,
+                                            "D:/My PC/Projects/Computer-Vision-Toolkit/src/Assets/model.json");
 
-  ImagePreproccessing::readImagesPath("Test Folder", this->trainingLabels);
+  ImagePreproccessing::readImagesPath("D:/My PC/Projects/Computer-Vision-Toolkit/images/TeamPhotos/faces/Training",
+                                      this->trainingLabels);
+
+  qDebug() << "yarb";
 }
 
 FaceRecognitionWidget::~FaceRecognitionWidget()
@@ -41,10 +46,16 @@ FaceRecognitionWidget::~FaceRecognitionWidget()
 
 // ------------------------------- GENERAL FUNCTIONS ------------------------------------- //
 
+
 void FaceRecognitionWidget::updateFilteredPicture(Mat updatedImage){
   this->recognitionWidgetImage.detectedFacesImage = updatedImage;
   HelperFunctions::viewImageOnLabel(updatedImage, ui->imageDetected);
 }
+
+void uploadData(){
+
+}
+
 
 void FaceRecognitionWidget::on_uploadImageBtn_clicked()
 {
@@ -106,14 +117,15 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
 
 }
 
-
 void FaceRecognitionWidget::on_recognitionBtn_clicked()
 {
-    // @TODO:
-
     Mat normalizedImage = ImagePreproccessing::imageNormalization(detectedFace,this->meanVector);
 
-    auto [person, underthreshold] = Testing::predict(this->weights, this->trainingLabels, normalizedImage);
+    auto [person, threshold] = Testing::predict(this->weights,
+                     this->trainingLabels,
+                     normalizedImage,
+                     this->meanVector,
+                     this->eigenFaces, 2e8);
 
     ui->personLabel->setText("I Recognized: " + person);
 }
