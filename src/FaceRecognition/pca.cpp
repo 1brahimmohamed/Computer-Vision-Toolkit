@@ -57,14 +57,13 @@ Mat Pca::computePca(Mat covariance_matrix, Mat NormalizedDataMat)
 
 Mat Pca::computeWeights(Mat EigenFacesMat, Mat NormalizedImag)
 {
-
     Mat weights;
     cv::Mat eigenfaces_transpose = EigenFacesMat.t();
     cv::Mat normalized_transpose = NormalizedImag.t();
 
     // Convert the matrix types if necessary
-    eigenfaces_transpose.convertTo(eigenfaces_transpose, CV_64FC1);
-    normalized_transpose.convertTo(normalized_transpose, CV_64FC1);
+    eigenfaces_transpose.convertTo(eigenfaces_transpose, CV_32F);
+    normalized_transpose.convertTo(normalized_transpose, CV_32F);
 
     weights = normalized_transpose*eigenfaces_transpose;
     return weights;

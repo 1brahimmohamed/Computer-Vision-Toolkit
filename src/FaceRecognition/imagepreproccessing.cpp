@@ -2,6 +2,7 @@
 #include "src/FaceRecognition/detectFaces.h"
 
 #include <QDir>
+#define NUM_EIGEN_FACES 30
 
 ImagePreproccessing::ImagePreproccessing()
 {
@@ -102,14 +103,14 @@ vector<QString> ImagePreproccessing::readImagesPath(QString inputFolder, vector<
 
 Mat ImagePreproccessing::FlattenImages(vector<Mat> images){
   // initialize the flatten images matrix and the vector of flatten images
-  Mat flattenImages;
+  Mat flattenImages(static_cast<int>(images.size()), images[0].rows * images[0].cols * 3, CV_32F);
   vector<Mat> vectorOfFlatMats;
 
   // loop through all images and flatten them
   for(auto& image: images){
-      Mat grayImage;
-      cvtColor(image, grayImage, COLOR_BGR2GRAY);       // convert the image to gray scale
-      Mat flattenGrayImage = grayImage.reshape(1, 1);   // flatten the image
+      /*      Mat grayImage;
+      cvtColor(image, grayImage, COLOR_BGR2GRAY); */      // convert the image to gray scale
+      Mat flattenGrayImage = image.reshape(1, 1);   // flatten the image
       vectorOfFlatMats.push_back(flattenGrayImage);     // add the flatten image to the vector of flatten images
     }
 
@@ -117,26 +118,54 @@ Mat ImagePreproccessing::FlattenImages(vector<Mat> images){
   vconcat(vectorOfFlatMats, flattenImages);
 
   // transpose the flatten images matrix
-  return flattenImages.t();
+  return flattenImages;
 }
 
 Mat ImagePreproccessing::normalizeImages(Mat flattenImages, Mat &sentMean){
   // initialize the normalized images matrix
   vector<Mat> normalizedImages;
 
-  // calculate the mean column vector of the flatten images matrix
-  Mat mean;
 
-  // get the mean of each row to form a vector col mean (1 is the col direction and 0 is row)
-  cv::reduce(flattenImages, mean, 1, REDUCE_AVG);
-  sentMean = mean;
+  PCA pca(normalizedImages, Mat(), PCA::DATA_AS_ROW, NUM_EIGEN_FACES);
+
+  Size sz(200,200);
+
+  // Extract mean vector and reshape it to obtain average face
+  Mat averageFace = pca.mean.reshape(3,sz.height);
+
+//  // calculate the mean column vector of the flatten images matrix
+//  Mat mean;
+
+//  // get the mean of each row to form a vector col mean (1 is the col direction and 0 is row)
+//  cv::reduce(flattenImages, mean, 1, REDUCE_AVG);
+
+//  sentMean = mean;
+
+  // Find eigen vectors.
+  Mat eigenVectors = pca.eigenvectors;
+
+  Mat eigenFaces;
+
+  // Reshape Eigenvectors to obtain EigenFaces
+  for(int i = 0; i < NUM_EIGEN_FACES; i++)
+  {
+      Mat eigenFace = eigenVectors.row(i).reshape(3,sz.height);
+      eigenFaces.push_back(eigenFace);
+  }
+
+
+  // Show mean face image at 2x the original size
+  Mat output;
+  resize(averageFace, output, Size(), 2, 2);
+  imshow("Result", output);
+
+
 
   Mat result;
-  sentMean = mean;
   // subtract the mean from each column
   for (int i = 0; i < flattenImages.cols; i++)
     {
-      normalizedImages.push_back(flattenImages.col(i) - mean);
+      normalizedImages.push_back(flattenImages.col(i) - averageFace);
     }
 
   // concatenate all normalized cols into one matrix
@@ -262,8 +291,8 @@ void ImagePreproccessing::loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& wei
       QJsonArray rowArray = eigenFacesArray[i].toArray();
       for (int j = 0; j < eigenFacesCols; ++j) {
           eigenFaces.at<double>(i, j) = rowArray[j].toDouble();
-      }
-  }
+        }
+    }
 
   qDebug() << "Matrices loaded from JSON file: " << filePath;
 }
