@@ -21,10 +21,13 @@ class Pca
 {
 public:
     Pca();
+
+    static Mat calculateCovarianceMatrix(Mat normalizedImages);
+    static Mat computePca(Mat covariance_matrix, Mat NormalizedDataMat);
+    static Mat computeWeights(Mat EigenFacesMat, Mat NormalizedImag);
+
 private:
-  static Mat CalculateCovarianceMatrix(Mat normalizedImages);
-  static Mat computePca(Mat covariance_matrix, Mat NormalizedDataMat);
-  static Mat ComputeWeights(Mat EigenFacesMat, Mat NormalizedImag);
+
 };
 
 #endif // PCA_H

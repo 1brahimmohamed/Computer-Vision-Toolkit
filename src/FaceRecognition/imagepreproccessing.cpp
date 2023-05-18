@@ -77,7 +77,7 @@ QString ImagePreproccessing::getLabelFromImagePath(QString imagePath){
     label = "Omnia";
   else
     label = "Unknown";
-  
+
   return label;
 }
 
