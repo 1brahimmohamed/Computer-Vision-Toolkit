@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this);
 
-  index = 6;
+  index = 0;
 
   FiltersWidget *myFilterWidget = new FiltersWidget();
   MixingWidget *myMixingWidget = new MixingWidget();

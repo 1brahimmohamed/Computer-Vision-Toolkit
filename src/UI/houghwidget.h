@@ -25,9 +25,10 @@ struct HoughImage{
   int threshold;
   int maxRaduis;
   int minRaduis;
-  float alpha;
-  float beta;
-  int gamma;
+  float numberOfPoints;
+  float initRaduis;
+  int xBais;
+  int yBais;
 };
 
 namespace Ui {
@@ -61,6 +62,8 @@ private slots:
   void on_gammaSlider_valueChanged(int value);
   void on_activeContBtn_clicked();
   void on_downloadBtn_clicked();
+  void on_thetaSlider_sliderReleased();
+  void on_thetaSlider_valueChanged(int value);
 
 private:
   Ui::HoughWidget *ui;
