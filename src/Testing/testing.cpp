@@ -1,14 +1,22 @@
 #include "testing.h"
+#include "src/FaceRecognition/pca.h"
+#include "src/FaceRecognition/imagepreproccessing.h"
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <vector>
 #include <cmath>
+#include <QDebug>
+#include <limits.h>
+
 
 using namespace std;
 using namespace cv;
 
-double euclideanDistance(const std::vector<double>& vector1, const std::vector<double>& vector2) {
+
+Testing::Testing(){}
+
+double Testing::euclideanDistance(const std::vector<double>& vector1, const std::vector<double>& vector2) {
     if (vector1.size() != vector2.size()) {
         std::cerr << "Vectors must have the same size!" << std::endl;
         return -1.0;
@@ -22,38 +30,33 @@ double euclideanDistance(const std::vector<double>& vector1, const std::vector<d
     return std::sqrt(distance);
 }
 
-vector<double> test_image_preprocessing (const std::vector<int>& test_image){
-
-    //Test image normalization
-    vector<int> normalized_test_image;
-//    normalized_test_image=Normalization();
-
-
+Mat Testing::testImagePreprocessing(Mat testImage, Mat meanVector, Mat eigenFaces){
 
    //Computing Test image weights
-    vector<double> test_weights;
-//   test_weights=calculateImageWeights();
+   Mat test_weights;
+
+   test_weights=Pca::computeWeights(eigenFaces, testImage);
 
    return test_weights;
 }
 
-tuple<string,bool> predict( const cv::Mat& train_weights, const std::vector<string>& train_labels,const std::vector<int>& test_image, double threshold = 2e8) {
+tuple<QString,bool> Testing::predict(Mat train_weights, vector<QString> train_labels,Mat test_image, Mat meanVector, Mat eigenFaces, double threshold=2e8){
 
     //calculating test image weights
-    vector<double> test_weights;
-    test_weights=test_image_preprocessing(test_image);
-
+    Mat test_weights;
+    test_weights = testImagePreprocessing(test_image, meanVector, eigenFaces);
 
     //Calculating euclidean distances between the test image and each training image
-    vector<double> euclidean_dist;
-    for (int j=0; j<train_weights.cols; j++) {
+    vector<double> euclidean_dist(train_weights.rows,0);
+
+    for (int j=0; j<train_weights.rows; j++) {
             euclidean_dist[j]=euclideanDistance(train_weights.row(j),test_weights);
         }
 
     // Index of image with least Euclidean_dist
     int index = -1;
     //minimum distance between the test image and the one of the training images
-    double min_dist =10000000.0;
+    double min_dist = std::numeric_limits<float>::infinity();
 
     for (int k = 0; k < train_weights.cols; ++k) {
         double dist = euclidean_dist[k];
@@ -66,28 +69,42 @@ tuple<string,bool> predict( const cv::Mat& train_weights, const std::vector<stri
     bool underThreshold=false;
     if (min_dist < threshold) underThreshold=true;
 
-    string matched_image_label = train_labels[index];
+    QString matched_image_label = train_labels[index];
 
     return make_tuple(matched_image_label, underThreshold);
 }
 
-tuple<int, int, int, int> computeMetrics( const cv::Mat& train_weights, const std::vector<string>& train_labels, const cv::Mat& test_matrix, const std::vector<string>& test_labels, double threshold = 2e8) {
+tuple<int, int, int, int> Testing::computeMetrics( Mat train_weights,
+                                          vector<QString> train_labels,
+                                          Mat test_matrix,
+                                          vector<QString> test_labels,
+                                          Mat meanVector,
+                                          Mat eigenFaces) {
 
-    string matched_image_label;
+    QString matched_image_label;
     bool match= false;
     int true_positive = 0;
     int false_positive = 0;
     int true_negative = 0;
     int false_negative = 0;
+    bool underThreshold = false;
 
 
-    for(int i=0; i<test_matrix.rows; i++){
+    for(int i=0; i<test_matrix.cols; i++){
 
-        auto [matched_image_label, underThreshold] = predict(train_weights,train_labels,test_matrix.row(i));
+
+        tuple<QString, bool> myTuple = Testing::predict(train_weights, train_labels, test_matrix.col(i), meanVector, eigenFaces);
+
+        matched_image_label = get<0>(myTuple);
+
+        underThreshold = get<1>(myTuple);
+
+        qDebug()<<matched_image_label <<test_labels[i];
 
         //comparing the predicted label with the true label
         if(matched_image_label == test_labels[i])
             match=true;
+
 
         if (underThreshold) { // It's a face
 
@@ -101,8 +118,8 @@ tuple<int, int, int, int> computeMetrics( const cv::Mat& train_weights, const st
 
         }
 
-    }
 
+    }
 
    return std::make_tuple(true_positive, false_positive, true_negative, false_negative);
  }

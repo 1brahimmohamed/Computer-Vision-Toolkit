@@ -3,17 +3,23 @@
 
 #include <bits/stdc++.h>
 #include <opencv2/opencv.hpp>
+#include <QString>
 using namespace std;
 using namespace cv;
 
-class testing
+class Testing
 {
 public:
-    testing();
+    Testing();
     static double euclideanDistance(const std::vector<double>& vector1, const std::vector<double>& vector2);
-    static vector<double> test_image_preprocessing (const std::vector<int>& test_image);
-    static tuple<string,bool> predict( const cv::Mat& train_weights, const std::vector<string>& train_labels,const std::vector<int>& test_image, double threshold = 2e8);
-    static tuple<int, int, int, int> computeMetrics( const cv::Mat& train_weights, const std::vector<string>& train_labels, const cv::Mat& test_matrix, const std::vector<string>& test_labels, double threshold = 2e8) ;
+    static Mat testImagePreprocessing (Mat testImage, Mat meanVector, Mat eigenFaces);
+    static tuple<QString,bool> predict(Mat train_weights, vector<QString> train_labels,Mat test_image, Mat meanVector, Mat eigenFaces, double threshold);
+    static tuple<int, int, int, int> computeMetrics( Mat train_weights,
+                                                     vector<QString> train_labels,
+                                                     Mat test_matrix,
+                                                     vector<QString> test_labels,
+                                                     Mat meanVector,
+                                                     Mat eigenFaces);
 
 };
 
