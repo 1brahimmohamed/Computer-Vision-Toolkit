@@ -3,7 +3,8 @@
 
 #include "src/Helpers/helperfunctions.h"
 #include "src/FaceRecognition/detectFaces.h"
-
+#include "src/FaceRecognition/imagepreproccessing.h"
+#include "src/Testing/testing.h"
 
 #include<QDebug>
 
@@ -25,6 +26,12 @@ FaceRecognitionWidget::FaceRecognitionWidget(QWidget *parent) :
   // Load the no face image
   this->noFaceImagePath = this->currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/UA.jpg");
   noFaceImage = imread(this->noFaceImagePath.toStdString());
+
+  this->modelPath = this->currentDir.absoluteFilePath("Computer-Vision-Toolkit/src/Assets/model.json");
+
+  ImagePreproccessing::loadMatricesFromJson(this->eigenFaces, this->weights, this->meanVector, this->modelPath);
+
+  ImagePreproccessing::readImagesPath("Test Folder", this->trainingLabels);
 }
 
 FaceRecognitionWidget::~FaceRecognitionWidget()
@@ -64,7 +71,9 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
       const cv::Size size(200, 200); // Example size
       for (cv::Mat& face : faces) {
           cv::resize(face, face, size);
+          detectedFace = face;
         }
+
 
       // Calculate the number of rows and columns in the grid
       const int numImages = faces.size();
@@ -101,7 +110,11 @@ void FaceRecognitionWidget::on_detectFacesBtn_clicked()
 void FaceRecognitionWidget::on_recognitionBtn_clicked()
 {
     // @TODO:
-    QString person = "Hima";
+
+    Mat normalizedImage = ImagePreproccessing::imageNormalization(detectedFace,this->meanVector);
+
+    auto [person, underthreshold] = Testing::predict(this->weights, this->trainingLabels, normalizedImage);
+
     ui->personLabel->setText("I Recognized: " + person);
 }
 

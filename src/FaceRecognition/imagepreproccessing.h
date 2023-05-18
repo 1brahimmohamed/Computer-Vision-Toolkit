@@ -20,14 +20,16 @@ class ImagePreproccessing
 {
 public:
   ImagePreproccessing();
+
   void DetectFacesInFolder();
-  vector<QString> readImagesPath(QString inputFolder, vector<QString> &labels);
-  Mat FlattenImages(vector<Mat> images);
-  Mat normalizeImages(Mat flattenImages, Mat &sentMean);
-  QString getLabelFromImagePath(QString imagePath);
-  Mat imageNormalization(Mat image, Mat mean);
-  void saveMatricesToJson(const cv::Mat eigenFaces, const cv::Mat weights, const cv::Mat mean, const QString filePath);
-  void loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& weights, cv::Mat& mean, const QString filePath);
+
+  static vector<QString> readImagesPath(QString inputFolder, vector<QString> &labels);
+  static Mat FlattenImages(vector<Mat> images);
+  static Mat normalizeImages(Mat flattenImages, Mat &sentMean);
+  static QString getLabelFromImagePath(QString imagePath);
+  static Mat imageNormalization(Mat image, Mat mean);
+  static void saveMatricesToJson(const cv::Mat eigenFaces, const cv::Mat weights, const cv::Mat mean, const QString filePath);
+  static void loadMatricesFromJson(cv::Mat& eigenFaces, cv::Mat& weights, cv::Mat& mean, const QString filePath);
 
 private:
   QDir currentDir;
